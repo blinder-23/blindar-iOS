@@ -15,6 +15,9 @@
 		0985E2E52C2BDD0600BDED83 /* Memo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0985E2E42C2BDD0600BDED83 /* Memo.swift */; };
 		0985E2E72C2BDDC500BDED83 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0985E2E62C2BDDC500BDED83 /* Feedback.swift */; };
 		0985E2EC2C2BE43000BDED83 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 0985E2EB2C2BE43000BDED83 /* Config.xcconfig */; };
+		0985E2EF2C2D3A0800BDED83 /* SchoolAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0985E2EE2C2D3A0800BDED83 /* SchoolAPI.swift */; };
+		0985E32E2C2D450000BDED83 /* SelectSchoolScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0985E32D2C2D450000BDED83 /* SelectSchoolScreen.swift */; };
+		0985E3302C2D468800BDED83 /* SchoolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0985E32F2C2D468800BDED83 /* SchoolViewModel.swift */; };
 		099EF63C2C08732400222E2F /* BlindarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099EF63B2C08732400222E2F /* BlindarApp.swift */; };
 		099EF63E2C08732400222E2F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099EF63D2C08732400222E2F /* ContentView.swift */; };
 		099EF6422C08732700222E2F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 099EF6412C08732700222E2F /* Assets.xcassets */; };
@@ -55,6 +58,10 @@
 		0985E2E42C2BDD0600BDED83 /* Memo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memo.swift; sourceTree = "<group>"; };
 		0985E2E62C2BDDC500BDED83 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
 		0985E2EB2C2BE43000BDED83 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		0985E2EE2C2D3A0800BDED83 /* SchoolAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolAPI.swift; sourceTree = "<group>"; };
+		0985E32D2C2D450000BDED83 /* SelectSchoolScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSchoolScreen.swift; sourceTree = "<group>"; };
+		0985E32F2C2D468800BDED83 /* SchoolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolViewModel.swift; sourceTree = "<group>"; };
+		0985E3312C2D4C4B00BDED83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		099EF6382C08732400222E2F /* Blindar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blindar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		099EF63B2C08732400222E2F /* BlindarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlindarApp.swift; sourceTree = "<group>"; };
 		099EF63D2C08732400222E2F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -97,6 +104,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0985E2ED2C2D39EA00BDED83 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				0985E2EE2C2D3A0800BDED83 /* SchoolAPI.swift */,
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
+		0985E2F02C2D3A2F00BDED83 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0985E32F2C2D468800BDED83 /* SchoolViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		099EF62F2C08732400222E2F = {
 			isa = PBXGroup;
 			children = (
@@ -120,10 +143,12 @@
 		099EF63A2C08732400222E2F /* Blindar */ = {
 			isa = PBXGroup;
 			children = (
-				0985E2D82C2BD67400BDED83 /* Config.xcconfig */,
+				0985E3312C2D4C4B00BDED83 /* Info.plist */,
 				099EF6412C08732700222E2F /* Assets.xcassets */,
 				0985E2EB2C2BE43000BDED83 /* Config.xcconfig */,
 				099EF63B2C08732400222E2F /* BlindarApp.swift */,
+				0985E2ED2C2D39EA00BDED83 /* APIService */,
+				0985E2F02C2D3A2F00BDED83 /* ViewModel */,
 				099EF6672C0873A600222E2F /* Model */,
 				099EF6682C0873AB00222E2F /* View */,
 				099EF6432C08732700222E2F /* Preview Content */,
@@ -189,6 +214,7 @@
 		099EF6742C0876DC00222E2F /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				0985E32D2C2D450000BDED83 /* SelectSchoolScreen.swift */,
 				099EF66B2C08743D00222E2F /* MainCalendarPage.swift */,
 				099EF66D2C08747800222E2F /* CalendarView.swift */,
 				099EF66F2C08749700222E2F /* MealContentsView.swift */,
@@ -332,6 +358,7 @@
 			files = (
 				0985E2DE2C2BD81400BDED83 /* Meal.swift in Sources */,
 				099EF66E2C08747800222E2F /* CalendarView.swift in Sources */,
+				0985E3302C2D468800BDED83 /* SchoolViewModel.swift in Sources */,
 				0985E2E02C2BD84B00BDED83 /* Schedule.swift in Sources */,
 				099EF63E2C08732400222E2F /* ContentView.swift in Sources */,
 				099EF66C2C08743D00222E2F /* MainCalendarPage.swift in Sources */,
@@ -341,8 +368,10 @@
 				099EF6762C09607D00222E2F /* NutrientNavigationPage.swift in Sources */,
 				099EF63C2C08732400222E2F /* BlindarApp.swift in Sources */,
 				0985E2E52C2BDD0600BDED83 /* Memo.swift in Sources */,
+				0985E32E2C2D450000BDED83 /* SelectSchoolScreen.swift in Sources */,
 				099EF6722C0876BC00222E2F /* ScheduleContentsView.swift in Sources */,
 				0985E2E72C2BDDC500BDED83 /* Feedback.swift in Sources */,
+				0985E2EF2C2D3A0800BDED83 /* SchoolAPI.swift in Sources */,
 				0985E2E22C2BD85300BDED83 /* School.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +411,7 @@
 /* Begin XCBuildConfiguration section */
 		099EF65C2C08732700222E2F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0985E2EB2C2BE43000BDED83 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -445,6 +475,7 @@
 		};
 		099EF65D2C08732700222E2F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0985E2EB2C2BE43000BDED83 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -510,6 +541,7 @@
 				DEVELOPMENT_TEAM = 53DAD6BN6X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Blindar/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -540,6 +572,7 @@
 				DEVELOPMENT_TEAM = 53DAD6BN6X;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Blindar/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
