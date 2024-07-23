@@ -68,6 +68,7 @@
 		090541F12C4F829F0039D633 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 090541F02C4F829F0039D633 /* FirebaseVertexAI-Preview */; };
 		090541F62C4F8BFB0039D633 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541F52C4F8BFB0039D633 /* LoginPage.swift */; };
 		090541F82C4F8CC60039D633 /* AppleAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */; };
+		09F5770D2C4FA0F300B89ECF /* NicknameNavigationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5770C2C4FA0F300B89ECF /* NicknameNavigationPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,6 +109,7 @@
 		090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthCoordinator.swift; sourceTree = "<group>"; };
 		09BE105C2C4F99A0002A6E66 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		09BE105D2C4F99C5002A6E66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		09F5770C2C4FA0F300B89ECF /* NicknameNavigationPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameNavigationPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				090541F52C4F8BFB0039D633 /* LoginPage.swift */,
+				09F5770C2C4FA0F300B89ECF /* NicknameNavigationPage.swift */,
 				090541872C4F807A0039D633 /* SelectSchoolScreen.swift */,
 			);
 			path = Entry;
@@ -417,6 +420,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				090541A02C4F807A0039D633 /* School.swift in Sources */,
+				09F5770D2C4FA0F300B89ECF /* NicknameNavigationPage.swift in Sources */,
 				090541B62C4F807A0039D633 /* UserViewModel.swift in Sources */,
 				0905419F2C4F807A0039D633 /* Schedule.swift in Sources */,
 				090541B12C4F807A0039D633 /* ContentView.swift in Sources */,
@@ -591,6 +595,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -622,6 +627,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
