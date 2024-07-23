@@ -41,7 +41,7 @@ struct LoginPage: View {
             .padding(20)
             .background(
                 NavigationLink("", isActive: $isLoggedIn, destination: {
-                    NicknameNavigationPage()
+                    SelectNicknameScreen()
                 })
             )
         }

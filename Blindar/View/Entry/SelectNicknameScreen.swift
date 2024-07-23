@@ -9,7 +9,7 @@ import SwiftUI
 
 var globalNickname: String = ""
 
-struct NicknameNavigationPage: View {
+struct SelectNicknameScreen: View {
     @State var nickname: String = ""
     @State var isNicknameProper: Bool = true
     
