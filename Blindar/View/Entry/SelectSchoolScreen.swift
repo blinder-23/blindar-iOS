@@ -8,7 +8,10 @@
 import SwiftUI
 import SwiftData
 
+var globalSchoolCode: Int = 0
+
 struct SelectSchoolScreen: View {
+    @EnvironmentObject var userVM: UserViewModel
     @Environment(\.modelContext) private var modelContext
     @StateObject private var schoolVM = SchoolViewModel()
     @State var query: String = ""
@@ -22,46 +25,53 @@ struct SelectSchoolScreen: View {
     @Query var savedSchools: [SchoolLocalData]
     
     var body: some View {
-        VStack {
-            //헤더
-            HStack {
-                Text("학교 선택")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                Spacer()
-            }
-            .padding(.vertical, 20)
-            //검색바
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.white)
-                .frame(height: 60)
-                .overlay {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                        TextField(text: $query, prompt: Text("학교 이름 검색").foregroundStyle(.hexC6C6CA), label: {
-                            EmptyView()
-                        })
-                    }
-                    .padding()
+        NavigationStack {
+            VStack {
+                //헤더
+                HStack {
+                    Text("학교 선택")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    Spacer()
                 }
-            //학교 목록
-            ScrollView {
-                ForEach(filteredSchools, id: \.schoolCode) { school in
-                    VStack(alignment: .leading) {
-                        VStack(spacing: 3) {
-                            Text(school.schoolName)
+                .padding(.vertical, 20)
+                //검색바
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.white)
+                    .frame(height: 60)
+                    .overlay {
+                        HStack {
+                            Image(systemName: "magnifyingglass")
+                            TextField(text: $query, prompt: Text("학교 이름 검색").foregroundStyle(.hexC6C6CA), label: {
+                                EmptyView()
+                            })
                         }
-                        .padding(.vertical)
-                        Rectangle()
-                            .frame(height: 0.3)
+                        .padding()
                     }
-                    .onTapGesture {
-                        saveSchoolsToLocal(school: school)
+                //학교 목록
+                ScrollView {
+                    ForEach(filteredSchools, id: \.schoolCode) { school in
+                        VStack(alignment: .leading) {
+                            VStack(spacing: 3) {
+                                Text(school.schoolName)
+                            }
+                            .padding(.vertical)
+                            Rectangle()
+                                .frame(height: 0.3)
+                        }
+                        .onTapGesture {
+                            saveSchoolsToLocal(school: school)
+                            globalSchoolCode = school.schoolCode
+                            var newUser: User = User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname)
+                            userVM.user = newUser
+                            //디버깅
+                            print("userVM.user : ", newUser)
+                        }
                     }
                 }
             }
+            .padding()
         }
-        .padding()
         .onAppear(perform: {
             schoolVM.fetchSchools()
         })

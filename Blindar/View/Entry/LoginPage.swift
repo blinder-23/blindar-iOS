@@ -41,7 +41,7 @@ struct LoginPage: View {
             .padding(20)
             .background(
                 NavigationLink("", isActive: $isLoggedIn, destination: {
-                    NicknameNavigationPage(uid: appleLoginCoordinator?.userData.userId ?? "uid is nill" )
+                    NicknameNavigationPage()
                 })
             )
         }

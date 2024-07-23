@@ -13,6 +13,8 @@ import FirebaseAuth
 import CryptoKit
 import AuthenticationServices
 
+var globalUid: String = ""
+
 class AppleAuthCoordinator: NSObject {
     var userData: User = User(userId: "", schoolCode: 0, name: "")
     var currentNonce: String?
@@ -131,10 +133,8 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                 }
                 // User is signed in to Firebase with Apple.
                 if let user = Auth.auth().currentUser {
-                    self.userData.userId = user.uid
+                    globalUid = user.uid
                     self.isLoggedIn = true
-                    //디버깅
-                    print("userData : ", self.userData)
                 }
             }
         }

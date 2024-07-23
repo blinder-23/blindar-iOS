@@ -7,9 +7,9 @@
 
 import SwiftUI
 
+var globalNickname: String = ""
+
 struct NicknameNavigationPage: View {
-    @StateObject var userVM: UserViewModel = UserViewModel()
-    var uid: String
     @State var nickname: String = ""
     @State var isNicknameProper: Bool = true
     
@@ -48,17 +48,17 @@ struct NicknameNavigationPage: View {
                     }
                 }
                 //다음 버튼
-                Button(action: {
-                    // 닉네임 검증 후 다음 페이지로 이동하는 로직 추가
+                NavigationLink(destination: {
+                    SelectSchoolScreen()
                 }, label: {
                     Rectangle()
                         .frame(width: UIScreen.main.bounds.width * 0.94, height: 60)
                         .clipShape(
                             .rect(
-                                topLeadingRadius: 16,
-                                bottomLeadingRadius: 16,
-                                bottomTrailingRadius: 16,
-                                topTrailingRadius: 16
+                                topLeadingRadius: 6,
+                                bottomLeadingRadius: 6,
+                                bottomTrailingRadius: 6,
+                                topTrailingRadius: 6
                             )
                         )
                         .foregroundColor(.hex42474E)
@@ -71,9 +71,8 @@ struct NicknameNavigationPage: View {
             }
             .padding()
         }
-        .onAppear {
-            // 디버깅
-            print("uid : ", uid)
+        .onDisappear {
+           globalNickname = nickname
         }
     }
     
@@ -82,7 +81,7 @@ struct NicknameNavigationPage: View {
         let maxKoreanLength = 15
         let koreanCount = nickname.filter { $0.isKoreanCharacter }.count
         let englishNumberCount = nickname.filter { $0.isEnglishOrNumber }.count
-
+        
         if koreanCount > maxKoreanLength || englishNumberCount > maxLength || nickname.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || nickname.contains(" ") {
             isNicknameProper = false
         } else {
@@ -103,5 +102,5 @@ extension Character {
 
 
 #Preview {
-    NicknameNavigationPage(uid: "lea")
+    NicknameNavigationPage()
 }
