@@ -12,11 +12,10 @@ class UserViewModel: ObservableObject {
     @Published var user: User = User(userId: "", schoolCode: 0, name: "")
     private var cancellables = Set<AnyCancellable>()
     @Published var errorMessage: String?
+    var postUserCancellable: AnyCancellable?
     
     func postUser(newUser: User) {
-        //디버깅
-        print("postUser func called")
-        UserAPI.shared.postMemo(newUser: newUser)
+        postUserCancellable = UserAPI.shared.postUser(newUser: newUser)
             .receive(on: DispatchQueue.main) // 메인 스레드에서 값을 받도록 설정
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -26,12 +25,14 @@ class UserViewModel: ObservableObject {
                     break
                 }
             }, receiveValue: { userdata in
-                //디버깅
-                print("userdata from server : ", userdata)
-                self.user = userdata
-                //디버깅
-                print("new user : ", self.user)
+                self.user = userdata.response
+                // 사용자 등록 성공 시 Notification 전송
+                NotificationCenter.default.post(name: NSNotification.Name("UserRegistered"), object: nil)
             })
-            .store(in: &cancellables)
+    }
+    
+    func cancelPostUser() {
+        postUserCancellable?.cancel()
+        postUserCancellable = nil
     }
 }

@@ -15,7 +15,7 @@ struct SelectNicknameScreen: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 300) {
+            VStack(spacing: 200) {
                 VStack(spacing: 50) {
                     //헤더
                     HStack {
@@ -72,7 +72,7 @@ struct SelectNicknameScreen: View {
             .padding()
         }
         .onDisappear {
-           globalNickname = nickname
+            globalNickname = nickname
         }
     }
     
@@ -100,7 +100,6 @@ extension Character {
     }
 }
 
-
 #Preview {
-    NicknameNavigationPage()
+    SelectNicknameScreen()
 }

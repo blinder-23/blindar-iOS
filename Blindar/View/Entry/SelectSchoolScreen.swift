@@ -11,6 +11,7 @@ import SwiftData
 var globalSchoolCode: Int = 0
 
 struct SelectSchoolScreen: View {
+    @EnvironmentObject var appStateVM: AppStateViewModel
     @EnvironmentObject var userVM: UserViewModel
     @Environment(\.modelContext) private var modelContext
     @StateObject private var schoolVM = SchoolViewModel()
@@ -60,21 +61,26 @@ struct SelectSchoolScreen: View {
                                 .frame(height: 0.3)
                         }
                         .onTapGesture {
+                            query = school.schoolName
                             saveSchoolsToLocal(school: school)
                             globalSchoolCode = school.schoolCode
-                            var newUser: User = User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname)
+                            let newUser: User = User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname)
                             userVM.user = newUser
-                            //디버깅
-                            print("userVM.user : ", newUser)
+                            //postUser 함수 호출
+                            userVM.postUser(newUser: newUser)
+                            appStateVM.appState = .postingUser
                         }
                     }
                 }
             }
             .padding()
         }
-        .onAppear(perform: {
+        .onAppear {
             schoolVM.fetchSchools()
-        })
+            NotificationCenter.default.addObserver(forName: NSNotification.Name("UserRegistered"), object: nil, queue: .main) { _ in
+                appStateVM.appState = .mainCalendarPage
+            }
+        }
     }
     
     private func saveSchoolsToLocal(school: School) {

@@ -24,7 +24,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct BlindarApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var userVM = UserViewModel()
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -46,8 +45,9 @@ struct BlindarApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(userVM)
-
+                .environmentObject(AppStateViewModel())
+                .environmentObject(UserViewModel())
+            
         }
         .modelContainer(sharedModelContainer)
     }

@@ -35,6 +35,7 @@ struct LoginPage: View {
                                 Text("Apple로 시작하기")
                             }
                             .font(.headline)
+                            .foregroundColor(.white)
                         }
                 })
             }
@@ -45,7 +46,6 @@ struct LoginPage: View {
                 })
             )
         }
-        .foregroundColor(.hex121316)
         .onChange(of: appleLoginCoordinator?.isLoggedIn, initial: false, {
             self.isLoggedIn = true
         })
