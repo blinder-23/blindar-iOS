@@ -12,8 +12,10 @@ struct PostingUserProgressView: View {
     @EnvironmentObject var userVM: UserViewModel
     
     var body: some View {
-        VStack(spacing: 200) {
+        VStack(spacing: 50) {
+            Text("회원 등록 중입니다")
             ProgressView()
+                .frame(height: screenHeight * 0.5)
             Button(action: {
                 userVM.cancelPostUser()
                 appStateVM.appState = .selectShcoolScreen
