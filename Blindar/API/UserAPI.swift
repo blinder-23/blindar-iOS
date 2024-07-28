@@ -14,24 +14,8 @@ class UserAPI {
     static let shared = UserAPI()
     
     func postUser(newUser: User) -> AnyPublisher<UserResponse, Error> {
-        // 디버깅: 사용자 객체를 JSON 데이터로 변환
         do {
             let jsonData = try JSONEncoder().encode(newUser)
-            // JSON 데이터 디코딩하여 콘솔에 출력
-            if let json = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] {
-                for (key, value) in json {
-                    if let stringValue = value as? String {
-                        print("\(key): \(stringValue) (String)")
-                    } else {
-                        print("\(key): \(value) (Not a String)")
-                    }
-                }
-            }
-            
-            // JSON 데이터 문자열로 변환하여 출력
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("JSON Data to send: \(jsonString)")
-            }
         } catch {
             print("Failed to encode user or decode JSON: \(error.localizedDescription)")
         }
@@ -47,12 +31,6 @@ class UserAPI {
         do {
             let jsonData = try JSONEncoder().encode(newUser)
             request.httpBody = jsonData
-            
-            // JSON 데이터 문자열로 변환하여 출력
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                print("Request Body: \(jsonString)")
-            }
-            
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         } catch {
             print("Failed to encode user: \(error.localizedDescription)")
