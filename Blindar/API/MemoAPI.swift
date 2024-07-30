@@ -60,7 +60,7 @@ class MemoAPI {
             .eraseToAnyPublisher()
     }
     
-    func postMemo(newMemo: Memo) -> AnyPublisher<Memo, Error> {
+    func postMemo(newMemo: Memo) -> AnyPublisher<MemoResponse, Error> {
         let components = URLComponents(string: "https://\(domain)/memo")
         
         guard let url = components?.url else {

@@ -10,6 +10,13 @@ import SwiftData
 
 struct MemoResponse: Codable {
     let response: [Memo]
+    let message: String
+    let responseCode: Int
+    var memoId: String
+    
+    enum CodingKeys: String, CodingKey {
+        case memoId = "memo_id"
+    }
 }
 
 struct Memo: Codable {
