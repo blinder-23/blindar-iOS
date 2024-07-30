@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct ScheduleContentsView: View {
-    @ObservedObject var memoVM: MemoViewModel
-    
+    @EnvironmentObject var userVM: UserViewModel
+    @EnvironmentObject var memoVM: MemoViewModel
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -28,6 +29,10 @@ struct ScheduleContentsView: View {
                 //Schdule Info
                 Text("일정 목록")
                     .font(.title3)
+                //Memo List
+                ForEach(memoVM.memos, id: \.memoId) { memo in
+                    Text(memo.contents)
+                }
                 //Memo Edit Button
                 NavigationLink {
                     MemoNavigationPage(memoVM: memoVM)
@@ -44,9 +49,17 @@ struct ScheduleContentsView: View {
             .padding()
             .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
         }
+        .onAppear {
+            //디버깅
+            print("userId to fetch memos", userVM.user.userId)
+//            memoVM.fetchMemos(userId: userVM.user.userId)
+            memoVM.fetchMemos(userId: "TFAgDLyG3bhdeSB1it0uiAO2YYp2")
+
+            
+        }
     }
 }
 
 #Preview {
-    ScheduleContentsView(memoVM: MemoViewModel())
+    ScheduleContentsView()
 }

@@ -44,7 +44,7 @@ class MemoViewModel: ObservableObject {
                     break
                 }
             }, receiveValue: { data in
-                self.newMemoId = data.memoId
+                self.newMemoId = data.memoId ?? ""
                 //디버깅
                 print("new memo id : ", self.newMemoId)
             })

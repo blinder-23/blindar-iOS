@@ -269,9 +269,9 @@
 		090541912C4F807A0039D633 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				090541902C4F807A0039D633 /* ScheduleContentsView.swift */,
 				0905418E2C4F807A0039D633 /* MemoModal.swift */,
 				0905418F2C4F807A0039D633 /* MemoNavigationPage.swift */,
-				090541902C4F807A0039D633 /* ScheduleContentsView.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";

@@ -89,7 +89,7 @@ class MemoAPI {
                 }
                 return data
             }
-            .decode(type: Memo.self, decoder: JSONDecoder())
+            .decode(type: MemoResponse.self, decoder: JSONDecoder())
             .handleEvents(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):

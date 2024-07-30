@@ -12,10 +12,13 @@ struct MemoResponse: Codable {
     let response: [Memo]
     let message: String
     let responseCode: Int
-    var memoId: String
+    var memoId: String?
     
     enum CodingKeys: String, CodingKey {
         case memoId = "memo_id"
+        case response
+        case message
+        case responseCode
     }
 }
 
