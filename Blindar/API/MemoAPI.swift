@@ -14,8 +14,6 @@ class MemoAPI {
     static let shared = MemoAPI()
     
     func fetchMemos(userId: String) -> AnyPublisher<MemoResponse, Error> {
-        //디버깅
-        print("params", userId)
         var components = URLComponents(string: "https://\(domain)/memo")
         components?.queryItems = [
             URLQueryItem(name: "user_id", value: "\(userId)"),
@@ -24,7 +22,7 @@ class MemoAPI {
         guard let url = components?.url else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-                
+        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
@@ -66,7 +64,7 @@ class MemoAPI {
         guard let url = components?.url else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-                
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         do {

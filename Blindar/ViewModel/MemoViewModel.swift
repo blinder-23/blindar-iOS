@@ -27,8 +27,6 @@ class MemoViewModel: ObservableObject {
                 }
             }, receiveValue: { data in
                 self.memos = data.response
-                //디버깅
-                print("memos : ", self.memos)
             })
             .store(in: &cancellables)
     }
@@ -45,8 +43,6 @@ class MemoViewModel: ObservableObject {
                 }
             }, receiveValue: { data in
                 self.newMemoId = data.memoId ?? ""
-                //디버깅
-                print("new memo id : ", self.newMemoId)
             })
             .store(in: &cancellables)
     }

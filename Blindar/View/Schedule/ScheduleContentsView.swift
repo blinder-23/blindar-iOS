@@ -10,7 +10,7 @@ import SwiftUI
 struct ScheduleContentsView: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var memoVM: MemoViewModel
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -50,12 +50,7 @@ struct ScheduleContentsView: View {
             .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
         }
         .onAppear {
-            //디버깅
-            print("userId to fetch memos", userVM.user.userId)
-//            memoVM.fetchMemos(userId: userVM.user.userId)
-            memoVM.fetchMemos(userId: "TFAgDLyG3bhdeSB1it0uiAO2YYp2")
-
-            
+            memoVM.fetchMemos(userId: userVM.user.userId)
         }
     }
 }
