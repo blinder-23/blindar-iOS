@@ -26,16 +26,17 @@ struct ContentView: View {
     @EnvironmentObject var appStateVM: AppStateViewModel
     
     var body: some View {
-        switch appStateVM.appState {
-        case .loginPage:
-            LoginPage()
-        case .selectShcoolScreen:
-            SelectSchoolScreen()
-        case .postingUser:
-            PostingUserProgressView()
-        case .mainCalendarPage:
-            MainCalendarPage()
-        }
+        SettingPage()
+//        switch appStateVM.appState {
+//        case .loginPage:
+//            LoginPage()
+//        case .selectShcoolScreen:
+//            SelectSchoolScreen()
+//        case .postingUser:
+//            PostingUserProgressView()
+//        case .mainCalendarPage:
+//            MainCalendarPage()
+//        }
     }
 }
 

@@ -30,12 +30,16 @@ struct SettingPage: View {
                     NavigationLink(destination: {
                         FeedbackNavigationPage()
                     }, label: {
-                        VStack(alignment: .leading) {
-                            Text("피드백 남기기")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                            Text("블린더 앱의 사용 후기를 남겨주세요!")
-                                .font(.callout)
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("피드백 남기기")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                Text("블린더 앱의 사용 후기를 남겨주세요!")
+                                    .font(.callout)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.right")
                         }
                         .foregroundColor(.white)
                     })

@@ -31,8 +31,14 @@ class FeedbackAPI {
         
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { output in
-                guard let response = output.response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
+                guard let response = output.response as? HTTPURLResponse else {
+                     throw URLError(.badServerResponse)
+                 }
+                switch response.statusCode {
+                case 200:
+                    print("피드백 등록 상태코드 200")
+                default:
+                    print("피드백 등록 상태코드: \(response.statusCode)")
                 }
                 // 성공한 경우, 성공 메시지 반환
                 return "Feedback successfully posted"

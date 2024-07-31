@@ -14,7 +14,7 @@ struct DeviceInfo {
     var appVersion: String
 }
 
-func getDeviceInf() -> DeviceInfo {
+func getDeviceInfo() -> DeviceInfo {
     let deviceName = UIDevice.current.name
     let osVersion = UIDevice.current.systemVersion
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
