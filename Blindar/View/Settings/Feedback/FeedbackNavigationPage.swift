@@ -8,18 +8,14 @@
 import SwiftUI
 
 struct FeedbackNavigationPage: View {
-    @State var text: String = ""
     @Environment(\.dismiss) private var dismiss
-    
+    @State var contents: String = ""
+
     var body: some View {
         NavigationStack {
-            
             VStack(spacing: 40) {
-                //헤더
-                Text("피드백 작성")
-                    .font(.title2)
                 //입력창
-                TextEditor(text: $text)
+                TextEditor(text: $contents)
                     .padding()
                     .frame(height: 200)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -59,7 +55,6 @@ struct FeedbackNavigationPage: View {
         .navigationBarTitle(Text("피드백 작성"))
     }
 }
-
 
 #Preview {
     FeedbackNavigationPage()

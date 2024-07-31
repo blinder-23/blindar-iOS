@@ -70,6 +70,8 @@
 		090541F82C4F8CC60039D633 /* AppleAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */; };
 		09A94D8E2C54EFFD003E7EF6 /* PostUserProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */; };
 		09A94D902C58A747003E7EF6 /* MemoEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */; };
+		09A94D922C5A1CA6003E7EF6 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */; };
+		09A94D942C5A1E4F003E7EF6 /* SettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D932C5A1E4F003E7EF6 /* SettingPage.swift */; };
 		09F5770D2C4FA0F300B89ECF /* SelectNicknameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5770C2C4FA0F300B89ECF /* SelectNicknameScreen.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +113,8 @@
 		090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthCoordinator.swift; sourceTree = "<group>"; };
 		09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUserProgressView.swift; sourceTree = "<group>"; };
 		09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoEditModal.swift; sourceTree = "<group>"; };
+		09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
+		09A94D932C5A1E4F003E7EF6 /* SettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPage.swift; sourceTree = "<group>"; };
 		09BE105C2C4F99A0002A6E66 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		09BE105D2C4F99C5002A6E66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		09F5770C2C4FA0F300B89ECF /* SelectNicknameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNicknameScreen.swift; sourceTree = "<group>"; };
@@ -228,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				090541822C4F807A0039D633 /* DateUtils.swift */,
+				09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -282,6 +287,8 @@
 		090541922C4F807A0039D633 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				09A94D932C5A1E4F003E7EF6 /* SettingPage.swift */,
+				0905418A2C4F807A0039D633 /* Feedback */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -293,7 +300,6 @@
 				09A94D8C2C54EFE7003E7EF6 /* Progress */,
 				090541862C4F807A0039D633 /* Calendar */,
 				090541882C4F807A0039D633 /* Entry */,
-				0905418A2C4F807A0039D633 /* Feedback */,
 				0905418D2C4F807A0039D633 /* Meal */,
 				090541912C4F807A0039D633 /* Schedule */,
 				090541922C4F807A0039D633 /* Settings */,
@@ -434,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				090541A02C4F807A0039D633 /* School.swift in Sources */,
+				09A94D942C5A1E4F003E7EF6 /* SettingPage.swift in Sources */,
 				09F5770D2C4FA0F300B89ECF /* SelectNicknameScreen.swift in Sources */,
 				090541B62C4F807A0039D633 /* UserViewModel.swift in Sources */,
 				0905419F2C4F807A0039D633 /* Schedule.swift in Sources */,
@@ -444,6 +451,7 @@
 				090541A62C4F807A0039D633 /* UserAPI.swift in Sources */,
 				090541A82C4F807A0039D633 /* CalendarView.swift in Sources */,
 				09A94D8E2C54EFFD003E7EF6 /* PostUserProgressView.swift in Sources */,
+				09A94D922C5A1CA6003E7EF6 /* DeviceInfo.swift in Sources */,
 				090541F82C4F8CC60039D633 /* AppleAuthCoordinator.swift in Sources */,
 				090541A22C4F807A0039D633 /* FeedbackAPI.swift in Sources */,
 				090541AF2C4F807A0039D633 /* MemoNavigationPage.swift in Sources */,
