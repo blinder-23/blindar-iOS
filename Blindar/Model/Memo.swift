@@ -9,9 +9,9 @@ import Foundation
 import SwiftData
 
 struct MemoResponse: Codable {
-    let response: [Memo]
-    let message: String
-    let responseCode: Int
+    let response: [Memo]?
+    let message: String?
+    let responseCode: Int?
     var memoId: String?
     
     enum CodingKeys: String, CodingKey {
@@ -36,12 +36,12 @@ struct Memo: Codable {
     }
 }
 
-@Model
-class MemoLocalData {
-    @Attribute(.unique) var userId: String //사용자 UID
-    var date: String //yyyyMMdd
-    @Attribute(.unique) var memoId: String //메모 id
-    var contents: String //수정할 일정 내용
+@Model 
+final public class MemoLocalData: Identifiable {
+    var userId: String
+    var date: String
+    var memoId: String
+    var contents: String
     
     init(userId: String, date: String, memoId: String, contents: String) {
         self.userId = userId
