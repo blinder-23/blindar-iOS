@@ -10,6 +10,7 @@ import SwiftData
 import Combine
 
 struct MainCalendarPage: View {
+    @EnvironmentObject var schoolVM: SchoolViewModel
     @EnvironmentObject var mealVM: MealViewModel
     @Environment(\.modelContext) private var modelContext
     @Query var savedSchools: [SchoolLocalData]
@@ -19,8 +20,8 @@ struct MainCalendarPage: View {
     var body: some View {
         NavigationStack {
             VStack {
+                CalendarView(currentDate: $currentDate)
                 ScrollView {
-                    CalendarView(currentDate: $currentDate)
                     MealContentsView(currentDate: $currentDate)
                 }
             }
@@ -31,6 +32,8 @@ struct MainCalendarPage: View {
                 fetchMealsIfNeeded(for: newDate)
             }
         }
+        .padding(.top, 20)
+        //        .navigationTitle(Text(schoolVM.schools.first?.schoolName ?? ""))
     }
     
     func fetchMealsIfNeeded(for date: Date) {
@@ -65,7 +68,8 @@ struct MainCalendarPage: View {
                 })
                 .store(in: &mealVM.cancellables)
         }
-    }}
+    }
+}
 
 #Preview {
     MainCalendarPage()

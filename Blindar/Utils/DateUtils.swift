@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 struct DateUtils {
     static let shared = DateUtils()
 
@@ -48,11 +46,22 @@ struct DateUtils {
         formatter.dateFormat = "M"
         return formatter
     }
+    
+    var monthWithoutZeroFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "M"
+        return formatter
+    }
 
     var compactDateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.dateFormat = "yyyyMMdd"
         return formatter
+    }
+    
+    func getDateString(from date: Date) -> String {
+        return compactDateFormatter.string(from: date)
     }
 }

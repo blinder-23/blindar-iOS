@@ -22,7 +22,7 @@ struct MealContentsView: View {
     @Binding var currentDate: Date
     @Query var savedMeals: [MealLocalData]
     @State var mealsForCurrentDate: MealLocalData?
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -45,6 +45,7 @@ struct MealContentsView: View {
                                 })
                                 .onTapGesture {
                                     mealtype = type
+                                    updateMealsForCurrentDate()
                                 }
                         }
                     }
@@ -53,13 +54,13 @@ struct MealContentsView: View {
                             .frame(height: 1)
                             .foregroundColor(.gray)
                     })
-
                     // 식단 리스트
                     if let meals = mealsForCurrentDate {
                         VStack {
                             ForEach(meals.dishes, id: \.self) { dish in
                                 Text(dish.menu)
                                     .font(.title3)
+                                    .padding(.vertical, 3)
                             }
                         }
                     } else {
@@ -80,10 +81,11 @@ struct MealContentsView: View {
                             mealtype = allCases[currentIndex + 1]
                         }
                     }
+                    updateMealsForCurrentDate()
                 })
                 //영양 정보 확인하기 버튼
                 NavigationLink {
-                    NutrientNavigationPage()
+                    NutrientNavigationPage(currentDate: $currentDate, mealtype: mealtype)
                 } label: {
                     Text("영양 정보 확인하기")
                         .foregroundStyle(Color.white)
@@ -104,7 +106,7 @@ struct MealContentsView: View {
             updateMealsForCurrentDate()
         }
     }
-
+    
     private func updateMealsForCurrentDate() {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd"

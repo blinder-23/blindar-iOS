@@ -9,137 +9,150 @@ import SwiftUI
 import SwiftData
 
 struct CalendarView: View {
+    @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var mealVM: MealViewModel
     @Binding var currentDate: Date
+    @State private var selectedDate: Date? = nil
+    @State private var translation: CGFloat = 0
+    @Query var savedMeals: [MealLocalData]
     
     var body: some View {
-        VStack {
-            CalendarHeader(currentDate: $currentDate)
-            CustomCalendar(currentDate: $currentDate)
-                .gesture(DragGesture().onEnded { value in
-                    if value.translation.width < 0 {
-                        currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
-                    } else if value.translation.width > 0 {
-                        currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
-                    }
-                })
-        }
-        .padding(.horizontal)
-    }
-}
-
-struct CalendarHeader: View {
-    @EnvironmentObject var mealVM: MealViewModel
-    @Binding var currentDate: Date
-    let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
-    
-    var body: some View {
+        let monthDates = generateMonthDates()
+        let year = DateUtils.shared.yearFormatter.string(from: currentDate)
+        let monthWithoutZero = DateUtils.shared.monthWithoutZeroFormatter.string(from: currentDate)
+        
         VStack(spacing: 10) {
             HStack(spacing: 70) {
-                //년, 월
+                // 상단 년, 월
                 VStack {
-                    Text("\(currentDate, formatter: DateUtils.shared.yearFormatter)")
-                    Text("\(currentDate, formatter: DateUtils.shared.monthFormatter)")
+                    Text(year)
+                    Text(monthWithoutZero)
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.hex9DCAFF)
                 }
                 .onTapGesture {
-                    currentDate = Date()
+                    self.currentDate = Date()
                 }
-                //월 이동 버튼
+                // 월 이동 버튼
                 HStack(spacing: 40) {
                     Button(action: {
-                        currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
+                        self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
                     }) {
                         Image(systemName: "chevron.left")
                     }
                     Button(action: {
-                        currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
+                        self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
                     }) {
                         Image(systemName: "chevron.right")
                     }
                 }
-                .font(.system(size: 25, weight: .bold)) // 고정 폰트 크기
+                .font(.headline)
                 .foregroundStyle(Color.hex9DCAFF)
             }
             .offset(x: 70)
-            //요일 표시
+            
+            // 요일 헤더
             HStack {
-                ForEach(daysOfWeek, id: \.self) { day in
+                ForEach(["일", "월", "화", "수", "목", "금", "토"], id: \.self) { day in
                     Text(day)
-                        .font(.title3) // 고정 폰트 크기
                         .frame(maxWidth: .infinity)
-                        .foregroundColor(day == "일" ? .red : (day == "토" ? .blue : .white))
+                        .foregroundColor(day == "일" ? .red : (day == "토" ? .blue : .primary))
                 }
             }
-        }
-    }
-}
-
-struct CustomCalendar: View {
-    @Environment(\.modelContext) private var modelContext
-    @EnvironmentObject var mealVM: MealViewModel
-    @Binding var currentDate: Date
-    @Query var savedMeals: [MealLocalData]
-    
-    private var currentMonth: Int {
-        Calendar.current.component(.month, from: currentDate)
-    }
-    
-    private var currentYear: Int {
-        Calendar.current.component(.year, from: currentDate)
-    }
-    
-    private var daysInMonth: [[Date]] {
-        var days = [Date]()
-        let calendar = Calendar.current
-        _ = calendar.range(of: .day, in: .month, for: currentDate)!
-        
-        // First day of the month
-        var startDate = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate))!
-        
-        // Adjust to the previous Sunday
-        while calendar.component(.weekday, from: startDate) != 1 {
-            startDate = calendar.date(byAdding: .day, value: -1, to: startDate)!
-        }
-        
-        for _ in 0..<42 { // 6 weeks * 7 days = 42 cells
-            days.append(startDate)
-            startDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
-        }
-        
-        // Split into 6 weeks
-        var weeks = [[Date]]()
-        for i in stride(from: 0, to: days.count, by: 7) {
-            let week = Array(days[i..<i+7])
-            weeks.append(week)
-        }
-        
-        return weeks
-    }
-    
-    var body: some View {
-        VStack(spacing: 5) {
-            ForEach(daysInMonth, id: \.self) { week in
-                HStack {
-                    ForEach(week, id: \.self) { date in
-                        Text("\(Calendar.current.component(.day, from: date))")
-                            .font(.title3)
-                            .frame(maxWidth: .infinity)
-                            .padding(4)
-                            .foregroundColor(color(for: date))
-                            .overlay(todayOverlay(for: date))
-                            .onTapGesture {
-                                currentDate = date
-                                fetchMealsIfNeeded(for: date)
-                            }
+            
+            // 달력 날짜들
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
+                ForEach(monthDates, id: \.self) { date in
+                    Text("\(Calendar.current.component(.day, from: date))")
+                        .font(.title3)
+                        .padding(4)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(selectedDate == date ? Color.gray.opacity(0.2) : Color.clear)
+                        .clipShape(Circle())
+                        .foregroundColor(isSameMonth(date: date) ? (isSaturday(date: date) ? .blue : (isSunday(date: date) ? .red : .primary)) : .gray)
+                        .overlay(
+                            Circle().stroke(isToday(date: date) ? Color.white : Color.clear)
+                        )
+                        .onTapGesture {
+                            self.selectedDate = date
+                            self.currentDate = date
+                            print(DateUtils.shared.getDateString(from: date))
+                            fetchMealsIfNeeded(for: date)
+                        }
+                }
+            }
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        self.translation = value.translation.width
                     }
-                }
-            }
+                    .onEnded { value in
+                        if self.translation < -50 {
+                            self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
+                        } else if self.translation > 50 {
+                            self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
+                        }
+                        self.translation = 0
+                    }
+            )
         }
+        .padding()
     }
     
+    // 오늘 날짜 여부 확인 함수
+    func isToday(date: Date) -> Bool {
+        return Calendar.current.isDate(date, inSameDayAs: Date())
+    }
+    
+    // 같은 달인지 확인하는 함수
+    func isSameMonth(date: Date) -> Bool {
+        return Calendar.current.isDate(date, equalTo: currentDate, toGranularity: .month)
+    }
+    
+    // 일요일 여부 확인 함수
+    func isSunday(date: Date) -> Bool {
+        return Calendar.current.component(.weekday, from: date) == 1
+    }
+    
+    // 토요일 여부 확인 함수
+    func isSaturday(date: Date) -> Bool {
+        return Calendar.current.component(.weekday, from: date) == 7
+    }
+    
+    // 현재 월의 날짜들을 생성하는 함수
+    func generateMonthDates() -> [Date] {
+        let calendar = Calendar.current
+        let range = calendar.range(of: .day, in: .month, for: currentDate)!
+        
+        var dates: [Date] = []
+        
+        let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate))!
+        let firstWeekday = calendar.component(.weekday, from: firstDayOfMonth) - 1
+        let daysInPreviousMonth = firstWeekday
+        
+        for i in stride(from: -daysInPreviousMonth, to: 0, by: 1) {
+            if let date = calendar.date(byAdding: .day, value: i, to: firstDayOfMonth) {
+                dates.append(date)
+            }
+        }
+        
+        for day in range {
+            if let date = calendar.date(byAdding: .day, value: day - 1, to: firstDayOfMonth) {
+                dates.append(date)
+            }
+        }
+        
+        while dates.count % 7 != 0 {
+            if let date = calendar.date(byAdding: .day, value: dates.count - daysInPreviousMonth, to: firstDayOfMonth) {
+                dates.append(date)
+            }
+        }
+        
+        return dates
+    }
+    
+    // 사버로부터 식단 데이터를 받아 로컬에 저장하는 함수
     func fetchMealsIfNeeded(for date: Date) {
         let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
         let year = extractedDate.year
@@ -171,31 +184,6 @@ struct CustomCalendar: View {
                     try? modelContext.save()
                 })
                 .store(in: &mealVM.cancellables)
-        }
-    }
-        
-    private func color(for date: Date) -> Color {
-        let weekday = Calendar.current.component(.weekday, from: date)
-        if Calendar.current.isDate(date, equalTo: currentDate, toGranularity: .month) {
-            if weekday == 1 {
-                return .red
-            } else if weekday == 7 {
-                return .blue
-            } else {
-                return .white
-            }
-        } else {
-            return .gray
-        }
-    }
-    
-    private func todayOverlay(for date: Date) -> some View {
-        if Calendar.current.isDate(date, inSameDayAs: Date()) {
-            return Circle()
-                .stroke(Color.hex9DCAFF, lineWidth: 2)
-        } else {
-            return Circle()
-                .stroke(Color.clear, lineWidth: 2)
         }
     }
 }
