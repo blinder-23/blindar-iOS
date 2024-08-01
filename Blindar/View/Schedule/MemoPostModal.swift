@@ -24,7 +24,7 @@ struct MemoPostModal: View {
         VStack(spacing: 40) {
             Text("메모 추가")
                 .font(.title2)
-            Text(configureDateFormatter.string(from: currentDate))
+            Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
                 .font(.title)
             TextEditor(text: $contents)
                 .padding()
@@ -48,7 +48,7 @@ struct MemoPostModal: View {
                         }
                 })
                 Button(action: {
-                    newMemo.date = compactDateFormatter.string(from: currentDate)
+                    newMemo.date = DateUtils.shared.compactDateFormatter.string(from: currentDate)
                     newMemo.contents = contents
                     postMemoToServer(newMemo: newMemo)
                         .sink(receiveValue: { newMemoId in

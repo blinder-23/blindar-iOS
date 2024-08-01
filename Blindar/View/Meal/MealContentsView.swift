@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 enum MealType: String, CaseIterable {
     case breakfast = "조식"
@@ -14,16 +15,20 @@ enum MealType: String, CaseIterable {
 }
 
 struct MealContentsView: View {
-    @ObservedObject var mealVM: MealViewModel
+    @EnvironmentObject var mealVM: MealViewModel
+    @Environment(\.modelContext) private var modelContext
     @State private var mealtype: MealType = .lunch
     var mealTypeHeader = ["조식", "중식", "석식"]
-    
+    @Binding var currentDate: Date
+    @Query var savedMeals: [MealLocalData]
+    @State var mealsForCurrentDate: MealLocalData?
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
                 //Swipe zone
                 VStack(spacing: 20) {
-                    //Header
+                    //헤더
                     HStack {
                         ForEach(MealType.allCases, id: \.self) { type in
                             Text(type.rawValue)
@@ -38,6 +43,9 @@ struct MealContentsView: View {
                                             .frame(height: 3)
                                     }
                                 })
+                                .onTapGesture {
+                                    mealtype = type
+                                }
                         }
                     }
                     .overlay(alignment: .bottom, content: {
@@ -45,25 +53,19 @@ struct MealContentsView: View {
                             .frame(height: 1)
                             .foregroundColor(.gray)
                     })
-                    //Meal Info
-                    ForEach(mealVM.selectedMeals, id: \.self) { meal in
-                        Section(header: Text("Menu for \(meal.ymd)")) {
-                            ForEach(meal.dishes, id: \.self) { dish in
+
+                    // 식단 리스트
+                    if let meals = mealsForCurrentDate {
+                        VStack {
+                            ForEach(meals.dishes, id: \.self) { dish in
                                 Text(dish.menu)
+                                    .font(.title3)
                             }
                         }
+                    } else {
+                        Text("식단 정보가 없습니다")
+                            .font(.title3)
                     }
-                    VStack {
-                        switch mealtype {
-                        case .breakfast:
-                            Text("조식")
-                        case .lunch:
-                            Text("중식")
-                        case .dinner:
-                            Text("석식")
-                        }
-                    }
-                    .font(.title3)
                 }
                 .gesture(DragGesture().onEnded { value in
                     let allCases = MealType.allCases
@@ -79,7 +81,7 @@ struct MealContentsView: View {
                         }
                     }
                 })
-                //Nutrition Info Button
+                //영양 정보 확인하기 버튼
                 NavigationLink {
                     NutrientNavigationPage()
                 } label: {
@@ -91,13 +93,22 @@ struct MealContentsView: View {
                         .background(in: RoundedRectangle(cornerRadius: 16))
                 }
             }
-            .frame(width: screenWidth * 0.85)
+            .frame(width: UIScreen.main.bounds.width * 0.85)
             .padding()
             .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
         }
+        .onAppear {
+            updateMealsForCurrentDate()
+        }
+        .onChange(of: currentDate) { _ in
+            updateMealsForCurrentDate()
+        }
     }
-}
 
-#Preview {
-    MealContentsView(mealVM: MealViewModel())
+    private func updateMealsForCurrentDate() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        let currentDateString = formatter.string(from: currentDate)
+        mealsForCurrentDate = savedMeals.first { $0.ymd == currentDateString }
+    }
 }

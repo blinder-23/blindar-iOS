@@ -26,7 +26,9 @@ struct ContentView: View {
     @EnvironmentObject var appStateVM: AppStateViewModel
     
     var body: some View {
-        SettingPage()
+        MainCalendarPage()
+//        SettingPage()
+        
 //        switch appStateVM.appState {
 //        case .loginPage:
 //            LoginPage()

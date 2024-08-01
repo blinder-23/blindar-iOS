@@ -15,11 +15,30 @@ struct SettingPage: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 70) {
                 HStack {
                     //프로필
+                    Image("SplashAppIcon")
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(Circle())
+                        .frame(width: screenWidth * 0.2)
 //                    Text(userVM.user.name)
+                    Text("닉네임")
+                        .font(.title)
+                    Spacer()
                     //로그아웃
+                    Button(action: {
+                        
+                    }, label: {
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(.hex00497B)
+                            .frame(width: screenHeight * 0.11, height: screenWidth * 0.1)
+                            .overlay {
+                                Text("로그아웃")
+                                    .foregroundStyle(Color.white)
+                            }
+                    })
                 }
                 VStack(alignment: .leading, spacing: 60) {
                     //하루씩 보기 모드

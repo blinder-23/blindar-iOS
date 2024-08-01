@@ -6,15 +6,16 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CalendarView: View {
-    @ObservedObject var mealVM: MealViewModel
+    @EnvironmentObject var mealVM: MealViewModel
     @Binding var currentDate: Date
     
     var body: some View {
         VStack {
             CalendarHeader(currentDate: $currentDate)
-            CustomCalendar(mealVM: mealVM, currentDate: $currentDate)
+            CustomCalendar(currentDate: $currentDate)
                 .gesture(DragGesture().onEnded { value in
                     if value.translation.width < 0 {
                         currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
@@ -28,6 +29,7 @@ struct CalendarView: View {
 }
 
 struct CalendarHeader: View {
+    @EnvironmentObject var mealVM: MealViewModel
     @Binding var currentDate: Date
     let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
     
@@ -36,8 +38,8 @@ struct CalendarHeader: View {
             HStack(spacing: 70) {
                 //년, 월
                 VStack {
-                    Text("\(currentDate, formatter: yearFormatter)")
-                    Text("\(currentDate, formatter: monthFormatter)")
+                    Text("\(currentDate, formatter: DateUtils.shared.yearFormatter)")
+                    Text("\(currentDate, formatter: DateUtils.shared.monthFormatter)")
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.hex9DCAFF)
@@ -76,8 +78,10 @@ struct CalendarHeader: View {
 }
 
 struct CustomCalendar: View {
-    @ObservedObject var mealVM: MealViewModel
+    @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject var mealVM: MealViewModel
     @Binding var currentDate: Date
+    @Query var savedMeals: [MealLocalData]
     
     private var currentMonth: Int {
         Calendar.current.component(.month, from: currentDate)
@@ -126,12 +130,50 @@ struct CustomCalendar: View {
                             .padding(4)
                             .foregroundColor(color(for: date))
                             .overlay(todayOverlay(for: date))
+                            .onTapGesture {
+                                currentDate = date
+                                fetchMealsIfNeeded(for: date)
+                            }
                     }
                 }
             }
         }
     }
     
+    func fetchMealsIfNeeded(for date: Date) {
+        let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
+        let year = extractedDate.year
+        let month = extractedDate.monthWithZero
+        
+        let monthExists = savedMeals.contains { meal in
+            let mealDateComponents = DateUtils.shared.extractYearAndMonth(from: meal.ymd)
+            return mealDateComponents.year == year && mealDateComponents.monthWithZero == month
+        }
+        
+        if !monthExists {
+            mealVM.fetchMeals(schoolCode: 7380110, year: year, month: month)
+                .sink(receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        print("Fetch failed: \(error)")
+                    }
+                }, receiveValue: { meals in
+                    for meal in meals {
+                        let mealLocalData = MealLocalData(
+                            ymd: meal.ymd,
+                            dishes: meal.dishes,
+                            origins: meal.origins,
+                            nutrients: meal.nutrients,
+                            calorie: meal.calorie,
+                            mealTime: meal.mealTime
+                        )
+                        modelContext.insert(mealLocalData)
+                    }
+                    try? modelContext.save()
+                })
+                .store(in: &mealVM.cancellables)
+        }
+    }
+        
     private func color(for date: Date) -> Color {
         let weekday = Calendar.current.component(.weekday, from: date)
         if Calendar.current.isDate(date, equalTo: currentDate, toGranularity: .month) {
@@ -156,20 +198,4 @@ struct CustomCalendar: View {
                 .stroke(Color.clear, lineWidth: 2)
         }
     }
-    
-//    private func dateFormatted(_ date: Date) -> String {
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy-MM-dd"
-//        return formatter.string(from: date)
-//    }
-    
-    private func dateFormatted(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMdd" // 날짜 형식을 서버에서 받는 형식에 맞춤
-        return formatter.string(from: date)
-    }
 }
-
-//#Preview {
-//    CalendarView(currentDate: <#T##Binding<Date>#>)
-//}

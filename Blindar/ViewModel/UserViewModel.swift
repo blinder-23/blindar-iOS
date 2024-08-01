@@ -7,12 +7,18 @@
 
 import Foundation
 import Combine
+import FirebaseFirestore
 
 class UserViewModel: ObservableObject {
     @Published var user: User = User(userId: "", schoolCode: 0, name: "")
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
     @Published var errorMessage: String?
     var postUserCancellable: AnyCancellable?
+    let firebaseDB = Firestore.firestore()
+    //닉네임 중복 검사 결과 추가
+    @Published var isNicknameDuplicated: Bool = false
+    //닉네임 중복 검사 결과 메시지 추가
+    @Published var nicknameCheckMessage: String?
     
     func postUser(newUser: User) {
         postUserCancellable = UserAPI.shared.postUser(newUser: newUser)
@@ -34,5 +40,19 @@ class UserViewModel: ObservableObject {
     func cancelPostUser() {
         postUserCancellable?.cancel()
         postUserCancellable = nil
+    }
+    
+    func checkNicknameDuplication(nickname: String) {
+        firebaseDB.collection("users").whereField("name", isEqualTo: nickname).getDocuments { querySnapshot, error in
+            if let error = error {
+                self.nicknameCheckMessage = "Error checking nickname: \(error.localizedDescription)"
+            } else if let documents = querySnapshot?.documents, !documents.isEmpty {
+                self.nicknameCheckMessage = "중복된 이름입니다"
+                self.isNicknameDuplicated = true
+            } else {
+                self.nicknameCheckMessage = nil
+                self.isNicknameDuplicated = false
+            }
+        }
     }
 }
