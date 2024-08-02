@@ -11,8 +11,9 @@ import SwiftData
 struct CalendarView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var mealVM: MealViewModel
+    @EnvironmentObject var schoolVM: SchoolViewModel
     @Binding var currentDate: Date
-    @State private var selectedDate: Date? = nil
+    @Binding var selectedDate: Date
     @State private var translation: CGFloat = 0
     @Query var savedMeals: [MealLocalData]
     
@@ -97,6 +98,10 @@ struct CalendarView: View {
                     }
             )
         }
+        .onAppear {
+            //디버깅
+            print("selected date on calendar : ", selectedDate)
+        }
         .padding()
     }
     
@@ -152,7 +157,7 @@ struct CalendarView: View {
         return dates
     }
     
-    // 사버로부터 식단 데이터를 받아 로컬에 저장하는 함수
+    // 서버로부터 식단 데이터를 받아 로컬에 저장하는 함수
     func fetchMealsIfNeeded(for date: Date) {
         let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
         let year = extractedDate.year
@@ -164,26 +169,30 @@ struct CalendarView: View {
         }
         
         if !monthExists {
-            mealVM.fetchMeals(schoolCode: 7380110, year: year, month: month)
-                .sink(receiveCompletion: { completion in
-                    if case let .failure(error) = completion {
-                        print("Fetch failed: \(error)")
-                    }
-                }, receiveValue: { meals in
-                    for meal in meals {
-                        let mealLocalData = MealLocalData(
-                            ymd: meal.ymd,
-                            dishes: meal.dishes,
-                            origins: meal.origins,
-                            nutrients: meal.nutrients,
-                            calorie: meal.calorie,
-                            mealTime: meal.mealTime
-                        )
-                        modelContext.insert(mealLocalData)
-                    }
-                    try? modelContext.save()
-                })
-                .store(in: &mealVM.cancellables)
+            if let schoolCode = schoolVM.schools.first?.schoolCode {
+                mealVM.fetchMeals(schoolCode: schoolCode, year: year, month: month)
+                    .sink(receiveCompletion: { completion in
+                        if case let .failure(error) = completion {
+                            print("Fetch failed: \(error)")
+                        }
+                    }, receiveValue: { meals in
+                        for meal in meals {
+                            let mealLocalData = MealLocalData(
+                                ymd: meal.ymd,
+                                dishes: meal.dishes,
+                                origins: meal.origins,
+                                nutrients: meal.nutrients,
+                                calorie: meal.calorie,
+                                mealTime: meal.mealTime
+                            )
+                            modelContext.insert(mealLocalData)
+                        }
+                        try? modelContext.save()
+                    })
+                    .store(in: &mealVM.cancellables)
+            } else {
+                print("cannot find school code")
+            }
         }
     }
 }

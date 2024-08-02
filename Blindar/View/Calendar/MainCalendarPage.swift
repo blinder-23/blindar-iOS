@@ -15,14 +15,15 @@ struct MainCalendarPage: View {
     @Environment(\.modelContext) private var modelContext
     @Query var savedSchools: [SchoolLocalData]
     @State var currentDate: Date = Date()
+    @State var selectedDate: Date = Date()
     @Query var savedMeals: [MealLocalData]
     
     var body: some View {
         NavigationStack {
             VStack {
-                CalendarView(currentDate: $currentDate)
+                CalendarView(currentDate: $currentDate, selectedDate: $selectedDate)
                 ScrollView {
-                    MealContentsView(currentDate: $currentDate)
+                    MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate)
                 }
             }
             .onAppear {
@@ -47,26 +48,30 @@ struct MainCalendarPage: View {
         }
         
         if !monthExists {
-            mealVM.fetchMeals(schoolCode: 7380110, year: year, month: month)
-                .sink(receiveCompletion: { completion in
-                    if case let .failure(error) = completion {
-                        print("Fetch failed: \(error)")
-                    }
-                }, receiveValue: { meals in
-                    for meal in meals {
-                        let mealLocalData = MealLocalData(
-                            ymd: meal.ymd,
-                            dishes: meal.dishes,
-                            origins: meal.origins,
-                            nutrients: meal.nutrients,
-                            calorie: meal.calorie,
-                            mealTime: meal.mealTime
-                        )
-                        modelContext.insert(mealLocalData)
-                    }
-                    try? modelContext.save()
-                })
-                .store(in: &mealVM.cancellables)
+            if let schoolCode = schoolVM.schools.first?.schoolCode {
+                mealVM.fetchMeals(schoolCode: schoolCode, year: year, month: month)
+                    .sink(receiveCompletion: { completion in
+                        if case let .failure(error) = completion {
+                            print("Fetch failed: \(error)")
+                        }
+                    }, receiveValue: { meals in
+                        for meal in meals {
+                            let mealLocalData = MealLocalData(
+                                ymd: meal.ymd,
+                                dishes: meal.dishes,
+                                origins: meal.origins,
+                                nutrients: meal.nutrients,
+                                calorie: meal.calorie,
+                                mealTime: meal.mealTime
+                            )
+                            modelContext.insert(mealLocalData)
+                        }
+                        try? modelContext.save()
+                    })
+                    .store(in: &mealVM.cancellables)
+            } else {
+                print("cannot find school code")
+            }
         }
     }
 }

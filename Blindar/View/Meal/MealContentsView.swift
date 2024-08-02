@@ -20,6 +20,7 @@ struct MealContentsView: View {
     @State private var mealtype: MealType = .lunch
     var mealTypeHeader = ["조식", "중식", "석식"]
     @Binding var currentDate: Date
+    @Binding var selectedDate: Date
     @Query var savedMeals: [MealLocalData]
     @State var mealsForCurrentDate: MealLocalData?
     
@@ -101,8 +102,12 @@ struct MealContentsView: View {
         }
         .onAppear {
             updateMealsForCurrentDate()
-        }
+            //디버깅
+            print("selected date on meal : ", selectedDate)        }
         .onChange(of: currentDate) { _ in
+            updateMealsForCurrentDate()
+        }
+        .onChange(of: selectedDate) { _ in
             updateMealsForCurrentDate()
         }
     }
@@ -110,7 +115,7 @@ struct MealContentsView: View {
     private func updateMealsForCurrentDate() {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd"
-        let currentDateString = formatter.string(from: currentDate)
-        mealsForCurrentDate = savedMeals.first { $0.ymd == currentDateString }
+        let selectedDateString = formatter.string(from: selectedDate)
+        mealsForCurrentDate = savedMeals.first { $0.ymd == selectedDateString }
     }
 }
