@@ -56,7 +56,8 @@ struct FeedbackNavigationPage: View {
                             .foregroundColor(.hex00497B)
                             .frame(height: 50)
                             .overlay {
-                                Text("전송")                                    .foregroundStyle(Color.white)
+                                Text("전송")                                    
+                                    .foregroundStyle(Color.white)
                                     .font(.title3)
                             }
                     })
