@@ -39,7 +39,7 @@ struct SettingPage: View {
                             }
                     })
                 }
-                .padding(.top, 30)
+                .padding(.top, 20)
                 VStack(alignment: .leading, spacing: 50) {
                     //하루씩 보기 모드
                     CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .onedayMode)
