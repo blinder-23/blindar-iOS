@@ -27,7 +27,7 @@ struct MainCalendarPage: View {
             .onAppear {
                 let extractedDate = DateUtils.shared.extractYearAndMonth(from: currentDate)
                 //                mealVM.fetchMeals(schoolCode: savedSchools[0].schoolCode, year: extractedDate.year, month: extractedDate.monthWithZero)
-                mealVM.fetchMeals(schoolCode: savedSchools[0].schoolCode, year: 2023, month: extractedDate.monthWithZero)
+//                mealVM.fetchMeals(schoolCode: savedSchools[0].schoolCode, year: 2023, month: extractedDate.monthWithZero)
             }
             .onChange(of: currentDate) { newDate in
                 fetchMealsIfNeeded(for: newDate)
