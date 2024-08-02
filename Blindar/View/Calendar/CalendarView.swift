@@ -66,13 +66,13 @@ struct CalendarView: View {
                 ForEach(monthDates, id: \.self) { date in
                     Text("\(Calendar.current.component(.day, from: date))")
                         .font(.title3)
-                        .padding(4)
+                        .padding(5)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(selectedDate == date ? Color.gray.opacity(0.2) : Color.clear)
+                        .background(selectedDate == date ? Color.white.opacity(0.4) : Color.clear)
                         .clipShape(Circle())
                         .foregroundColor(isSameMonth(date: date) ? (isSaturday(date: date) ? .blue : (isSunday(date: date) ? .red : .primary)) : .gray)
                         .overlay(
-                            Circle().stroke(isToday(date: date) ? Color.white : Color.clear)
+                            Circle().stroke(isToday(date: date) ? Color.hex9DCAFF : Color.clear)
                         )
                         .onTapGesture {
                             self.selectedDate = date

@@ -33,7 +33,7 @@ struct MainCalendarPage: View {
             }
         }
         .padding(.top, 20)
-        //        .navigationTitle(Text(schoolVM.schools.first?.schoolName ?? ""))
+        .navigationTitle(Text(schoolVM.schools.first?.schoolName ?? ""))
     }
     
     func fetchMealsIfNeeded(for date: Date) {
