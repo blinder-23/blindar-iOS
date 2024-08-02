@@ -27,8 +27,6 @@ struct MainCalendarPage: View {
                 //                mealVM.fetchMeals(schoolCode: savedSchools[0].schoolCode, year: extractedDate.year, month: extractedDate.monthWithZero)
                 mealVM.fetchMeals(schoolCode: savedSchools[0].schoolCode, year: 2023, month: extractedDate.monthWithZero)
             }
-<<<<<<< HEAD
-=======
             .onChange(of: currentDate) { newDate in
                 fetchMealsIfNeeded(for: newDate)
             }
@@ -79,7 +77,6 @@ struct MainCalendarPage: View {
                     try? modelContext.save()
                 })
                 .store(in: &mealVM.cancellables)
->>>>>>> 4348268 (feat: add navigation tool bar item of navigation link to SettingPage)
         }
     }
 }
