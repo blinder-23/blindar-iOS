@@ -15,8 +15,8 @@ struct SettingPage: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 70) {
-                HStack {
+            VStack(spacing: 60) {
+                HStack(spacing: 8) {
                     //프로필
                     Image("SplashAppIcon")
                         .resizable()
@@ -39,7 +39,8 @@ struct SettingPage: View {
                             }
                     })
                 }
-                VStack(alignment: .leading, spacing: 60) {
+                .padding(.top, 30)
+                VStack(alignment: .leading, spacing: 50) {
                     //하루씩 보기 모드
                     CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .onedayMode)
                     //데일리 알림
@@ -62,6 +63,7 @@ struct SettingPage: View {
                         .foregroundColor(.white)
                     })
                 }
+                Spacer()
             }
             .padding()
         }
