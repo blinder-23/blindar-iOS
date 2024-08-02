@@ -11,6 +11,7 @@ import Combine
 
 struct MainCalendarPage: View {
     @StateObject var mealVM: MealViewModel = MealViewModel()
+    @EnvironmentObject var schoolVM: SchoolViewModel
     @Environment(\.modelContext) private var modelContext
     @Query var savedSchools: [SchoolLocalData]
     @State var currentDate: Date = Date()
@@ -59,7 +60,7 @@ struct MainCalendarPage: View {
         }
         
         if !monthExists {
-            mealVM.fetchMeals(schoolCode: 7380110, year: year, month: month)
+            mealVM.fetchMeals(schoolCode: schoolVM.schools.first?.schoolCode ?? 0, year: year, month: month)
                 .sink(receiveCompletion: { completion in
                     if case let .failure(error) = completion {
                         print("Fetch failed: \(error)")
