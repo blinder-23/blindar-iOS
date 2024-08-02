@@ -24,7 +24,7 @@ struct MemoEditModal: View {
         VStack(spacing: 40) {
             Text("메모 편집")
                 .font(.title2)
-            Text(configureDateFormatter.string(from: currentDate))
+            Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
                 .font(.title)
             TextEditor(text: $contents)
                 .padding()
@@ -46,7 +46,7 @@ struct MemoEditModal: View {
                         }
                 })
                 Button(action: {
-                    yyyyMMdddate = compactDateFormatter.string(from: currentDate)
+                    yyyyMMdddate = DateUtils.shared.compactDateFormatter.string(from: currentDate)
                     editMemoOfServer()
                         .sink(receiveValue: {
                             editMemoOfLocal()

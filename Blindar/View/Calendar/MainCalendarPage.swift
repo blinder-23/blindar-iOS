@@ -7,12 +7,14 @@
 
 import SwiftUI
 import SwiftData
+import Combine
 
 struct MainCalendarPage: View {
     @StateObject var mealVM: MealViewModel = MealViewModel()
     @Environment(\.modelContext) private var modelContext
     @Query var savedSchools: [SchoolLocalData]
     @State var currentDate: Date = Date()
+    @Query var savedMeals: [MealLocalData]
     
     var body: some View {
         NavigationStack {
@@ -23,7 +25,7 @@ struct MainCalendarPage: View {
                 }
             }
             .onAppear {
-                let extractedDate = extractYearAndMonth(from: currentDate)
+                let extractedDate = DateUtils.shared.extractYearAndMonth(from: currentDate)
                 //                mealVM.fetchMeals(schoolCode: savedSchools[0].schoolCode, year: extractedDate.year, month: extractedDate.monthWithZero)
                 mealVM.fetchMeals(schoolCode: savedSchools[0].schoolCode, year: 2023, month: extractedDate.monthWithZero)
             }

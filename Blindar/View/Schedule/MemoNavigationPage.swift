@@ -21,7 +21,7 @@ struct MemoNavigationPage: View {
         NavigationStack {
             VStack {
                 HStack {
-                    Text(configureDateFormatter.string(from: currentDate))
+                    Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
                         .font(.title)
                     Spacer()
                 }

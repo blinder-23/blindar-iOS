@@ -36,8 +36,8 @@ struct CalendarHeader: View {
             HStack(spacing: 70) {
                 //년, 월
                 VStack {
-                    Text("\(currentDate, formatter: yearFormatter)")
-                    Text("\(currentDate, formatter: monthFormatter)")
+                    Text("\(currentDate, formatter: DateUtils.shared.yearFormatter)")
+                    Text("\(currentDate, formatter: DateUtils.shared.monthFormatter)")
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.hex9DCAFF)

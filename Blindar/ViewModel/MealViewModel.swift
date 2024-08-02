@@ -12,7 +12,7 @@ class MealViewModel: ObservableObject {
     @Published var meals: [Meal] = []
     @Published var selectedMeals: [Meal] = [] // 선택된 날짜에 해당하는 식단 정보
     @Published var errorMessage: String?
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
     
     func fetchMeals(schoolCode: Int, year: Int, month: String) {
         MealAPI.shared.fetchMeals(schoolCode: schoolCode, year: year, month: month)
