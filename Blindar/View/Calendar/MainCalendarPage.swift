@@ -32,6 +32,16 @@ struct MainCalendarPage: View {
             .onChange(of: currentDate) { newDate in
                 fetchMealsIfNeeded(for: newDate)
             }
+            .toolbar(content: {
+                ToolbarItem(placement: .topBarTrailing, content: {
+                    NavigationLink(destination: {
+                        SettingPage()
+                    }, label: {
+                        Image(systemName: "gearshape")
+                            .foregroundColor(.white)
+                    })
+                })
+            })
         }
         .padding(.top, 20)
         .navigationTitle(Text(schoolVM.schools.first?.schoolName ?? ""))
