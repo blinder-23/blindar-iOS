@@ -15,17 +15,15 @@ struct SettingPage: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 70) {
-                HStack {
+            VStack(spacing: 30) {
+                HStack(spacing: 8) {
                     //프로필
-                    Image("SplashAppIcon")
+                    Image("AppIconImage")
                         .resizable()
                         .scaledToFit()
+                        .frame(width: screenWidth * 0.17)
                         .clipShape(Circle())
-                        .frame(width: screenWidth * 0.2)
-//                    Text(userVM.user.name)
-                    Text("닉네임")
-                        .font(.title)
+                    Text(userVM.user.name)
                     Spacer()
                     //로그아웃
                     Button(action: {
@@ -40,7 +38,7 @@ struct SettingPage: View {
                             }
                     })
                 }
-                VStack(alignment: .leading, spacing: 60) {
+                VStack(alignment: .leading, spacing: 30) {
                     //하루씩 보기 모드
                     CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .onedayMode)
                     //데일리 알림
@@ -64,7 +62,9 @@ struct SettingPage: View {
                     })
                 }
             }
-            .padding()
+            .padding(.vertical, 0)
+            .padding(.horizontal, 12)
+            .offset(y: -screenHeight * 0.15)
         }
         .navigationBarTitle(Text("설정"))
     }
@@ -103,8 +103,8 @@ struct CustomBlock: View {
                             .font(.title2)
                             .fontWeight(.bold)
                         Text("""
-                매일 오전 8시에 식단, 학사일정, 메모를 알림으로
-                받아볼 수 있습니다.
+                매일 오전 8시에 식단, 학사일정, 메모를
+                알림으로 받아볼 수 있습니다.
                 """)
                         .font(.callout)
                     }
@@ -112,7 +112,7 @@ struct CustomBlock: View {
             case .none:
                 EmptyView()
             }
-
+            
         }
     }
 }
