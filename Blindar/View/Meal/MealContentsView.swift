@@ -46,24 +46,6 @@ struct MealContentsView: View {
                             .foregroundColor(.gray)
                     })
                     //Meal Info
-                    ForEach(mealVM.selectedMeals, id: \.self) { meal in
-                        Section(header: Text("Menu for \(meal.ymd)")) {
-                            ForEach(meal.dishes, id: \.self) { dish in
-                                Text(dish.menu)
-                            }
-                        }
-                    }
-                    VStack {
-                        switch mealtype {
-                        case .breakfast:
-                            Text("조식")
-                        case .lunch:
-                            Text("중식")
-                        case .dinner:
-                            Text("석식")
-                        }
-                    }
-                    .font(.title3)
                 }
                 .gesture(DragGesture().onEnded { value in
                     let allCases = MealType.allCases

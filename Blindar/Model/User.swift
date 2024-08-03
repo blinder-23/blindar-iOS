@@ -8,6 +8,12 @@
 import Foundation
 import SwiftData
 
+struct UserResponse: Codable {
+    var message: String
+    var responseCode: Int
+    var response: User
+}
+
 struct User: Codable {
     var userId: String //Google Firebase UID
     var schoolCode: Int //NEIS API에서 제공하는 표준 학교 코드

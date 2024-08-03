@@ -45,6 +45,10 @@ struct BlindarApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(AppStateViewModel())
+                .environmentObject(UserViewModel())
+                .environmentObject(MemoViewModel())
+                .environmentObject(MealViewModel())
         }
         .modelContainer(sharedModelContainer)
     }

@@ -9,7 +9,17 @@ import Foundation
 import SwiftData
 
 struct MemoResponse: Codable {
-    let response: [Memo]
+    let response: [Memo]?
+    let message: String?
+    let responseCode: Int?
+    var memoId: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case memoId = "memo_id"
+        case response
+        case message
+        case responseCode
+    }
 }
 
 struct Memo: Codable {
@@ -26,12 +36,12 @@ struct Memo: Codable {
     }
 }
 
-@Model
-class MemoLocalData {
-    @Attribute(.unique) var userId: String //사용자 UID
-    var date: String //yyyyMMdd
-    @Attribute(.unique) var memoId: String //메모 id
-    var contents: String //수정할 일정 내용
+@Model 
+final public class MemoLocalData: Identifiable {
+    var userId: String
+    var date: String
+    var memoId: String
+    var contents: String
     
     init(userId: String, date: String, memoId: String, contents: String) {
         self.userId = userId
