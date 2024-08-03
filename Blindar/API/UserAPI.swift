@@ -13,13 +13,19 @@ private let domain = Bundle.main.object(forInfoDictionaryKey: "DOMAIN") as? Stri
 class UserAPI {
     static let shared = UserAPI()
     
-    func postMemo(newUser: User) -> AnyPublisher<User, Error> {
+    func postUser(newUser: User) -> AnyPublisher<UserResponse, Error> {
+        do {
+            let jsonData = try JSONEncoder().encode(newUser)
+        } catch {
+            print("Failed to encode user or decode JSON: \(error.localizedDescription)")
+        }
+        
         let components = URLComponents(string: "https://\(domain)/user/update")
         
         guard let url = components?.url else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-                
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         do {
@@ -27,6 +33,7 @@ class UserAPI {
             request.httpBody = jsonData
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         } catch {
+            print("Failed to encode user: \(error.localizedDescription)")
         }
         
         return URLSession.shared.dataTaskPublisher(for: request)
@@ -42,13 +49,13 @@ class UserAPI {
                 }
                 return data
             }
-            .decode(type: User.self, decoder: JSONDecoder())
+            .decode(type: UserResponse.self, decoder: JSONDecoder())
             .handleEvents(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
-                    print("사용자 등록 failed: \(error.localizedDescription)")
+                    print("사용자 등록값 반환 failed: \(error.localizedDescription)")
                 case .finished:
-                    print("사용자 등록 finished successfully")
+                    print("사용자 등록값 반환 finished successfully")
                 }
             })
             .mapError { error -> Error in
@@ -67,3 +74,4 @@ class UserAPI {
             .eraseToAnyPublisher()
     }
 }
+

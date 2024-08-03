@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct FeedbackResponse: Codable {
+    var contents: String
+}
+
 struct Feedback: Codable {
     var userId: String //사용자 id
     var deviceName: String //기기 이름 ex.SM-F731

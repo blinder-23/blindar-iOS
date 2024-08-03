@@ -9,15 +9,15 @@ import Foundation
 import Combine
 
 class MemoViewModel: ObservableObject {
+    @Published var newMemoId: String?
     @Published var memos: [Memo] = []
-    @Published var newMemoId: String = ""
     @Published var errorMessage: String?
     @Published var successMessage: String?
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
     
     func fetchMemos(userId: String) {
         MemoAPI.shared.fetchMemos(userId: userId)
-            .receive(on: DispatchQueue.main) // 메인 스레드에서 값을 받도록 설정
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
@@ -26,34 +26,55 @@ class MemoViewModel: ObservableObject {
                     break
                 }
             }, receiveValue: { data in
-                self.memos = data.response
-                //디버깅
-                print("memos : ", self.memos)
+                self.memos = data.response ?? []
             })
             .store(in: &cancellables)
     }
     
-    func postMemo(newMemo: Memo) {
-        MemoAPI.shared.postMemo(newMemo: newMemo)
-            .receive(on: DispatchQueue.main) // 메인 스레드에서 값을 받도록 설정
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    self.errorMessage = error.localizedDescription
-                case .finished:
-                    break
-                }
-            }, receiveValue: { data in
-                self.newMemoId = data.memoId
-                //디버깅
-                print("new memo id : ", self.newMemoId)
-            })
-            .store(in: &cancellables)
+    func postMemo(newMemo: Memo) -> AnyPublisher<String?, Never> {
+        return Future<String?, Never> { promise in
+            MemoAPI.shared.postMemo(newMemo: newMemo)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        self.errorMessage = error.localizedDescription
+                        promise(.success(nil))
+                    case .finished:
+                        break
+                    }
+                }, receiveValue: { data in
+                    self.newMemoId = data.memoId ?? ""
+                    promise(.success(self.newMemoId))
+                })
+                .store(in: &self.cancellables)
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func editMemo(newMemo: Memo) -> AnyPublisher<Void, Never> {
+        return Future<Void, Never> { promise in
+            MemoAPI.shared.postMemo(newMemo: newMemo)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        self.errorMessage = error.localizedDescription
+                        promise(.success(()))
+                    case .finished:
+                        break
+                    }
+                }, receiveValue: { data in
+                    promise(.success(()))
+                })
+                .store(in: &self.cancellables)
+        }
+        .eraseToAnyPublisher()
     }
     
     func deleteMemo(memoId: String) {
         MemoAPI.shared.deleteMemo(memoId: memoId)
-            .receive(on: DispatchQueue.main) // 메인 스레드에서 값을 받도록 설정
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .failure(let error):
@@ -63,7 +84,6 @@ class MemoViewModel: ObservableObject {
                 }
             }, receiveValue: { [weak self] successMessage in
                 self?.successMessage = successMessage
-                // 디버깅
                 print("Deletion success: ", successMessage)
             })
             .store(in: &cancellables)

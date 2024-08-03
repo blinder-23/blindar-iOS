@@ -13,11 +13,13 @@ import FirebaseAuth
 import CryptoKit
 import AuthenticationServices
 
+var globalUid: String = ""
+
 class AppleAuthCoordinator: NSObject {
-    var userVM: UserViewModel = UserViewModel()
     var userData: User = User(userId: "", schoolCode: 0, name: "")
     var currentNonce: String?
     let window: UIWindow?
+    var isLoggedIn = false
     
     init(window: UIWindow?) {
         self.window = window
@@ -131,10 +133,8 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                 }
                 // User is signed in to Firebase with Apple.
                 if let user = Auth.auth().currentUser {
-                    self.userData.userId = user.uid
-                    //디버깅
-                    print("userData : ", self.userData)
-                    self.userVM.postUser(newUser: self.userData)
+                    globalUid = user.uid
+                    self.isLoggedIn = true
                 }
             }
         }
