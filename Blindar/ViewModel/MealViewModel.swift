@@ -26,7 +26,6 @@ class MealViewModel: ObservableObject {
                     }
                 }, receiveValue: { mealResponse in
                     self.meals = mealResponse.response
-                    print("self.meals: ", self.meals)
                     promise(.success(self.meals))
                 })
                 .store(in: &self.cancellables)

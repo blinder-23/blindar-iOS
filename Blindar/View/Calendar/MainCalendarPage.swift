@@ -97,7 +97,6 @@ struct MainCalendarPage: View {
                                     .onTapGesture {
                                         self.selectedDate = date
                                         self.currentDate = date
-                                        print(DateUtils.shared.getDateString(from: date))
                                         fetchMealsIfNeeded(for: date)
                                     }
                             }
@@ -123,6 +122,7 @@ struct MainCalendarPage: View {
                 }
             }
             .onAppear {
+                refreshAndFetchMeals(for: currentDate)
                 fetchMealsIfNeeded(for: currentDate)
             }
             .onChange(of: currentDate) { newDate in
@@ -140,6 +140,45 @@ struct MainCalendarPage: View {
             })
         }
     }
+    
+    func refreshAndFetchMeals(for date: Date) {
+        let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
+        let year = extractedDate.year
+        let month = extractedDate.monthWithZero
+        
+         for meal in savedMeals {
+             modelContext.delete(meal)
+         }
+         
+         try? modelContext.save()
+        
+            if let school = schoolVM.getSchoolInfoFromUserDefaults() {
+                print("차겟 학교 : ", school.schoolName)
+                mealVM.fetchMeals(schoolCode: school.schoolCode, year: year, month: month)
+                    .sink(receiveCompletion: { completion in
+                        if case let .failure(error) = completion {
+                            print("Fetch failed: \(error)")
+                        }
+                    }, receiveValue: { meals in
+                        for meal in meals {
+                            let mealLocalData = MealLocalData(
+                                ymd: meal.ymd,
+                                dishes: meal.dishes,
+                                origins: meal.origins,
+                                nutrients: meal.nutrients,
+                                calorie: meal.calorie,
+                                mealTime: meal.mealTime
+                            )
+                            modelContext.insert(mealLocalData)
+                        }
+                        try? modelContext.save()
+                    })
+                    .store(in: &mealVM.cancellables)
+            } else {
+                print("cannot find school code")
+            }
+    }
+
     
     func fetchMealsIfNeeded(for date: Date) {
         let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)

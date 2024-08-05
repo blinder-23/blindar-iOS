@@ -84,7 +84,6 @@ class MemoViewModel: ObservableObject {
                 }
             }, receiveValue: { [weak self] successMessage in
                 self?.successMessage = successMessage
-                print("Deletion success: ", successMessage)
             })
             .store(in: &cancellables)
     }

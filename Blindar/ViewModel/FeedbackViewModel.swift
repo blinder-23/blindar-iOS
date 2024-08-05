@@ -25,8 +25,6 @@ class FeedbackViewModel: ObservableObject {
                 }
             }, receiveValue: { [weak self] successMessage in
                 self?.successMessage = successMessage
-                // 디버깅
-                print("Feedback Post success: ", successMessage)
             })
             .store(in: &cancellables)
     }
