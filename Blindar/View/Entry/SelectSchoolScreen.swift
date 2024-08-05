@@ -11,8 +11,8 @@ import SwiftData
 var globalSchoolCode: Int = 0
 
 struct SelectSchoolScreen: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var userVM: UserViewModel
-    @Environment(\.modelContext) private var modelContext
     @StateObject private var schoolVM = SchoolViewModel()
     @State var query: String = ""
     var filteredSchools: [School] {
@@ -22,7 +22,6 @@ struct SelectSchoolScreen: View {
             return schoolVM.schools.filter { $0.schoolName.contains(query) }
         }
     }
-    @Query var savedSchools: [SchoolLocalData]
     
     var body: some View {
         NavigationStack {
@@ -61,12 +60,11 @@ struct SelectSchoolScreen: View {
                         }
                         .onTapGesture {
                             query = school.schoolName
-                            saveSchoolsToLocal(school: school)
                             globalSchoolCode = school.schoolCode
+                            saveSchoolToUserDefaults()
                             let newUser: User = User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname)
-                            userVM.user = newUser
-                            //postUser 함수 호출
-                            userVM.postUser(newUser: newUser)
+                            postUserToServer(newUser: newUser)
+                            dismiss()
                         }
                     }
                 }
@@ -78,15 +76,16 @@ struct SelectSchoolScreen: View {
         }
     }
     
-    private func saveSchoolsToLocal(school: School) {
-        for savedSchool in savedSchools {
-            modelContext.delete(savedSchool)
-        }
-        
-        // Insert new school
-        let schoolToSave = SchoolLocalData(schoolName: school.schoolName, schoolCode: school.schoolCode)
-        modelContext.insert(schoolToSave)
-        try? modelContext.save()
+    func saveSchoolToUserDefaults() {
+        schoolVM.saveSchoolInfoToUserDefaults(school: School(schoolName: query, schoolCode: globalSchoolCode))
+    }
+    
+    func postUserToServer(newUser: User) {
+        userVM.postUser(newUser: newUser)
+            .sink(receiveValue: { _ in
+                userVM.userState = .isRegistered
+            })
+            .store(in: &userVM.cancellables)
     }
 }
 

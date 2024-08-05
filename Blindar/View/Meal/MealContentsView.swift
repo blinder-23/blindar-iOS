@@ -101,10 +101,7 @@ struct MealContentsView: View {
             .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
         }
         .onAppear {
-            updateMealsForCurrentDate()
-            //디버깅
-            print("selected date on meal : ", selectedDate)        }
-        .onChange(of: currentDate) { _ in
+            selectedDate = currentDate
             updateMealsForCurrentDate()
         }
         .onChange(of: selectedDate) { _ in

@@ -28,7 +28,18 @@ struct MainCalendarPage: View {
         
         NavigationStack {
             VStack {
-                //달력 뷰
+                //학교 표시 - 학교 선택 페이지 네비게이션 링크
+                NavigationLink(destination: {
+                    SelectSchoolScreen()
+                }, label: {
+                    if let school = schoolVM.getSchoolInfoFromUserDefaults() {
+                        Text(school.schoolName)
+                            .foregroundStyle(Color.white)
+                            .font(.title2)
+                    } else {
+                        Text("학교 정보 없음")
+                    }
+                })
                 VStack(spacing: 10) {
                     HStack(spacing: 70) {
                         // 상단 년, 월
@@ -59,6 +70,7 @@ struct MainCalendarPage: View {
                         .foregroundStyle(Color.hex9DCAFF)
                     }
                     .offset(x: 70)
+                    //스크롤 뷰
                     ScrollView {
                         // 요일 헤더
                         HStack {
@@ -109,7 +121,6 @@ struct MainCalendarPage: View {
                         MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate)
                     }
                 }
-                
             }
             .onAppear {
                 fetchMealsIfNeeded(for: currentDate)
@@ -128,8 +139,6 @@ struct MainCalendarPage: View {
                 })
             })
         }
-        .padding(.top, 20)
-        .navigationTitle(Text(schoolVM.schools.first?.schoolName ?? ""))
     }
     
     func fetchMealsIfNeeded(for date: Date) {

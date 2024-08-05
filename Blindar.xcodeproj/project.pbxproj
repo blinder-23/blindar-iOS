@@ -318,8 +318,8 @@
 			isa = PBXGroup;
 			children = (
 				090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */,
-				090541992C4F807A0039D633 /* SchoolViewModel.swift */,
 				0905419A2C4F807A0039D633 /* UserViewModel.swift */,
+				090541992C4F807A0039D633 /* SchoolViewModel.swift */,
 				090541972C4F807A0039D633 /* MealViewModel.swift */,
 				090541982C4F807A0039D633 /* MemoViewModel.swift */,
 				090541962C4F807A0039D633 /* FeedbackViewModel.swift */,
