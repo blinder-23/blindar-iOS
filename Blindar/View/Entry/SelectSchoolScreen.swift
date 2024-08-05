@@ -11,7 +11,6 @@ import SwiftData
 var globalSchoolCode: Int = 0
 
 struct SelectSchoolScreen: View {
-    @EnvironmentObject var appStateVM: AppStateViewModel
     @EnvironmentObject var userVM: UserViewModel
     @Environment(\.modelContext) private var modelContext
     @StateObject private var schoolVM = SchoolViewModel()
@@ -68,7 +67,6 @@ struct SelectSchoolScreen: View {
                             userVM.user = newUser
                             //postUser 함수 호출
                             userVM.postUser(newUser: newUser)
-                            appStateVM.appState = .postingUser
                         }
                     }
                 }
@@ -77,9 +75,6 @@ struct SelectSchoolScreen: View {
         }
         .onAppear {
             schoolVM.fetchSchools()
-            NotificationCenter.default.addObserver(forName: NSNotification.Name("UserRegistered"), object: nil, queue: .main) { _ in
-                appStateVM.appState = .mainCalendarPage
-            }
         }
     }
     

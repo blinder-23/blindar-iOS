@@ -18,6 +18,7 @@ struct User: Codable {
     var userId: String //Google Firebase UID
     var schoolCode: Int //NEIS API에서 제공하는 표준 학교 코드
     var name: String //유저 닉네임
+    var schoolName: String?
     
     enum CodingKeys: String, CodingKey {
         case userId = "user_id"

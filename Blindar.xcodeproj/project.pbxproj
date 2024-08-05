@@ -22,7 +22,6 @@
 		090541A52C4F807A0039D633 /* SchoolAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0905417F2C4F807A0039D633 /* SchoolAPI.swift */; };
 		090541A62C4F807A0039D633 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541802C4F807A0039D633 /* UserAPI.swift */; };
 		090541A72C4F807A0039D633 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541822C4F807A0039D633 /* DateUtils.swift */; };
-		090541A82C4F807A0039D633 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541842C4F807A0039D633 /* CalendarView.swift */; };
 		090541A92C4F807A0039D633 /* MainCalendarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541852C4F807A0039D633 /* MainCalendarPage.swift */; };
 		090541AA2C4F807A0039D633 /* SelectSchoolScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541872C4F807A0039D633 /* SelectSchoolScreen.swift */; };
 		090541AB2C4F807A0039D633 /* FeedbackNavigationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541892C4F807A0039D633 /* FeedbackNavigationPage.swift */; };
@@ -68,6 +67,7 @@
 		090541F12C4F829F0039D633 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 090541F02C4F829F0039D633 /* FirebaseVertexAI-Preview */; };
 		090541F62C4F8BFB0039D633 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541F52C4F8BFB0039D633 /* LoginPage.swift */; };
 		090541F82C4F8CC60039D633 /* AppleAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */; };
+		0996CECF2C60C0180015D602 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CECE2C60C0180015D602 /* SplashScreen.swift */; };
 		09A94D8E2C54EFFD003E7EF6 /* PostUserProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */; };
 		09A94D902C58A747003E7EF6 /* MemoEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */; };
 		09A94D922C5A1CA6003E7EF6 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */; };
@@ -92,7 +92,6 @@
 		0905417F2C4F807A0039D633 /* SchoolAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolAPI.swift; sourceTree = "<group>"; };
 		090541802C4F807A0039D633 /* UserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		090541822C4F807A0039D633 /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
-		090541842C4F807A0039D633 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		090541852C4F807A0039D633 /* MainCalendarPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCalendarPage.swift; sourceTree = "<group>"; };
 		090541872C4F807A0039D633 /* SelectSchoolScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSchoolScreen.swift; sourceTree = "<group>"; };
 		090541892C4F807A0039D633 /* FeedbackNavigationPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackNavigationPage.swift; sourceTree = "<group>"; };
@@ -111,6 +110,7 @@
 		090541F22C4F8A150039D633 /* Blindar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Blindar.entitlements; sourceTree = "<group>"; };
 		090541F52C4F8BFB0039D633 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
 		090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthCoordinator.swift; sourceTree = "<group>"; };
+		0996CECE2C60C0180015D602 /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUserProgressView.swift; sourceTree = "<group>"; };
 		09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoEditModal.swift; sourceTree = "<group>"; };
 		09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
@@ -241,7 +241,6 @@
 			isa = PBXGroup;
 			children = (
 				090541852C4F807A0039D633 /* MainCalendarPage.swift */,
-				090541842C4F807A0039D633 /* CalendarView.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -249,6 +248,7 @@
 		090541882C4F807A0039D633 /* Entry */ = {
 			isa = PBXGroup;
 			children = (
+				0996CECE2C60C0180015D602 /* SplashScreen.swift */,
 				090541F52C4F8BFB0039D633 /* LoginPage.swift */,
 				09F5770C2C4FA0F300B89ECF /* SelectNicknameScreen.swift */,
 				090541872C4F807A0039D633 /* SelectSchoolScreen.swift */,
@@ -439,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0996CECF2C60C0180015D602 /* SplashScreen.swift in Sources */,
 				090541A02C4F807A0039D633 /* School.swift in Sources */,
 				09A94D942C5A1E4F003E7EF6 /* SettingPage.swift in Sources */,
 				09F5770D2C4FA0F300B89ECF /* SelectNicknameScreen.swift in Sources */,
@@ -449,7 +450,6 @@
 				090541AC2C4F807A0039D633 /* MealContentsView.swift in Sources */,
 				0905419D2C4F807A0039D633 /* Meal.swift in Sources */,
 				090541A62C4F807A0039D633 /* UserAPI.swift in Sources */,
-				090541A82C4F807A0039D633 /* CalendarView.swift in Sources */,
 				09A94D8E2C54EFFD003E7EF6 /* PostUserProgressView.swift in Sources */,
 				09A94D922C5A1CA6003E7EF6 /* DeviceInfo.swift in Sources */,
 				090541F82C4F8CC60039D633 /* AppleAuthCoordinator.swift in Sources */,

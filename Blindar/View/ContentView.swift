@@ -7,34 +7,36 @@
 
 import SwiftUI
 import SwiftData
+import FirebaseAuth
 
 let screenWidth = UIScreen.main.bounds.width
 let screenHeight = UIScreen.main.bounds.height
 
-enum AppState {
-    case loginPage
-    case selectShcoolScreen
-    case postingUser
-    case mainCalendarPage
-}
-
-class AppStateViewModel: ObservableObject {
-    @Published var appState: AppState = .loginPage
-}
-
 struct ContentView: View {
-    @EnvironmentObject var appStateVM: AppStateViewModel
+    @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject var userVM: UserViewModel
+    @EnvironmentObject var schoolVM: SchoolViewModel
+    @EnvironmentObject var mealVM: MealViewModel
+    @Query var savedMeals: [MealLocalData]
     
     var body: some View {
-        switch appStateVM.appState {
-        case .loginPage:
-            LoginPage()
-        case .selectShcoolScreen:
-            SelectSchoolScreen()
-        case .postingUser:
-            PostingUserProgressView()
-        case .mainCalendarPage:
-            MainCalendarPage()
+        Group {
+            switch userVM.userState {
+            case .isCheckingRegistration:
+                SplashScreen()
+            case .isNotRegistered:
+                LoginPage()
+            case .isRegistered:
+                MainCalendarPage()
+            }
+        }
+        .onAppear {
+            //자동 로그인
+            if userVM.getUserInfoFromUserDefaults() != nil {
+                userVM.userState = .isRegistered
+            } else {
+                userVM.userState = .isNotRegistered
+            }
         }
     }
 }
