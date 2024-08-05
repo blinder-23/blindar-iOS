@@ -36,7 +36,6 @@ class SchoolViewModel: ObservableObject {
                 self.schools = schools
                 if let school = schools.first {
                     self.selectedSchool = school
-                    print("selected", self.selectedSchool)
                 }
             })
             .store(in: &cancellables)

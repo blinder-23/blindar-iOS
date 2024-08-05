@@ -11,9 +11,12 @@ import SwiftData
 var globalSchoolCode: Int = 0
 
 struct SelectSchoolScreen: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query var savedMeals: [MealLocalData]
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var userVM: UserViewModel
-    @StateObject private var schoolVM = SchoolViewModel()
+    @EnvironmentObject var mealVM: MealViewModel
+    @EnvironmentObject var schoolVM: SchoolViewModel
     @State var query: String = ""
     var filteredSchools: [School] {
         if query.isEmpty {
@@ -78,6 +81,7 @@ struct SelectSchoolScreen: View {
     
     func saveSchoolToUserDefaults() {
         schoolVM.saveSchoolInfoToUserDefaults(school: School(schoolName: query, schoolCode: globalSchoolCode))
+        refreshMeals(for: Date())
     }
     
     func postUserToServer(newUser: User) {
@@ -87,6 +91,47 @@ struct SelectSchoolScreen: View {
             })
             .store(in: &userVM.cancellables)
     }
+    
+    func refreshMeals(for date: Date) {
+        let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
+        let year = extractedDate.year
+        let month = extractedDate.monthWithZero
+        
+        for meal in savedMeals {
+            modelContext.delete(meal)
+        }
+        
+        try? modelContext.save()
+        print("삭제 시도 후 식단 개수 : ", savedMeals.count)
+        
+        if let school = schoolVM.getSchoolInfoFromUserDefaults() {
+            //디버깅
+            print("타겟 학교 : ", school)
+            mealVM.fetchMeals(schoolCode: school.schoolCode, year: year, month: month)
+                .sink(receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        print("Fetch failed: \(error)")
+                    }
+                }, receiveValue: { meals in
+                    for meal in meals {
+                        let mealLocalData = MealLocalData(
+                            ymd: meal.ymd,
+                            dishes: meal.dishes,
+                            origins: meal.origins,
+                            nutrients: meal.nutrients,
+                            calorie: meal.calorie,
+                            mealTime: meal.mealTime
+                        )
+                        modelContext.insert(mealLocalData)
+                    }
+                    try? modelContext.save()
+                })
+                .store(in: &mealVM.cancellables)
+        } else {
+            print("cannot find school code")
+        }
+    }
+    
 }
 
 #Preview {
