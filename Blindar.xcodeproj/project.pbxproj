@@ -68,6 +68,8 @@
 		090541F62C4F8BFB0039D633 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541F52C4F8BFB0039D633 /* LoginPage.swift */; };
 		090541F82C4F8CC60039D633 /* AppleAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */; };
 		0996CECF2C60C0180015D602 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CECE2C60C0180015D602 /* SplashScreen.swift */; };
+		0996CED12C61ABCE0015D602 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED02C61ABCE0015D602 /* ScheduleViewModel.swift */; };
+		0996CED32C61AC1C0015D602 /* ScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED22C61AC1C0015D602 /* ScheduleAPI.swift */; };
 		09A94D8E2C54EFFD003E7EF6 /* PostUserProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */; };
 		09A94D902C58A747003E7EF6 /* MemoEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */; };
 		09A94D922C5A1CA6003E7EF6 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */; };
@@ -111,6 +113,8 @@
 		090541F52C4F8BFB0039D633 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
 		090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthCoordinator.swift; sourceTree = "<group>"; };
 		0996CECE2C60C0180015D602 /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
+		0996CED02C61ABCE0015D602 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		0996CED22C61AC1C0015D602 /* ScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAPI.swift; sourceTree = "<group>"; };
 		09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUserProgressView.swift; sourceTree = "<group>"; };
 		09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoEditModal.swift; sourceTree = "<group>"; };
 		09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 				090541802C4F807A0039D633 /* UserAPI.swift */,
 				0905417C2C4F807A0039D633 /* FeedbackAPI.swift */,
 				0905417D2C4F807A0039D633 /* MealAPI.swift */,
+				0996CED22C61AC1C0015D602 /* ScheduleAPI.swift */,
 				0905417E2C4F807A0039D633 /* MemoAPI.swift */,
 				0905417F2C4F807A0039D633 /* SchoolAPI.swift */,
 			);
@@ -321,6 +326,7 @@
 				0905419A2C4F807A0039D633 /* UserViewModel.swift */,
 				090541992C4F807A0039D633 /* SchoolViewModel.swift */,
 				090541972C4F807A0039D633 /* MealViewModel.swift */,
+				0996CED02C61ABCE0015D602 /* ScheduleViewModel.swift */,
 				090541982C4F807A0039D633 /* MemoViewModel.swift */,
 				090541962C4F807A0039D633 /* FeedbackViewModel.swift */,
 			);
@@ -470,9 +476,11 @@
 				090541A72C4F807A0039D633 /* DateUtils.swift in Sources */,
 				090541A92C4F807A0039D633 /* MainCalendarPage.swift in Sources */,
 				090541AD2C4F807A0039D633 /* NutrientNavigationPage.swift in Sources */,
+				0996CED12C61ABCE0015D602 /* ScheduleViewModel.swift in Sources */,
 				090541A42C4F807A0039D633 /* MemoAPI.swift in Sources */,
 				0905419E2C4F807A0039D633 /* Memo.swift in Sources */,
 				090541F62C4F8BFB0039D633 /* LoginPage.swift in Sources */,
+				0996CED32C61AC1C0015D602 /* ScheduleAPI.swift in Sources */,
 				090541AE2C4F807A0039D633 /* MemoPostModal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

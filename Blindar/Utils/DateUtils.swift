@@ -64,4 +64,18 @@ struct DateUtils {
     func getDateString(from date: Date) -> String {
         return compactDateFormatter.string(from: date)
     }
+    
+    func convertEpochToDateString(epoch: Int) -> String {
+        // UNIX epoch 정수를 Date 객체로 변환
+        let date = Date(timeIntervalSince1970: TimeInterval(epoch))
+        
+        // DateFormatter 설정
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyyMMdd"
+        
+        // Date 객체를 yyyyMMdd 형태의 문자열로 변환
+        let dateString = dateFormatter.string(from: date)
+        return dateString
+    }
 }

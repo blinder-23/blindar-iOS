@@ -22,7 +22,7 @@ struct MealContentsView: View {
     @Binding var currentDate: Date
     @Binding var selectedDate: Date
     @Query var savedMeals: [MealLocalData]
-    @State var mealsForCurrentDate: MealLocalData?
+    @Binding var mealsForCurrentDate: MealLocalData?
     
     var body: some View {
         NavigationStack {
@@ -46,7 +46,8 @@ struct MealContentsView: View {
                                 })
                                 .onTapGesture {
                                     mealtype = type
-                                    updateMealsForCurrentDate()
+                                    //디버깅
+//                                    updateMealsForCurrentDate()
                                 }
                         }
                     }
@@ -82,7 +83,8 @@ struct MealContentsView: View {
                             mealtype = allCases[currentIndex + 1]
                         }
                     }
-                    updateMealsForCurrentDate()
+                    //디버깅
+//                    updateMealsForCurrentDate()
                 })
                 //영양 정보 확인하기 버튼
                 NavigationLink {
@@ -100,19 +102,5 @@ struct MealContentsView: View {
             .padding()
             .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
         }
-        .onAppear {
-            selectedDate = currentDate
-            updateMealsForCurrentDate()
-        }
-        .onChange(of: selectedDate) { _ in
-            updateMealsForCurrentDate()
-        }
-    }
-    
-    private func updateMealsForCurrentDate() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMdd"
-        let selectedDateString = formatter.string(from: selectedDate)
-        mealsForCurrentDate = savedMeals.first { $0.ymd == selectedDateString }
     }
 }

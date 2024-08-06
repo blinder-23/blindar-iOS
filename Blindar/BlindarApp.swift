@@ -51,6 +51,7 @@ struct BlindarApp: App {
                 .environmentObject(MemoViewModel())
                 .environmentObject(MealViewModel())
                 .environmentObject(SchoolViewModel())
+                .environmentObject(ScheduleViewModel())
         }
         .modelContainer(sharedModelContainer)
     }

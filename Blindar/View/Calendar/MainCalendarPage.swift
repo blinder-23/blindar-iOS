@@ -14,13 +14,17 @@ struct MainCalendarPage: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var schoolVM: SchoolViewModel
     @EnvironmentObject var mealVM: MealViewModel
+    @EnvironmentObject var scheduleVM: ScheduleViewModel
     @Query var savedSchools: [SchoolLocalData]
     @State var currentDate: Date = Date()
     @State var selectedDate: Date = Date()
     @Query var savedMeals: [MealLocalData]
+    @Query var savedSchedules: [ScheduleLocalData]
+    @Query var savedMemos: [MemoLocalData]
     @State private var translation: CGFloat = 0
-    
-    
+    @State var mealsForCurrentDate: MealLocalData?
+    @State var schedulesForCurrentDate: [ScheduleLocalData] = []
+
     var body: some View {
         let monthDates = generateMonthDates()
         let year = DateUtils.shared.yearFormatter.string(from: currentDate)
@@ -114,9 +118,20 @@ struct MainCalendarPage: View {
                                     self.translation = 0
                                 }
                         )
-                        
-                        //식단 뷰
-                        MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate)
+                        VStack {
+                            //식단 뷰
+                            MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
+                            //일정 뷰
+                            ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                        }
+                        .onAppear {
+                            selectedDate = currentDate
+                            //디버깅
+//                            updateMealsForCurrentDate()
+                        }
+                        .onChange(of: selectedDate) { _ in
+                            updateMealsAndSchedulesForCurrentDate()
+                        }
                     }
                 }
             }
@@ -126,6 +141,7 @@ struct MainCalendarPage: View {
             }
             .onChange(of: currentDate) { newDate in
                 fetchMealsIfNeeded(for: newDate)
+                fetchSchedulesIfNeeded(for: newDate)
             }
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing, content: {
@@ -138,6 +154,16 @@ struct MainCalendarPage: View {
                 })
             })
         }
+    }
+    
+    private func updateMealsAndSchedulesForCurrentDate() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        let selectedDateString = formatter.string(from: selectedDate)
+        //식단 업데이트
+        mealsForCurrentDate = savedMeals.first { $0.ymd == selectedDateString }
+        //일정 업데이트
+        schedulesForCurrentDate = savedSchedules.filter { $0.dateString == selectedDateString }
     }
     
     func fetchMealsIfNeeded(for date: Date) {
@@ -178,6 +204,44 @@ struct MainCalendarPage: View {
         }
     }
     
+    func fetchSchedulesIfNeeded(for date: Date) {
+          let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
+          let year = extractedDate.year
+          let month = extractedDate.monthWithZero
+          
+          let monthExists = savedSchedules.contains { schedule in
+              let schduleDateComponents = DateUtils.shared.extractYearAndMonth(from: schedule.dateString)
+              return schduleDateComponents.year == year && schduleDateComponents.monthWithZero == month
+          }
+          
+          if !monthExists {
+              if let school = schoolVM.getSchoolInfoFromUserDefaults() {
+                  scheduleVM.fetcSchedules(schoolCode: school.schoolCode, year: year, month: month)
+                      .sink(receiveCompletion: { completion in
+                          if case let .failure(error) = completion {
+                              print("ScheduleFetch failed: \(error)")
+                          }
+                      }, receiveValue: { schedules in
+                          print(schedules)
+                          for schedule in schedules {
+                              let scheduleLocalData = ScheduleLocalData(
+                                  schoolCode: schedule.schoolCode,
+                                  id: schedule.id,
+                                  date: schedule.date,
+                                  schedule: schedule.scheduleInfo,
+                                  contents: schedule.contents,
+                                  dateString: DateUtils.shared.convertEpochToDateString(epoch: schedule.date)
+                              )
+                              modelContext.insert(scheduleLocalData)
+                          }
+                          try? modelContext.save()
+                      })
+                      .store(in: &scheduleVM.cancellables)
+              } else {
+                  print("cannot find school code")
+              }
+          }
+      }
     // 오늘 날짜 여부 확인 함수
     func isToday(date: Date) -> Bool {
         return Calendar.current.isDate(date, inSameDayAs: Date())

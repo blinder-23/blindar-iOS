@@ -13,6 +13,9 @@ struct ScheduleContentsView: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var memoVM: MemoViewModel
     @Query var savedMemos: [MemoLocalData]
+    @Binding var currentDate: Date
+    @Binding var selectedDate: Date
+    @Binding var schedulesForCurrentDate: [ScheduleLocalData]
 
     var body: some View {
         NavigationStack {
@@ -29,9 +32,23 @@ struct ScheduleContentsView: View {
                         .frame(height: 3)
                         .foregroundColor(.gray)
                 })
-                //Schdule Info
-                Text("일정 목록")
-                    .font(.title3)
+                //일정 리스트
+                if schedulesForCurrentDate.isEmpty {
+                    Text("학사 정보가 없습니다")
+                        .font(.title2)
+                } else {
+                    ForEach(schedulesForCurrentDate, id: \.id) { schedule in
+                        VStack {
+                            Text(schedule.schedule)
+                                .font(.title3)
+                                .onTapGesture {
+                                    print(schedulesForCurrentDate)
+                                }
+                        }
+                        .padding(.vertical, 3)
+                    }
+                }
+                
                 //Memo List
                 ForEach(savedMemos, id: \.memoId) { memo in
                     Text(memo.contents)
@@ -53,11 +70,9 @@ struct ScheduleContentsView: View {
             .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
         }
         .onAppear {
-//            memoVM.fetchMemos(userId: userVM.user.userId)
+            if let user = userVM.getUserInfoFromUserDefaults() {
+                memoVM.fetchMemos(userId: user.userId)
+            }
         }
     }
-}
-
-#Preview {
-    ScheduleContentsView()
 }

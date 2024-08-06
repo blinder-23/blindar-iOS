@@ -13,10 +13,12 @@ var globalSchoolCode: Int = 0
 struct SelectSchoolScreen: View {
     @Environment(\.modelContext) private var modelContext
     @Query var savedMeals: [MealLocalData]
+    @Query var savedSchedules: [ScheduleLocalData]
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var mealVM: MealViewModel
     @EnvironmentObject var schoolVM: SchoolViewModel
+    @EnvironmentObject var scheduleVM: ScheduleViewModel
     @State var query: String = ""
     var filteredSchools: [School] {
         if query.isEmpty {
@@ -82,6 +84,7 @@ struct SelectSchoolScreen: View {
     func saveSchoolToUserDefaults() {
         schoolVM.saveSchoolInfoToUserDefaults(school: School(schoolName: query, schoolCode: globalSchoolCode))
         refreshMeals(for: Date())
+        refreshSchedules(for: Date())
     }
     
     func postUserToServer(newUser: User) {
@@ -128,6 +131,37 @@ struct SelectSchoolScreen: View {
             print("cannot find school code")
         }
     }
+    
+    func refreshSchedules(for date: Date) {
+        let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
+        let year = extractedDate.year
+        let month = extractedDate.monthWithZero
+        
+        for schedule in savedSchedules {
+            modelContext.delete(schedule)
+        }
+        
+        try? modelContext.save()
+        
+        if let school = schoolVM.getSchoolInfoFromUserDefaults() {
+            scheduleVM.fetcSchedules(schoolCode: school.schoolCode, year: year, month: month)
+                .sink(receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        print("Fetch failed: \(error)")
+                    }
+                }, receiveValue: { schedules in
+                    for schedule in schedules {
+                        let scheduleLocalData = ScheduleLocalData(schoolCode: schedule.schoolCode, id: schedule.id, date: schedule.date, schedule: schedule.scheduleInfo, contents: schedule.contents, dateString: DateUtils.shared.convertEpochToDateString(epoch: schedule.date))
+                        modelContext.insert(scheduleLocalData)
+                    }
+                    try? modelContext.save()
+                })
+                .store(in: &scheduleVM.cancellables)
+        } else {
+            print("cannot find school code")
+        }
+    }
+
     
 }
 

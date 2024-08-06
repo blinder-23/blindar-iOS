@@ -34,14 +34,6 @@ class MemoAPI {
                 return output.data
             }
             .decode(type: MemoResponse.self, decoder: JSONDecoder())
-            .handleEvents(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    print("Fetch failed: \(error.localizedDescription)")
-                case .finished:
-                    print("Fetch finished successfully")
-                }
-            })
             .mapError { error -> Error in
                 if let urlError = error as? URLError {
                     switch urlError.code {
@@ -88,14 +80,6 @@ class MemoAPI {
                 return data
             }
             .decode(type: MemoResponse.self, decoder: JSONDecoder())
-            .handleEvents(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    print("Fetch failed: \(error.localizedDescription)")
-                case .finished:
-                    print("Fetch finished successfully")
-                }
-            })
             .mapError { error -> Error in
                 if let urlError = error as? URLError {
                     switch urlError.code {
@@ -142,14 +126,6 @@ class MemoAPI {
                 return data
             }
             .decode(type: MemoResponse.self, decoder: JSONDecoder())
-            .handleEvents(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    print("Fetch failed: \(error.localizedDescription)")
-                case .finished:
-                    print("Fetch finished successfully")
-                }
-            })
             .mapError { error -> Error in
                 if let urlError = error as? URLError {
                     switch urlError.code {
