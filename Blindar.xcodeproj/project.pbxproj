@@ -22,7 +22,7 @@
 		090541A52C4F807A0039D633 /* SchoolAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0905417F2C4F807A0039D633 /* SchoolAPI.swift */; };
 		090541A62C4F807A0039D633 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541802C4F807A0039D633 /* UserAPI.swift */; };
 		090541A72C4F807A0039D633 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541822C4F807A0039D633 /* DateUtils.swift */; };
-		090541A92C4F807A0039D633 /* MainCalendarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541852C4F807A0039D633 /* MainCalendarPage.swift */; };
+		090541A92C4F807A0039D633 /* MainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541852C4F807A0039D633 /* MainPage.swift */; };
 		090541AA2C4F807A0039D633 /* SelectSchoolScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541872C4F807A0039D633 /* SelectSchoolScreen.swift */; };
 		090541AB2C4F807A0039D633 /* FeedbackNavigationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541892C4F807A0039D633 /* FeedbackNavigationPage.swift */; };
 		090541AC2C4F807A0039D633 /* MealContentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0905418B2C4F807A0039D633 /* MealContentsView.swift */; };
@@ -71,6 +71,7 @@
 		0996CED12C61ABCE0015D602 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED02C61ABCE0015D602 /* ScheduleViewModel.swift */; };
 		0996CED32C61AC1C0015D602 /* ScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED22C61AC1C0015D602 /* ScheduleAPI.swift */; };
 		0996CED52C61DD6E0015D602 /* OnedayModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED42C61DD6E0015D602 /* OnedayModeView.swift */; };
+		0996CED72C61E6370015D602 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED62C61E6370015D602 /* CalendarView.swift */; };
 		09A94D8E2C54EFFD003E7EF6 /* PostUserProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */; };
 		09A94D902C58A747003E7EF6 /* MemoEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */; };
 		09A94D922C5A1CA6003E7EF6 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */; };
@@ -95,7 +96,7 @@
 		0905417F2C4F807A0039D633 /* SchoolAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolAPI.swift; sourceTree = "<group>"; };
 		090541802C4F807A0039D633 /* UserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		090541822C4F807A0039D633 /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
-		090541852C4F807A0039D633 /* MainCalendarPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCalendarPage.swift; sourceTree = "<group>"; };
+		090541852C4F807A0039D633 /* MainPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPage.swift; sourceTree = "<group>"; };
 		090541872C4F807A0039D633 /* SelectSchoolScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSchoolScreen.swift; sourceTree = "<group>"; };
 		090541892C4F807A0039D633 /* FeedbackNavigationPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackNavigationPage.swift; sourceTree = "<group>"; };
 		0905418B2C4F807A0039D633 /* MealContentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealContentsView.swift; sourceTree = "<group>"; };
@@ -117,6 +118,7 @@
 		0996CED02C61ABCE0015D602 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		0996CED22C61AC1C0015D602 /* ScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAPI.swift; sourceTree = "<group>"; };
 		0996CED42C61DD6E0015D602 /* OnedayModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnedayModeView.swift; sourceTree = "<group>"; };
+		0996CED62C61E6370015D602 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUserProgressView.swift; sourceTree = "<group>"; };
 		09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoEditModal.swift; sourceTree = "<group>"; };
 		09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
@@ -247,7 +249,8 @@
 		090541862C4F807A0039D633 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				090541852C4F807A0039D633 /* MainCalendarPage.swift */,
+				090541852C4F807A0039D633 /* MainPage.swift */,
+				0996CED62C61E6370015D602 /* CalendarView.swift */,
 				0996CED42C61DD6E0015D602 /* OnedayModeView.swift */,
 			);
 			path = Home;
@@ -478,8 +481,9 @@
 				090541B22C4F807A0039D633 /* FeedbackViewModel.swift in Sources */,
 				09A94D902C58A747003E7EF6 /* MemoEditModal.swift in Sources */,
 				090541A72C4F807A0039D633 /* DateUtils.swift in Sources */,
-				090541A92C4F807A0039D633 /* MainCalendarPage.swift in Sources */,
+				090541A92C4F807A0039D633 /* MainPage.swift in Sources */,
 				090541AD2C4F807A0039D633 /* NutrientNavigationPage.swift in Sources */,
+				0996CED72C61E6370015D602 /* CalendarView.swift in Sources */,
 				0996CED12C61ABCE0015D602 /* ScheduleViewModel.swift in Sources */,
 				090541A42C4F807A0039D633 /* MemoAPI.swift in Sources */,
 				0905419E2C4F807A0039D633 /* Memo.swift in Sources */,
