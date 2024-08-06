@@ -32,92 +32,102 @@ struct MainCalendarPage: View {
         
         NavigationStack {
             VStack {
-                //학교 표시 - 학교 선택 페이지 네비게이션 링크
-                NavigationLink(destination: {
-                    SelectSchoolScreen()
-                }, label: {
-                    if let school = schoolVM.getSchoolInfoFromUserDefaults() {
-                        Text(school.schoolName)
-                            .foregroundStyle(Color.white)
-                            .font(.title2)
-                    } else {
-                        Text("학교 정보 없음")
-                    }
-                })
+                VStack {
+                    //학교 표시 - 학교 선택 페이지 네비게이션 링크
+                    NavigationLink(destination: {
+                        SelectSchoolScreen()
+                    }, label: {
+                        if let school = schoolVM.getSchoolInfoFromUserDefaults() {
+                            Text(school.schoolName)
+                                .foregroundStyle(Color.white)
+                                .font(.title2)
+                        } else {
+                            Text("학교 정보 없음")
+                        }
+                    })
+                }
+                .padding(.bottom, 20)
                 VStack(spacing: 10) {
-                    HStack(spacing: 70) {
-                        // 상단 년, 월
-                        VStack {
-                            Text(year)
-                            Text(monthWithoutZero)
-                                .font(.title)
-                                .fontWeight(.semibold)
-                                .foregroundStyle(Color.hex9DCAFF)
-                        }
-                        .onTapGesture {
-                            self.currentDate = Date()
-                        }
-                        // 월 이동 버튼
-                        HStack(spacing: 40) {
-                            Button(action: {
-                                self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
-                            }) {
-                                Image(systemName: "chevron.left")
+                    //달력 헤더
+                        HStack(spacing: 70) {
+                            // 상단 년, 월
+                            VStack {
+                                Text(year)
+                                Text(monthWithoutZero)
+                                    .font(.title)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Color.hex9DCAFF)
                             }
-                            Button(action: {
-                                self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
-                            }) {
-                                Image(systemName: "chevron.right")
+                            .onTapGesture {
+                                self.currentDate = Date()
                             }
+                            // 월 이동 버튼
+                            HStack(spacing: 40) {
+                                Button(action: {
+                                    self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
+                                }) {
+                                    Image(systemName: "chevron.left")
+                                }
+                                Button(action: {
+                                    self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
+                                }) {
+                                    Image(systemName: "chevron.right")
+                                }
+                            }
+                            .font(.headline)
+                            .foregroundStyle(Color.hex9DCAFF)
                         }
-                        .font(.headline)
-                        .foregroundStyle(Color.hex9DCAFF)
-                    }
-                    .offset(x: 70)
+                        .offset(x: 70)
+                        .padding(.bottom)
                     //스크롤 뷰
                     ScrollView {
-                        // 요일 헤더
-                        HStack {
-                            ForEach(["일", "월", "화", "수", "목", "금", "토"], id: \.self) { day in
-                                Text(day)
-                                    .frame(maxWidth: .infinity)
-                                    .foregroundColor(day == "일" ? .red : (day == "토" ? .blue : .primary))
-                            }
-                        }
-                        
-                        // 달력 날짜들
-                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-                            ForEach(monthDates, id: \.self) { date in
-                                Text("\(Calendar.current.component(.day, from: date))")
-                                    .font(.title3)
-                                    .padding(5)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                    .background(selectedDate == date ? Color.white.opacity(0.4) : Color.clear)
-                                    .clipShape(Circle())
-                                    .foregroundColor(isSameMonth(date: date) ? (isSaturday(date: date) ? .blue : (isSunday(date: date) ? .red : .primary)) : .gray)
-                                    .overlay(
-                                        Circle().stroke(isToday(date: date) ? Color.hex9DCAFF : Color.clear)
-                                    )
-                                    .onTapGesture {
-                                        self.selectedDate = date
-                                        self.currentDate = date
-                                    }
-                            }
-                        }
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                    self.translation = value.translation.width
+                        //달력
+                        VStack {
+                            // 요일 헤더
+                            HStack {
+                                ForEach(["일", "월", "화", "수", "목", "금", "토"], id: \.self) { day in
+                                    Text(day)
+                                        .frame(maxWidth: .infinity)
+                                        .foregroundColor(day == "일" ? .red : (day == "토" ? .blue : .primary))
                                 }
-                                .onEnded { value in
-                                    if self.translation < -50 {
-                                        self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
-                                    } else if self.translation > 50 {
-                                        self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
-                                    }
-                                    self.translation = 0
+                            }
+                            .padding(.bottom, 8)
+                            // 달력 날짜들
+                            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
+                                ForEach(monthDates, id: \.self) { date in
+                                    Text("\(Calendar.current.component(.day, from: date))")
+                                        .font(.title3)
+                                        .padding(5)
+                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                        .background(selectedDate == date ? Color.white.opacity(0.4) : Color.clear)
+                                        .clipShape(Circle())
+                                        .foregroundColor(isSameMonth(date: date) ? (isSaturday(date: date) ? .blue : (isSunday(date: date) ? .red : .primary)) : .gray)
+                                        .overlay(
+                                            Circle().stroke(isToday(date: date) ? Color.hex9DCAFF : Color.clear)
+                                        )
+                                        .onTapGesture {
+                                            self.selectedDate = date
+                                            self.currentDate = date
+                                        }
                                 }
-                        )
+                            }
+                            .gesture(
+                                DragGesture()
+                                    .onChanged { value in
+                                        self.translation = value.translation.width
+                                    }
+                                    .onEnded { value in
+                                        if self.translation < -50 {
+                                            self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
+                                        } else if self.translation > 50 {
+                                            self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
+                                        }
+                                        self.translation = 0
+                                    }
+                            )
+                        }
+                        .padding(.bottom)
+                        //정보
                         VStack {
                             //식단 뷰
                             MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
