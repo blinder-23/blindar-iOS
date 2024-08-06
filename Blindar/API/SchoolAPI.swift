@@ -31,14 +31,6 @@ class SchoolAPI {
             .map { schoolResponse in
                 schoolResponse.data.map { School(schoolName: $0.schoolName, schoolCode: $0.schoolCode) }
             }
-            .handleEvents(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    print("Fetch failed: \(error.localizedDescription)")
-                case .finished:
-                    print("Fetch finished successfully")
-                }
-            })
             .mapError { error -> Error in
                 if let urlError = error as? URLError {
                     switch urlError.code {

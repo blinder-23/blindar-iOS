@@ -102,11 +102,8 @@ struct SelectSchoolScreen: View {
         }
         
         try? modelContext.save()
-        print("삭제 시도 후 식단 개수 : ", savedMeals.count)
         
         if let school = schoolVM.getSchoolInfoFromUserDefaults() {
-            //디버깅
-            print("타겟 학교 : ", school)
             mealVM.fetchMeals(schoolCode: school.schoolCode, year: year, month: month)
                 .sink(receiveCompletion: { completion in
                     if case let .failure(error) = completion {

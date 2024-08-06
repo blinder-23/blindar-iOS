@@ -97,7 +97,6 @@ struct MainCalendarPage: View {
                                     .onTapGesture {
                                         self.selectedDate = date
                                         self.currentDate = date
-                                        fetchMealsIfNeeded(for: date)
                                     }
                             }
                         }
@@ -124,7 +123,6 @@ struct MainCalendarPage: View {
             .onAppear {
                 currentDate = Date()
                 selectedDate = Date()
-                fetchMealsIfNeeded(for: currentDate)
             }
             .onChange(of: currentDate) { newDate in
                 fetchMealsIfNeeded(for: newDate)
@@ -154,8 +152,6 @@ struct MainCalendarPage: View {
         
         if !monthExists {
             if let school = schoolVM.getSchoolInfoFromUserDefaults() {
-                //디버깅
-                print("다시 조회 학교 : ", school)
                 mealVM.fetchMeals(schoolCode: school.schoolCode, year: year, month: month)
                     .sink(receiveCompletion: { completion in
                         if case let .failure(error) = completion {

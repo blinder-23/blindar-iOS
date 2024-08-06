@@ -41,23 +41,9 @@ class UserAPI {
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw URLError(.badServerResponse)
                 }
-                switch httpResponse.statusCode {
-                case 200:
-                    print("사용자 등록 상태코드 200")
-                default:
-                    print("사용자 등록 상태코드: \(httpResponse.statusCode)")
-                }
                 return data
             }
             .decode(type: UserResponse.self, decoder: JSONDecoder())
-            .handleEvents(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    print("사용자 등록값 반환 failed: \(error.localizedDescription)")
-                case .finished:
-                    print("사용자 등록값 반환 finished successfully")
-                }
-            })
             .mapError { error -> Error in
                 if let urlError = error as? URLError {
                     switch urlError.code {
