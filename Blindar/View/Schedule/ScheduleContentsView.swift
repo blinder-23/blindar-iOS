@@ -41,9 +41,6 @@ struct ScheduleContentsView: View {
                         VStack {
                             Text(schedule.schedule)
                                 .font(.title3)
-                                .onTapGesture {
-                                    print(schedulesForCurrentDate)
-                                }
                         }
                         .padding(.vertical, 3)
                     }

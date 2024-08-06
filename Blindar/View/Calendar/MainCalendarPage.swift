@@ -222,7 +222,6 @@ struct MainCalendarPage: View {
                               print("ScheduleFetch failed: \(error)")
                           }
                       }, receiveValue: { schedules in
-                          print(schedules)
                           for schedule in schedules {
                               let scheduleLocalData = ScheduleLocalData(
                                   schoolCode: schedule.schoolCode,
