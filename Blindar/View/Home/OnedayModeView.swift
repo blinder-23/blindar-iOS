@@ -12,20 +12,19 @@ struct OnedayModeView: View {
     @Binding var selectedDate: Date
     @Binding var mealsForCurrentDate: MealLocalData?
     @Binding var schedulesForCurrentDate: [ScheduleLocalData]
-    @State var isProperDate: Bool = true
 
     var body: some View {
         VStack {
             // 원데이모드 UI
             VStack {
-                VStack {
+                VStack(alignment: .leading) {
                     // 입력된 날짜
                     Text("입력한 날짜")
                     // 현재 날짜
                     Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
                         .font(.title)
                 }
-                VStack {
+                VStack(alignment: .leading) {
                     // 날짜입력
                     Text("날짜 입력")
                     // 날짜입력창 yyyy.MM.dd
@@ -42,11 +41,6 @@ struct OnedayModeView: View {
                             currentDate = newDate
                             selectedDate = newDate
                         }
-                    // 날짜 필드 검증 메세지
-                    if !isProperDate {
-                        Text("잘못된 날짜입니다")
-                            .foregroundStyle(Color.hexBA1A1A)
-                    }
                 }
                 HStack {
                     // 하루전, 오늘, 다음날 버튼

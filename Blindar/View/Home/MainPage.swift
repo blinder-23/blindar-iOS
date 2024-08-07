@@ -67,7 +67,9 @@ struct MainPage: View {
                             }
                         }
                     case .OneDay:
-                        OnedayModeView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                        ScrollView {
+                            OnedayModeView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                        }
                     }
                 }
                 .onAppear {
