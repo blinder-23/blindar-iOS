@@ -12,6 +12,7 @@ struct SettingPage: View {
     @State var isOnedayModeOn: Bool = false
     @State var isDailyNotificationOn: Bool = false
     @State var settingFeature: SettingFeature = .none
+    @Binding var mainPageMode: MainPageMode
     
     var body: some View {
         NavigationStack {
@@ -40,9 +41,9 @@ struct SettingPage: View {
                 }
                 VStack(alignment: .leading, spacing: 30) {
                     //하루씩 보기 모드
-                    CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .onedayMode)
+                    CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .onedayMode, mainPageMode: $mainPageMode)
                     //데일리 알림
-                    CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .dailyNotification)
+                    CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .dailyNotification, mainPageMode: $mainPageMode)
                     //피드백 보내기
                     NavigationLink(destination: {
                         FeedbackNavigationPage()
@@ -67,6 +68,9 @@ struct SettingPage: View {
             .offset(y: -screenHeight * 0.15)
         }
         .navigationBarTitle(Text("설정"))
+        .onAppear {
+            isOnedayModeOn = mainPageMode == .oneday
+        }
     }
 }
 
@@ -80,6 +84,8 @@ struct CustomBlock: View {
     @Binding var isOnedayModeOn: Bool
     @Binding var isDailyNotificationOn: Bool
     var settingFeature: SettingFeature
+    @Binding var mainPageMode: MainPageMode
+    
     var body: some View {
         VStack {
             switch settingFeature {
@@ -96,6 +102,13 @@ struct CustomBlock: View {
                         .font(.callout)
                     }
                 })
+                .onChange(of: isOnedayModeOn) { newValue in
+                    if newValue == true {
+                        mainPageMode = .oneday
+                    } else {
+                        mainPageMode = .calendar
+                    }
+                }
             case .dailyNotification:
                 Toggle(isOn: $isDailyNotificationOn, label: {
                     VStack(alignment: .leading) {
@@ -112,10 +125,11 @@ struct CustomBlock: View {
             case .none:
                 EmptyView()
             }
-            
         }
     }
 }
+
 #Preview {
-    SettingPage()
+    SettingPage(mainPageMode: .constant(.calendar))
+        .environmentObject(UserViewModel())
 }

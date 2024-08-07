@@ -10,8 +10,8 @@ import SwiftData
 import Combine
 
 enum MainPageMode {
-    case Calendar
-    case OneDay
+    case calendar
+    case oneday
 }
 
 struct MainPage: View {
@@ -29,7 +29,7 @@ struct MainPage: View {
     @State private var translation: CGFloat = 0
     @State var mealsForCurrentDate: MealLocalData?
     @State var schedulesForCurrentDate: [ScheduleLocalData] = []
-    @State var mainPageMode: MainPageMode = .OneDay
+    @State var mainPageMode: MainPageMode = .oneday
     
     var body: some View {
         NavigationStack {
@@ -52,7 +52,7 @@ struct MainPage: View {
                 //뷰 모드
                 VStack(spacing: 10) {
                     switch mainPageMode {
-                    case .Calendar:
+                    case .calendar:
                         //달력 모드
                         ScrollView {
                             //달력
@@ -66,7 +66,7 @@ struct MainPage: View {
                                 ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
                             }
                         }
-                    case .OneDay:
+                    case .oneday:
                         ScrollView {
                             OnedayModeView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate, schedulesForCurrentDate: $schedulesForCurrentDate)
                         }
@@ -92,7 +92,7 @@ struct MainPage: View {
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing, content: {
                     NavigationLink(destination: {
-                        SettingPage()
+                        SettingPage(mainPageMode: $mainPageMode)
                     }, label: {
                         Image(systemName: "gearshape")
                             .foregroundColor(.white)
