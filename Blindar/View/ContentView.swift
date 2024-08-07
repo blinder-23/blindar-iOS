@@ -21,14 +21,15 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            switch userVM.userState {
-            case .isCheckingRegistration:
-                SplashScreen()
-            case .isNotRegistered:
-                LoginPage()
-            case .isRegistered:
-                MainCalendarPage()
-            }
+            MainPage()
+//            switch userVM.userState {
+//            case .isCheckingRegistration:
+//                SplashScreen()
+//            case .isNotRegistered:
+//                LoginPage()
+//            case .isRegistered:
+//                MainPage()
+//            }
         }
         .onAppear {
             //자동 로그인

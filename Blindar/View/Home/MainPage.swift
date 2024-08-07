@@ -29,7 +29,7 @@ struct MainPage: View {
     @State private var translation: CGFloat = 0
     @State var mealsForCurrentDate: MealLocalData?
     @State var schedulesForCurrentDate: [ScheduleLocalData] = []
-    @State var mainPageMode: MainPageMode = .Calendar
+    @State var mainPageMode: MainPageMode = .OneDay
     
     var body: some View {
         NavigationStack {
@@ -65,18 +65,18 @@ struct MainPage: View {
                                 //일정 뷰
                                 ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
                             }
-                            .onAppear {
-                                selectedDate = currentDate
-                                //디버깅
-                                //updateMealsForCurrentDate()
-                            }
-                            .onChange(of: selectedDate) { _ in
-                                updateMealsAndSchedulesForCurrentDate()
-                            }
                         }
                     case .OneDay:
-                        OnedayModeView()
+                        OnedayModeView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate, schedulesForCurrentDate: $schedulesForCurrentDate)
                     }
+                }
+                .onAppear {
+                    selectedDate = currentDate
+                    //디버깅
+                    //updateMealsForCurrentDate()
+                }
+                .onChange(of: selectedDate) { _ in
+                    updateMealsAndSchedulesForCurrentDate()
                 }
             }
             .onAppear {
@@ -188,5 +188,5 @@ struct MainPage: View {
 }
 
 #Preview {
-    MainCalendarPage()
+    MainPage()
 }
