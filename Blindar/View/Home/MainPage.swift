@@ -91,6 +91,14 @@ struct MainPage: View {
             }
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing, content: {
+                    Button(action: {
+                        refreshMeals(for: Date())
+                        refreshSchedules(for: Date())                    }, label: {
+                        Image(systemName: "arrow.circlepath")
+                            .foregroundColor(.white)
+                    })
+                })
+                ToolbarItem(placement: .topBarTrailing, content: {
                     NavigationLink(destination: {
                         SettingPage(mainPageMode: $mainPageMode)
                     }, label: {
@@ -99,6 +107,73 @@ struct MainPage: View {
                     })
                 })
             })
+        }
+    }
+    
+    func refreshMeals(for date: Date) {
+        let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
+        let year = extractedDate.year
+        let month = extractedDate.monthWithZero
+        
+        for meal in savedMeals {
+            modelContext.delete(meal)
+        }
+        
+        try? modelContext.save()
+        
+        if let school = schoolVM.getSchoolInfoFromUserDefaults() {
+            mealVM.fetchMeals(schoolCode: school.schoolCode, year: year, month: month)
+                .sink(receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        print("Fetch failed: \(error)")
+                    }
+                }, receiveValue: { meals in
+                    for meal in meals {
+                        let mealLocalData = MealLocalData(
+                            ymd: meal.ymd,
+                            dishes: meal.dishes,
+                            origins: meal.origins,
+                            nutrients: meal.nutrients,
+                            calorie: meal.calorie,
+                            mealTime: meal.mealTime
+                        )
+                        modelContext.insert(mealLocalData)
+                    }
+                    try? modelContext.save()
+                })
+                .store(in: &mealVM.cancellables)
+        } else {
+            print("cannot find school code")
+        }
+    }
+    
+    func refreshSchedules(for date: Date) {
+        let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
+        let year = extractedDate.year
+        let month = extractedDate.monthWithZero
+        
+        for schedule in savedSchedules {
+            modelContext.delete(schedule)
+        }
+        
+        try? modelContext.save()
+        
+        if let school = schoolVM.getSchoolInfoFromUserDefaults() {
+            scheduleVM.fetcSchedules(schoolCode: school.schoolCode, year: year, month: month)
+                .sink(receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        print("Fetch failed: \(error)")
+                    }
+                }, receiveValue: { schedules in
+                    for schedule in schedules {
+                        let scheduleLocalData = ScheduleLocalData(schoolCode: schedule.schoolCode, id: schedule.id, date: schedule.date, schedule: schedule.scheduleInfo, contents: schedule.contents, dateString: DateUtils.shared.convertEpochToDateString(epoch: schedule.date))
+                        modelContext.insert(scheduleLocalData)
+                    }
+                    try? modelContext.save()
+                })
+                .store(in: &scheduleVM.cancellables)
+        } else {
+            print("cannot find school code")
         }
     }
     
