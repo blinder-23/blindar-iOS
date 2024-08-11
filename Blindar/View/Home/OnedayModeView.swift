@@ -8,56 +8,103 @@
 import SwiftUI
 
 struct OnedayModeView: View {
+    @EnvironmentObject var uiManager: UIManager
     @Binding var currentDate: Date
     @Binding var selectedDate: Date
     @Binding var mealsForCurrentDate: MealLocalData?
     @Binding var schedulesForCurrentDate: [ScheduleLocalData]
 
     var body: some View {
-        VStack {
-            // 원데이모드 UI
+        if uiManager.isPortrait {
             VStack {
-                VStack(alignment: .leading) {
-                    // 입력된 날짜
-                    Text("입력한 날짜")
-                    // 현재 날짜
-                    Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
-                        .font(.title)
+                VStack {
+                    VStack(alignment: .leading) {
+                        Text("입력한 날짜")
+                        // 현재 날짜
+                        Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
+                            .font(.title)
+                    }
+                    VStack(alignment: .leading) {
+                        // 날짜입력
+                        Text("날짜 입력")
+                        // 날짜입력창 yyyy.MM.dd
+                        DatePicker("날짜 입력", selection: $currentDate, displayedComponents: [.date])
+                            .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
+                            .background(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(Color.white)
+                                    .frame(height: 200)
+                            )
+                            .onChange(of: currentDate) { newDate in
+                                // 선택된 날짜를 currentDate에 반영
+                                currentDate = newDate
+                                selectedDate = newDate
+                            }
+                    }
+                    HStack {
+                        // 하루전, 오늘, 다음날 버튼
+                        DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
+                        DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
+                        DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
+                    }
                 }
-                VStack(alignment: .leading) {
-                    // 날짜입력
-                    Text("날짜 입력")
-                    // 날짜입력창 yyyy.MM.dd
-                    DatePicker("날짜 입력", selection: $currentDate, displayedComponents: [.date])
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .labelsHidden()
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.white)
-                                .frame(height: 200)
-                        )
-                        .onChange(of: currentDate) { newDate in
-                            // 선택된 날짜를 currentDate에 반영
-                            currentDate = newDate
-                            selectedDate = newDate
-                        }
-                }
-                HStack {
-                    // 하루전, 오늘, 다음날 버튼
-                    DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
-                    DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
-                    DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
+                .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)
+                .padding()
+                .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
+                // 정보
+                VStack {
+                    // 식단 뷰
+                    MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
+                    // 일정 뷰
+                    ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
                 }
             }
-            .frame(width: UIScreen.main.bounds.width * 0.85)
-            .padding()
-            .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
-            // 정보
-            VStack {
-                // 식단 뷰
-                MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
-                // 일정 뷰
-                ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+        } else {
+            HStack(alignment: .top) {
+                VStack {
+                    VStack(alignment: .leading) {
+                        Text("입력한 날짜")
+                        // 현재 날짜
+                        Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
+                            .font(.title)
+                    }
+                    VStack(alignment: .leading) {
+                        // 날짜입력
+                        Text("날짜 입력")
+                        // 날짜입력창 yyyy.MM.dd
+                        DatePicker("날짜 입력", selection: $currentDate, displayedComponents: [.date])
+                            .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
+                            .background(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(Color.white)
+                                    .frame(height: 200)
+                            )
+                            .onChange(of: currentDate) { newDate in
+                                // 선택된 날짜를 currentDate에 반영
+                                currentDate = newDate
+                                selectedDate = newDate
+                            }
+                    }
+                    HStack {
+                        // 하루전, 오늘, 다음날 버튼
+                        DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
+                        DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
+                        DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
+                    }
+                }
+                .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)                .padding()
+                .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
+                ScrollView {
+                    // 정보
+                    VStack {
+                        // 식단 뷰
+                        MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
+                        // 일정 뷰
+                        ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                    }
+                }
             }
         }
     }

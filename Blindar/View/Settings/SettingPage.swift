@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingPage: View {
+    @EnvironmentObject var uiManager: UIManager
     @EnvironmentObject var userVM: UserViewModel
     @State var isOnedayModeOn: Bool = false
     @State var isDailyNotificationOn: Bool = false
@@ -22,9 +23,11 @@ struct SettingPage: View {
                     Image("AppIconImage")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: screenWidth * 0.17)
+                        .frame(width: uiManager.screenWidth * 0.17)
                         .clipShape(Circle())
-                    Text(userVM.user.name)
+                    if let user = userVM.getUserInfoFromUserDefaults() {
+                        Text(user.name)
+                    }
                     Spacer()
                     //로그아웃
                     Button(action: {
@@ -32,7 +35,7 @@ struct SettingPage: View {
                     }, label: {
                         RoundedRectangle(cornerRadius: 8)
                             .foregroundColor(.hex00497B)
-                            .frame(width: screenHeight * 0.11, height: screenWidth * 0.1)
+                            .frame(width: uiManager.screenHeight * 0.11, height: uiManager.screenWidth * 0.1)
                             .overlay {
                                 Text("로그아웃")
                                     .foregroundStyle(Color.white)
@@ -65,7 +68,7 @@ struct SettingPage: View {
             }
             .padding(.vertical, 0)
             .padding(.horizontal, 12)
-            .offset(y: -screenHeight * 0.15)
+            .offset(y: -uiManager.screenHeight * 0.15)
         }
         .navigationBarTitle(Text("설정"))
         .onAppear {

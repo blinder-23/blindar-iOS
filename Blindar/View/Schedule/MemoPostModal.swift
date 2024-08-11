@@ -50,15 +50,19 @@ struct MemoPostModal: View {
                 Button(action: {
                     newMemo.date = DateUtils.shared.compactDateFormatter.string(from: currentDate)
                     newMemo.contents = contents
-                    postMemoToServer(newMemo: newMemo)
-                        .sink(receiveValue: { newMemoId in
-                            if let newMemoId = newMemoId {
-                                let newMemoToLocal = MemoLocalData(userId: newMemo.userId, date: newMemo.date, memoId: newMemoId, contents: newMemo.contents)
-                                postMemoToLocal(newMemoToLocal: newMemoToLocal)
-                            }
-                            dismiss()
-                        })
-                        .store(in: &memoVM.cancellables)
+                    if let user = userVM.getUserInfoFromUserDefaults() {
+                        newMemo.userId = user.userId
+                        postMemoToServer(newMemo: newMemo)
+                            .sink(receiveValue: { newMemoId in
+                                if let newMemoId = newMemoId, let user = userVM.getUserInfoFromUserDefaults() {
+                                    print("디버깅 : ", user.userId)
+                                    let newMemoToLocal = MemoLocalData(userId: user.userId, date: newMemo.date, memoId: newMemoId, contents: newMemo.contents)
+                                    postMemoToLocal(newMemoToLocal: newMemoToLocal)
+                                }
+                                dismiss()
+                            })
+                            .store(in: &memoVM.cancellables)
+                    }
                 }, label: {
                     RoundedRectangle(cornerRadius: 16)
                         .foregroundColor(.hex00497B)

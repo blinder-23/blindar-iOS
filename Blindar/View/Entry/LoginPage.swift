@@ -10,6 +10,7 @@ import SwiftUI
 import SwiftData
 
 struct LoginPage: View {
+    @EnvironmentObject var uiManager: UIManager
     @Environment(\.window) var window: UIWindow?
     @State private var appleLoginCoordinator: AppleAuthCoordinator?
     @State var isLoggedIn = false
@@ -21,14 +22,14 @@ struct LoginPage: View {
                 Image("SplashAppIcon")
                     .resizable()
                     .scaledToFit()
-                    .frame(height: screenHeight * 0.3)
+                    .frame(height: uiManager.screenHeight * 0.3)
                 //로그인 버튼
                 Button(action: {
                     appleLogin()
                 }, label: {
                     RoundedRectangle(cornerRadius: 14)
                         .stroke(Color.white, lineWidth: 1.5)
-                        .frame(width: screenWidth * 0.85, height: 55)
+                        .frame(width: uiManager.screenWidth * 0.85, height: 55)
                         .overlay {
                             HStack {
                                 Image(systemName: "apple.logo")

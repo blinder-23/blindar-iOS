@@ -47,10 +47,12 @@ struct FeedbackNavigationPage: View {
                     //전송 버튼
                     Button(action: {
                         let deviceInfo = getDeviceInfo()
-                        newFeedback = Feedback(userId: userVM.user.userId, deviceName: deviceInfo.deviceName, osVersion: deviceInfo.osVersion, appVersion: deviceInfo.osVersion, contents: contents)
-                        //피드백 전송 함수 호출
-                        feedbackVM.postFeedback(newFeedback: newFeedback)
-                        dismiss()
+                        if let user = userVM.getUserInfoFromUserDefaults() {
+                            newFeedback = Feedback(userId: user.userId, deviceName: deviceInfo.deviceName, osVersion: deviceInfo.osVersion, appVersion: deviceInfo.osVersion, contents: contents)
+                            //피드백 전송 함수 호출
+                            feedbackVM.postFeedback(newFeedback: newFeedback)
+                            dismiss()
+                        }
                     }, label: {
                         RoundedRectangle(cornerRadius: 16)
                             .foregroundColor(.hex00497B)

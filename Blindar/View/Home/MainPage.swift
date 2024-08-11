@@ -15,7 +15,10 @@ enum MainPageMode {
 }
 
 struct MainPage: View {
+    @EnvironmentObject var uiManager: UIManager
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var schoolVM: SchoolViewModel
     @EnvironmentObject var mealVM: MealViewModel
@@ -29,7 +32,7 @@ struct MainPage: View {
     @State private var translation: CGFloat = 0
     @State var mealsForCurrentDate: MealLocalData?
     @State var schedulesForCurrentDate: [ScheduleLocalData] = []
-    @State var mainPageMode: MainPageMode = .oneday
+    @State var mainPageMode: MainPageMode = .calendar
     
     var body: some View {
         NavigationStack {
@@ -42,34 +45,46 @@ struct MainPage: View {
                         if let school = schoolVM.getSchoolInfoFromUserDefaults() {
                             Text(school.schoolName)
                                 .foregroundStyle(Color.white)
-                                .font(.title2)
+                                .font(.title)
                         } else {
                             Text("학교 정보 없음")
                         }
                     })
                 }
-                .padding(.bottom, 20)
+                .padding(.bottom, uiManager.isPortrait ? 20 : 50)
                 //뷰 모드
                 VStack(spacing: 10) {
                     switch mainPageMode {
                     case .calendar:
-                        //달력 모드
-                        ScrollView {
-                            //달력
-                            CalendarView(currentDate: $currentDate, selectedDate: $selectedDate)
-                                .padding(.bottom)
-                            //정보
-                            VStack {
-                                //식단 뷰
-                                MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
-                                //일정 뷰
-                                ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                        if uiManager.isPortrait {
+                            ScrollView {
+                                //달력
+                                CalendarView(currentDate: $currentDate, selectedDate: $selectedDate)
+                                    .padding(.bottom)
+                                //정보
+                                VStack {
+                                    //식단 뷰
+                                    MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
+                                    //일정 뷰
+                                    ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                                }
+                            }
+                        } else {
+                            HStack(alignment: .top) {
+                                CalendarView(currentDate: $currentDate, selectedDate: $selectedDate)
+                                ScrollView {
+                                    //정보
+                                    VStack {
+                                        //식단 뷰
+                                        MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
+                                        //일정 뷰
+                                        ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                                    }
+                                }
                             }
                         }
                     case .oneday:
-                        ScrollView {
-                            OnedayModeView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate, schedulesForCurrentDate: $schedulesForCurrentDate)
-                        }
+                        OnedayModeView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate, schedulesForCurrentDate: $schedulesForCurrentDate)
                     }
                 }
                 .onAppear {
@@ -93,7 +108,8 @@ struct MainPage: View {
                 ToolbarItem(placement: .topBarTrailing, content: {
                     Button(action: {
                         refreshMeals(for: Date())
-                        refreshSchedules(for: Date())                    }, label: {
+                        refreshSchedules(for: Date())
+                    }, label: {
                         Image(systemName: "arrow.circlepath")
                             .foregroundColor(.white)
                     })
@@ -108,6 +124,7 @@ struct MainPage: View {
                 })
             })
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     func refreshMeals(for date: Date) {

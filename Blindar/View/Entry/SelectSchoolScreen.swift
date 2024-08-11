@@ -69,6 +69,7 @@ struct SelectSchoolScreen: View {
                             saveSchoolToUserDefaults()
                             let newUser: User = User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname)
                             postUserToServer(newUser: newUser)
+                            userVM.saveUserInfoToUserDefaults(user: User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname, schoolName: query))
                             dismiss()
                         }
                     }

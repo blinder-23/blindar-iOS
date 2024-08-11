@@ -15,6 +15,7 @@ enum MealType: String, CaseIterable {
 }
 
 struct MealContentsView: View {
+    @EnvironmentObject var uiManager: UIManager
     @EnvironmentObject var mealVM: MealViewModel
     @Environment(\.modelContext) private var modelContext
     @State private var mealtype: MealType = .lunch
@@ -98,7 +99,7 @@ struct MealContentsView: View {
                         .background(in: RoundedRectangle(cornerRadius: 16))
                 }
             }
-            .frame(width: UIScreen.main.bounds.width * 0.85)
+            .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)
             .padding()
             .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
         }

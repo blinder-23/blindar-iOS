@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ScheduleContentsView: View {
+    @EnvironmentObject var uiManager: UIManager
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var memoVM: MemoViewModel
@@ -62,7 +63,7 @@ struct ScheduleContentsView: View {
                         .background(in: RoundedRectangle(cornerRadius: 16))
                 }
             }
-            .frame(width: screenWidth * 0.85)
+            .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)
             .padding()
             .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
         }

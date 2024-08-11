@@ -59,6 +59,7 @@ struct MemoNavigationPage: View {
         .onAppear {
             print("Number of saved memos: \(savedMemos.count)")
         }
+        
     }
 }
 

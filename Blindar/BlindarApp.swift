@@ -47,6 +47,7 @@ struct BlindarApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(UIManager())
                 .environmentObject(UserViewModel())
                 .environmentObject(MemoViewModel())
                 .environmentObject(MealViewModel())

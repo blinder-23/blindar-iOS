@@ -16,7 +16,6 @@ import AuthenticationServices
 var globalUid: String = ""
 
 class AppleAuthCoordinator: NSObject {
-    var userData: User = User(userId: "", schoolCode: 0, name: "")
     var currentNonce: String?
     let window: UIWindow?
     var isLoggedIn = false

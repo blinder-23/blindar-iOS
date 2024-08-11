@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseDatabase
 
 var globalNickname: String = ""
 
@@ -13,6 +14,8 @@ struct SelectNicknameScreen: View {
     @EnvironmentObject var userVM: UserViewModel
     @State var nickname: String = ""
     @State var isNicknameProper: Bool = true
+    @State var isDuplicated: Bool = false
+
     
     var body: some View {
         NavigationStack {
@@ -37,7 +40,6 @@ struct SelectNicknameScreen: View {
                                     TextField("한글 15자, 영문 및 숫자 30자", text: $nickname)
                                         .onChange(of: nickname) { newValue in
                                             validateNickname(newValue)
-                                            userVM.checkNicknameDuplication(nickname: newValue)
                                         }
                                 }
                                 .padding(.horizontal, 8)
@@ -73,11 +75,6 @@ struct SelectNicknameScreen: View {
             }
             .padding()
         }
-        .onReceive(userVM.$isNicknameDuplicated, perform: { isDuplicated in
-            if isDuplicated {
-                isNicknameProper = false
-            }
-        })
         .onDisappear {
             globalNickname = nickname
         }
