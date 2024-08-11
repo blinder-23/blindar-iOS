@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 var globalSchoolCode: Int = 0
+var globalSchoolName: String = ""
 
 struct SelectSchoolScreen: View {
     @Environment(\.modelContext) private var modelContext
@@ -55,23 +56,24 @@ struct SelectSchoolScreen: View {
                 //학교 목록
                 ScrollView {
                     ForEach(filteredSchools, id: \.schoolCode) { school in
-                        VStack(alignment: .leading) {
-                            VStack(spacing: 3) {
-                                Text(school.schoolName)
+                        NavigationLink(destination: {
+                            SelectNicknameScreen()
+                        }, label: {
+                            VStack(alignment: .leading) {
+                                VStack(spacing: 3) {
+                                    Text(school.schoolName)
+                                }
+                                .padding(.vertical)
+                                Rectangle()
+                                    .frame(height: 0.3)
                             }
-                            .padding(.vertical)
-                            Rectangle()
-                                .frame(height: 0.3)
-                        }
-                        .onTapGesture {
-                            query = school.schoolName
-                            globalSchoolCode = school.schoolCode
-                            saveSchoolToUserDefaults()
-                            let newUser: User = User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname)
-                            postUserToServer(newUser: newUser)
-                            userVM.saveUserInfoToUserDefaults(user: User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname, schoolName: query))
-                            dismiss()
-                        }
+                            .onTapGesture {
+                                query = school.schoolName
+                                globalSchoolName = school.schoolName
+                                globalSchoolCode = school.schoolCode
+                                saveSchoolToUserDefaults()
+                            }
+                        })
                     }
                 }
             }
@@ -86,14 +88,6 @@ struct SelectSchoolScreen: View {
         schoolVM.saveSchoolInfoToUserDefaults(school: School(schoolName: query, schoolCode: globalSchoolCode))
         refreshMeals(for: Date())
         refreshSchedules(for: Date())
-    }
-    
-    func postUserToServer(newUser: User) {
-        userVM.postUser(newUser: newUser)
-            .sink(receiveValue: { _ in
-                userVM.userState = .isRegistered
-            })
-            .store(in: &userVM.cancellables)
     }
     
     func refreshMeals(for date: Date) {
@@ -162,8 +156,6 @@ struct SelectSchoolScreen: View {
             print("cannot find school code")
         }
     }
-
-    
 }
 
 #Preview {

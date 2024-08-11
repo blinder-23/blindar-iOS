@@ -16,7 +16,6 @@ struct SelectNicknameScreen: View {
     @State var isNicknameProper: Bool = true
     @State var isDuplicated: Bool = false
 
-    
     var body: some View {
         NavigationStack {
             VStack(spacing: 200) {
@@ -46,14 +45,20 @@ struct SelectNicknameScreen: View {
                             }
                         //경고메세지
                         if !isNicknameProper {
-                            Text("조건에 맞지 않거나 중복된 이름입니다")
+                            Text("조건에 맞지 않는 이름입니다")
+                                .foregroundColor(Color.hexFFB4AB)
+                        }
+                        if isDuplicated {
+                            Text("중복된 이름입니다")
                                 .foregroundColor(Color.hexFFB4AB)
                         }
                     }
                 }
-                //다음 버튼
-                NavigationLink(destination: {
-                    SelectSchoolScreen()
+                //회원가입 버튼
+                Button(action: {
+                    let newUser: User = User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname)
+                    postUserToServer(newUser: newUser)
+                    userVM.saveUserInfoToUserDefaults(user: User(userId: globalUid, schoolCode: globalSchoolCode, name: globalNickname, schoolName: globalSchoolName))
                 }, label: {
                     Rectangle()
                         .frame(width: UIScreen.main.bounds.width * 0.94, height: 60)
@@ -91,6 +96,14 @@ struct SelectNicknameScreen: View {
         } else {
             isNicknameProper = true
         }
+    }
+    
+    func postUserToServer(newUser: User) {
+        userVM.postUser(newUser: newUser)
+            .sink(receiveValue: { _ in
+                userVM.userState = .isRegistered
+            })
+            .store(in: &userVM.cancellables)
     }
 }
 

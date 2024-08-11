@@ -58,22 +58,28 @@ class UserViewModel: ObservableObject {
         .eraseToAnyPublisher()
     }
     
-    // Firestore에 사용자 이름 저장
-    func tryStoreUsername(username: String, userId: String) -> Future<Void, Error> {
+    func tryStoreUse(user: User) -> Future<Void, Error> {
         return Future { promise in
-            let userRef = self.firebaseDB.child("users").child(username).child("owner")
+            let userRef = self.firebaseDB.child("users").child(user.name)
             
-            // Check if the username already exists
+            // Step 1: Check if the username already exists
             userRef.observeSingleEvent(of: .value) { snapshot in
                 if snapshot.exists() {
-                    // Username already exists
+                    // Username already exists, do not proceed to save
                     self.isNicknameDuplicated = true
-                    promise(.failure(NSError(domain: "Username already exists", code: 0, userInfo: nil)))
+                    let error = NSError(domain: "Username already exists", code: 0, userInfo: nil)
+                    promise(.failure(error))
                 } else {
-                    // Username does not exist, proceed to store the userId
-                    userRef.setValue(userId) { error, _ in
+                    // Step 2: Username does not exist, proceed to store the data
+                    let userData: [String: Any] = [
+                        "owner": user.userId,
+                        "school_code": user.schoolCode,
+                        "school_name": user.schoolName
+                    ]
+                    
+                    userRef.setValue(userData) { error, _ in
                         if let error = error {
-                            print("Failed to store user: \(error.localizedDescription)")
+                            // Handle error when setting value
                             promise(.failure(error))
                         } else {
                             // Successfully stored user
@@ -86,8 +92,36 @@ class UserViewModel: ObservableObject {
         }
     }
     
-    func storeUserWithCombine(username: String, userId: String) {
-        tryStoreUsername(username: username, userId: userId)
+    // Firestore에 사용자 이름 저장
+//    func tryStoreUsername(username: String, userId: String) -> Future<Void, Error> {
+//        return Future { promise in
+//            let userRef = self.firebaseDB.child("users").child(username).child("owner")
+//            
+//            // Check if the username already exists
+//            userRef.observeSingleEvent(of: .value) { snapshot in
+//                if snapshot.exists() {
+//                    // Username already exists
+//                    self.isNicknameDuplicated = true
+//                    promise(.failure(NSError(domain: "Username already exists", code: 0, userInfo: nil)))
+//                } else {
+//                    // Username does not exist, proceed to store the userId
+//                    userRef.setValue(userId) { error, _ in
+//                        if let error = error {
+//                            print("Failed to store user: \(error.localizedDescription)")
+//                            promise(.failure(error))
+//                        } else {
+//                            // Successfully stored user
+//                            self.isNicknameDuplicated = false
+//                            promise(.success(()))
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+    
+    func storeUserWithCombine(user: User) {
+        tryStoreUse(user: user)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
