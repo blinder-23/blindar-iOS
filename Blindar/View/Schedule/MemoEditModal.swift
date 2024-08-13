@@ -15,7 +15,7 @@ struct MemoEditModal: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var memoVM: MemoViewModel
     @Environment(\.dismiss) private var dismiss
-    let currentDate = Date()
+    @Binding var currentDate: Date
     @State var contents = ""
     @State var yyyyMMdddate = ""
     @State var localMemo: MemoLocalData

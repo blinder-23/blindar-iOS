@@ -30,23 +30,23 @@ struct SettingPage: View {
                         .font(.title2)
                     Spacer()
                     //로그아웃
-                    Button(action: {
-                        
-                    }, label: {
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundColor(.hex00497B)
-                            .frame(width: uiManager.screenHeight * 0.11, height: uiManager.screenWidth * 0.1)
-                            .overlay {
-                                Text("로그아웃")
-                                    .foregroundStyle(Color.white)
-                            }
-                    })
+//                    Button(action: {
+//                        
+//                    }, label: {
+//                        RoundedRectangle(cornerRadius: 8)
+//                            .foregroundColor(.hex00497B)
+//                            .frame(width: uiManager.screenHeight * 0.11, height: uiManager.screenWidth * 0.1)
+//                            .overlay {
+//                                Text("로그아웃")
+//                                    .foregroundStyle(Color.white)
+//                            }
+//                    })
                 }
                 VStack(alignment: .leading, spacing: 30) {
                     //하루씩 보기 모드
                     CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .onedayMode, mainPageMode: $mainPageMode)
                     //데일리 알림
-                    CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .dailyNotification, mainPageMode: $mainPageMode)
+//                    CustomBlock(isOnedayModeOn: $isOnedayModeOn, isDailyNotificationOn: $isDailyNotificationOn, settingFeature: .dailyNotification, mainPageMode: $mainPageMode)
                     //피드백 보내기
                     NavigationLink(destination: {
                         FeedbackNavigationPage()

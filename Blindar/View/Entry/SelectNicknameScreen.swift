@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 import SwiftData
+import UIKit
 
 struct SelectNicknameScreen: View {
     @Environment(\.dismiss) private var dismiss
@@ -36,7 +37,7 @@ struct SelectNicknameScreen: View {
                 }
                 //입력창
                 VStack(alignment: .leading) {
-                    Text("한글 15자, 영문 및 숫자 30자")
+                    Text("닉네임")
                         .foregroundColor(isNicknameProper ? .white : Color.hexFFB4AB)
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(isNicknameProper ? Color.white : Color.hexFFB4AB, lineWidth: 1)
@@ -55,11 +56,17 @@ struct SelectNicknameScreen: View {
                     if !isNicknameProper {
                         Text("조건에 맞지 않는 이름입니다")
                             .foregroundColor(Color.hexFFB4AB)
+                            .onAppear {
+                                UIAccessibility.post(notification: .announcement, argument: "조건에 맞지 않는 이름입니다")
+                            }
                     }
                     //경고메세지
                     if isDuplicated {
                         Text("중복된 이름입니다")
                             .foregroundColor(Color.hexFFB4AB)
+                            .onAppear {
+                                UIAccessibility.post(notification: .announcement, argument: "중복된 이름입니다")
+                            }
                     }
                 }
             }

@@ -37,7 +37,7 @@ struct SelectSchoolScreen: View {
                     Spacer()
                 }
                 .padding(.vertical, 20)
-
+                
                 // Search Bar
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(Color.white)
@@ -45,13 +45,14 @@ struct SelectSchoolScreen: View {
                     .overlay {
                         HStack {
                             Image(systemName: "magnifyingglass")
+                                .accessibilityHidden(true)
                             TextField(text: $query, prompt: Text("학교 이름 검색").foregroundStyle(.hexC6C6CA), label: {
                                 EmptyView()
                             })
                         }
                         .padding()
                     }
-
+                
                 // School List
                 ScrollView {
                     ForEach(filteredSchools, id: \.schoolCode) { school in
@@ -66,11 +67,11 @@ struct SelectSchoolScreen: View {
                             }
                             .foregroundColor(.white)
                         })
+                        .accessibilityLabel(Text(school.schoolName))
                     }
                 }
             }
             .padding()
-        
         .onAppear {
             schoolVM.fetchSchools()
         }

@@ -45,15 +45,17 @@ struct ScheduleContentsView: View {
                         }
                         .padding(.vertical, 3)
                     }
+                    .accessibilityElement(children: .combine)
                 }
                 
                 //Memo List
                 ForEach(savedMemos, id: \.memoId) { memo in
                     Text(memo.contents)
                 }
+                .accessibilityElement(children: .combine)
                 //Memo Edit Button
                 NavigationLink {
-                    MemoNavigationPage()
+                    MemoNavigationPage(currentDate: $currentDate)
                 } label: {
                     Text("메모 편집하기")
                         .foregroundStyle(Color.white)

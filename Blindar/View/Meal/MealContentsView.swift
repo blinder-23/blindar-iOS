@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UIKit
 
 enum MealType: String, CaseIterable {
     case breakfast = "조식"
@@ -32,26 +33,37 @@ struct MealContentsView: View {
                 VStack(spacing: 20) {
                     //헤더
                     HStack {
-                        ForEach(MealType.allCases, id: \.self) { type in
-                            Text(type.rawValue)
-                                .font(.title2)
-                                .fontWeight(mealtype == type ? .bold : .regular)
-                                .foregroundColor(mealtype == type ? .white : .gray)
-                                .padding(.horizontal, 8)
-                                .padding(.bottom, 5)
-                                .overlay(alignment: .bottom, content: {
-                                    if mealtype == type {
-                                        Rectangle()
-                                            .frame(height: 3)
-                                    }
-                                })
-                                .onTapGesture {
-                                    mealtype = type
-                                    //디버깅
-//                                    updateMealsForCurrentDate()
-                                }
-                        }
+                        Text("중식")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 8)
+                            .padding(.bottom, 5)
+                            .overlay(alignment: .bottom, content: {
+                                Rectangle()
+                                    .frame(height: 3)
+                            })
                     }
+                    //                    HStack {
+                    //                        ForEach(MealType.allCases, id: \.self) { type in
+                    //                            Text(type.rawValue)
+                    //                                .font(.title2)
+                    //                                .fontWeight(mealtype == type ? .bold : .regular)
+                    //                                .foregroundColor(mealtype == type ? .white : .gray)
+                    //                                .padding(.horizontal, 8)
+                    //                                .padding(.bottom, 5)
+                    //                                .overlay(alignment: .bottom, content: {
+                    //                                    if mealtype == type {
+                    //                                        Rectangle()
+                    //                                            .frame(height: 3)
+                    //                                    }
+                    //                                })
+                    //                                .onTapGesture {
+                    //                                    mealtype = type
+                    //                                    //디버깅
+                    ////                                    updateMealsForCurrentDate()
+                    //                                }
+                    //                        }
+                    //                    }
                     .overlay(alignment: .bottom, content: {
                         Rectangle()
                             .frame(height: 1)
@@ -65,6 +77,8 @@ struct MealContentsView: View {
                                     .font(.title3)
                                     .padding(.vertical, 3)
                             }
+                            .accessibilityElement(children: .combine)
+                            .accessibilityLabel(meals.dishes.map { $0.menu }.joined(separator: ", "))
                         }
                     } else {
                         Text("식단 정보가 없습니다")
@@ -85,7 +99,7 @@ struct MealContentsView: View {
                         }
                     }
                     //디버깅
-//                    updateMealsForCurrentDate()
+                    //                    updateMealsForCurrentDate()
                 })
                 //영양 정보 확인하기 버튼
                 NavigationLink {

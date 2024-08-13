@@ -19,12 +19,10 @@ struct LoginPage: View {
         NavigationView {
             if uiManager.isPortrait {
                 VStack(spacing: 200) {
-                    //스플래시 앱 아이콘
                     Image("SplashAppIcon")
                         .resizable()
                         .scaledToFit()
                         .frame(height: uiManager.screenHeight * 0.3)
-                    //로그인 버튼
                     Button(action: {
                         appleLogin()
                     }, label: {
@@ -50,7 +48,6 @@ struct LoginPage: View {
             } else {
                 HStack {
                     VStack {
-                        //스플래시 앱 아이콘
                         Image("SplashAppIcon")
                             .resizable()
                             .scaledToFit()
@@ -58,7 +55,6 @@ struct LoginPage: View {
                     }
                     .frame(width: uiManager.screenWidth * 0.45)
                     VStack {
-                        //로그인 버튼
                         Button(action: {
                             appleLogin()
                         }, label: {
@@ -72,7 +68,6 @@ struct LoginPage: View {
                                     }
                                     .font(.headline)
                                     .foregroundColor(.white)
-                                    
                                 }
                         })
                     }
@@ -85,13 +80,13 @@ struct LoginPage: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .onChange(of: appleLoginCoordinator?.isLoggedIn, initial: false, {
-            self.isLoggedIn = true
-        })
     }
     
     func appleLogin() {
-        appleLoginCoordinator = AppleAuthCoordinator(window: window)
+        appleLoginCoordinator = AppleAuthCoordinator(window: window) {
+            // Completion handler called after login UI is dismissed
+                self.isLoggedIn = true
+        }
         appleLoginCoordinator?.startAppleLogin()
     }
 }

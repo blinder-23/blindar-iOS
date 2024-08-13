@@ -37,7 +37,8 @@ struct ContentView: View {
         }
         .onAppear {
             // 자동 로그인
-            if userVM.getUserInfoFromUserDefaults() != nil {
+            if let user = userVM.getUserInfoFromUserDefaults() {
+                userVM.user = user
                 userVM.userState = .isRegistered
             } else {
                 userVM.userState = .isNotRegistered

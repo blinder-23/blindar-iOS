@@ -15,7 +15,7 @@ struct MemoPostModal: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var memoVM: MemoViewModel
     @Environment(\.dismiss) private var dismiss
-    let currentDate = Date()
+    @Binding var currentDate: Date
     @State var newMemo: Memo = Memo(userId: "", date: "", memoId: "", contents: "")
     @State private var contents = ""
     @State private var yyyyMMdddate = ""

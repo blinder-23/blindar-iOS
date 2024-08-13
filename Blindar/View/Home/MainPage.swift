@@ -110,6 +110,7 @@ struct MainPage: View {
                         Image(systemName: "arrow.circlepath")
                             .foregroundColor(.white)
                     })
+                    .accessibilityLabel(Text("새로고침"))
                 })
                 ToolbarItem(placement: .topBarTrailing, content: {
                     NavigationLink(destination: {
@@ -118,6 +119,7 @@ struct MainPage: View {
                         Image(systemName: "gearshape")
                             .foregroundColor(.white)
                     })
+                    .accessibilityLabel(Text("설정 페이지 이동"))
                 })
             })
         }

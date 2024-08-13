@@ -11,7 +11,7 @@ import SwiftData
 struct MemoNavigationPage: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var memoVM: MemoViewModel
-    let currentDate = Date()
+    @Binding var currentDate: Date
     @State var isMemoPostModalPresented: Bool = false
     @State var isMemoEditModalPresented: Bool = false
     @State var selectedMemo: MemoLocalData? = nil
@@ -49,17 +49,13 @@ struct MemoNavigationPage: View {
             .padding()
         }
         .sheet(isPresented: $isMemoPostModalPresented, content: {
-            MemoPostModal()
+            MemoPostModal(currentDate: $currentDate)
                 .presentationDetents([.large, .fraction(0.7)])
         })
         .sheet(item: $selectedMemo, content: { memo in
-            MemoEditModal(localMemo: memo)
+            MemoEditModal(currentDate: $currentDate, localMemo: memo)
                 .presentationDetents([.large, .fraction(0.7)])
         })
-        .onAppear {
-            print("Number of saved memos: \(savedMemos.count)")
-        }
-        
     }
 }
 

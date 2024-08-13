@@ -21,7 +21,10 @@ struct CalendarView: View {
                 // 상단 년, 월
                 VStack {
                     Text(DateUtils.shared.yearFormatter.string(from: currentDate))
+                        .accessibilityLabel(Text("\(DateUtils.shared.yearFormatter.string(from: currentDate))년"))
                     Text(DateUtils.shared.monthWithoutZeroFormatter.string(from: currentDate))
+                        .accessibilityLabel(Text("\(DateUtils.shared.monthWithoutZeroFormatter.string(from: currentDate))월"))
+                        .accessibilityHint(Text("이중 탭하면 오늘로 돌아옵니다"))
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundStyle(Color.hex9DCAFF)
@@ -36,11 +39,13 @@ struct CalendarView: View {
                     }) {
                         Image(systemName: "chevron.left")
                     }
+                    .accessibilityLabel("이전 달 달력 보기")
                     Button(action: {
                         self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
                     }) {
                         Image(systemName: "chevron.right")
                     }
+                    .accessibilityLabel("다음 달 달력 보기")
                 }
                 .font(.headline)
                 .foregroundStyle(Color.hex9DCAFF)
@@ -57,6 +62,7 @@ struct CalendarView: View {
                                 .foregroundColor(day == "일" ? .red : (day == "토" ? .blue : .primary))
                         }
                     }
+                    .accessibilityHidden(true)
                     .padding(.bottom, 8)
                     // 달력 날짜들
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {

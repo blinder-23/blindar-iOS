@@ -18,10 +18,11 @@ var globalUid: String = ""
 class AppleAuthCoordinator: NSObject {
     var currentNonce: String?
     let window: UIWindow?
-    var isLoggedIn = false
+    var onCompletion: (() -> Void)?
     
-    init(window: UIWindow?) {
+    init(window: UIWindow?, onCompletion: @escaping () -> Void) {
         self.window = window
+        self.onCompletion = onCompletion
     }
     
     func startAppleLogin() {
@@ -37,7 +38,6 @@ class AppleAuthCoordinator: NSObject {
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
     }
-    
     
     private func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
@@ -116,24 +116,21 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
                 return
             }
             
-            // Initialize a Firebase credential.
             let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                       idToken: idTokenString,
                                                       rawNonce: nonce)
             
-            //Firebase 작업
             Auth.auth().signIn(with: credential) { (authResult, error) in
-                if (error != nil) {
-                    // Error. If error.code == .MissingOrInvalidNonce, make sure
-                    // you're sending the SHA256-hashed nonce as a hex string with
-                    // your request to Apple.
-                    print(error?.localizedDescription as Any)
+                if let error = error {
+                    print(error.localizedDescription)
                     return
                 }
-                // User is signed in to Firebase with Apple.
+                
                 if let user = Auth.auth().currentUser {
                     globalUid = user.uid
-                    self.isLoggedIn = true
+                    DispatchQueue.main.async {
+                        self.onCompletion?()
+                    }
                 }
             }
         }
@@ -142,6 +139,6 @@ extension AppleAuthCoordinator: ASAuthorizationControllerDelegate {
 
 extension AppleAuthCoordinator: ASAuthorizationControllerPresentationContextProviding {
     public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        window!
+        return window!
     }
 }
