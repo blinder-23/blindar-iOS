@@ -70,7 +70,6 @@ struct MemoBlock: View {
         VStack {
             HStack(spacing: 20) {
                 Text(localMemo.contents)
-                Text(localMemo.memoId) // 디버깅용
                 Spacer()
                 Button(action: { onEdit() }, label: {
                     Image(systemName: "pencil")
