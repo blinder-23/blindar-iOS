@@ -11,20 +11,27 @@ import SwiftData
 struct UserResponse: Codable {
     var message: String
     var responseCode: Int
-    var response: User
+    var response: UserRequest
 }
 
-struct User: Codable {
+struct UserRequest: Codable {
     var userId: String //Google Firebase UID
     var schoolCode: Int //NEIS API에서 제공하는 표준 학교 코드
     var name: String //유저 닉네임
-    var schoolName: String?
     
     enum CodingKeys: String, CodingKey {
         case userId = "user_id"
         case schoolCode = "school_code"
         case name
     }
+}
+
+//앱 내에서 사용할 User Info
+struct User: Codable {
+    var userId: String
+    var schoolCode: Int
+    var name: String
+    var schoolName: String
 }
 
 @Model

@@ -77,7 +77,7 @@ struct MemoPostModal: View {
         }
         .padding()
         .onAppear {
-            newMemo.userId = userVM.user.userId
+            newMemo.userId = userVM.user?.userId ?? ""
         }
     }
     

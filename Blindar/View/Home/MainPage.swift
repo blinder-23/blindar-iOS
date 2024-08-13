@@ -42,13 +42,10 @@ struct MainPage: View {
                     NavigationLink(destination: {
                         SelectSchoolScreen()
                     }, label: {
-                        if let school = schoolVM.getSchoolInfoFromUserDefaults() {
-                            Text(school.schoolName)
+                        Text(userVM.user?.schoolName ?? "학교 정보 없음")
                                 .foregroundStyle(Color.white)
                                 .font(.title)
-                        } else {
-                            Text("학교 정보 없음")
-                        }
+
                     })
                 }
                 .padding(.bottom, uiManager.isPortrait ? 20 : 50)
@@ -138,8 +135,8 @@ struct MainPage: View {
         
         try? modelContext.save()
         
-        if let school = schoolVM.getSchoolInfoFromUserDefaults() {
-            mealVM.fetchMeals(schoolCode: school.schoolCode, year: year, month: month)
+        if let user = userVM.getUserInfoFromUserDefaults() {
+            mealVM.fetchMeals(schoolCode: user.schoolCode, year: year, month: month)
                 .sink(receiveCompletion: { completion in
                     if case let .failure(error) = completion {
                         print("Fetch failed: \(error)")
@@ -175,8 +172,8 @@ struct MainPage: View {
         
         try? modelContext.save()
         
-        if let school = schoolVM.getSchoolInfoFromUserDefaults() {
-            scheduleVM.fetcSchedules(schoolCode: school.schoolCode, year: year, month: month)
+        if let user = userVM.getUserInfoFromUserDefaults() {
+            scheduleVM.fetcSchedules(schoolCode: user.schoolCode, year: year, month: month)
                 .sink(receiveCompletion: { completion in
                     if case let .failure(error) = completion {
                         print("Fetch failed: \(error)")
@@ -215,8 +212,8 @@ struct MainPage: View {
         }
         
         if !monthExists {
-            if let school = schoolVM.getSchoolInfoFromUserDefaults() {
-                mealVM.fetchMeals(schoolCode: school.schoolCode, year: year, month: month)
+            if let user = userVM.getUserInfoFromUserDefaults() {
+                mealVM.fetchMeals(schoolCode: user.schoolCode, year: year, month: month)
                     .sink(receiveCompletion: { completion in
                         if case let .failure(error) = completion {
                             print("Fetch failed: \(error)")
@@ -253,8 +250,8 @@ struct MainPage: View {
         }
         
         if !monthExists {
-            if let school = schoolVM.getSchoolInfoFromUserDefaults() {
-                scheduleVM.fetcSchedules(schoolCode: school.schoolCode, year: year, month: month)
+            if let user = userVM.getUserInfoFromUserDefaults() {
+                scheduleVM.fetcSchedules(schoolCode: user.schoolCode, year: year, month: month)
                     .sink(receiveCompletion: { completion in
                         if case let .failure(error) = completion {
                             print("ScheduleFetch failed: \(error)")

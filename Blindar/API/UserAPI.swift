@@ -13,9 +13,9 @@ private let domain = Bundle.main.object(forInfoDictionaryKey: "DOMAIN") as? Stri
 class UserAPI {
     static let shared = UserAPI()
     
-    func postUser(newUser: User) -> AnyPublisher<UserResponse, Error> {
+    func postUser(newUser: UserRequest) -> AnyPublisher<UserResponse, Error> {
         do {
-            let jsonData = try JSONEncoder().encode(newUser)
+            _ = try JSONEncoder().encode(newUser)
         } catch {
             print("Failed to encode user or decode JSON: \(error.localizedDescription)")
         }

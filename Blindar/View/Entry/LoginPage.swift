@@ -16,7 +16,7 @@ struct LoginPage: View {
     @State var isLoggedIn = false
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             if uiManager.isPortrait {
                 VStack(spacing: 200) {
                     //스플래시 앱 아이콘
@@ -56,6 +56,7 @@ struct LoginPage: View {
                             .scaledToFit()
                             .frame(height: uiManager.screenHeight * 0.3)
                     }
+                    .frame(width: uiManager.screenWidth * 0.45)
                     VStack {
                         //로그인 버튼
                         Button(action: {
@@ -76,7 +77,6 @@ struct LoginPage: View {
                         })
                     }
                 }
-                .padding(20)
                 .background(
                     NavigationLink("", isActive: $isLoggedIn, destination: {
                         SelectSchoolScreen()
@@ -84,6 +84,7 @@ struct LoginPage: View {
                 )
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .onChange(of: appleLoginCoordinator?.isLoggedIn, initial: false, {
             self.isLoggedIn = true
         })

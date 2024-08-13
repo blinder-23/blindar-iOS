@@ -18,16 +18,16 @@ struct SettingPage: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 30) {
-                HStack(spacing: 8) {
+                HStack {
                     //프로필
                     Image("AppIconImage")
                         .resizable()
                         .scaledToFit()
                         .frame(width: uiManager.screenWidth * 0.17)
                         .clipShape(Circle())
-                    if let user = userVM.getUserInfoFromUserDefaults() {
-                        Text(user.name)
-                    }
+                        .padding()
+                    Text(userVM.user?.name ?? "이름 정보 없음")
+                        .font(.title2)
                     Spacer()
                     //로그아웃
                     Button(action: {
