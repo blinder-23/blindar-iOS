@@ -41,7 +41,7 @@ struct MainPage: View {
                 VStack {
                     //학교 표시 - 학교 선택 페이지 네비게이션 링크
                     NavigationLink(destination: {
-                        SelectSchoolScreen()
+                        SelectSchoolScreen(isEntry: false)
                     }, label: {
                         Text(userVM.user?.schoolName ?? "학교 정보 없음")
                                 .foregroundStyle(Color.white)

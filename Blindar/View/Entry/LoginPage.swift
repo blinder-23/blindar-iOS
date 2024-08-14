@@ -43,7 +43,7 @@ struct LoginPage: View {
                 .padding(20)
                 .background(
                     NavigationLink("", isActive: $isLoggedIn, destination: {
-                        SelectSchoolScreen()
+                        SelectSchoolScreen(isEntry: true)
                     })
                     .accessibilityHidden(true)
                 )
@@ -77,7 +77,7 @@ struct LoginPage: View {
                 }
                 .background(
                     NavigationLink("", isActive: $isLoggedIn, destination: {
-                        SelectSchoolScreen()
+                        SelectSchoolScreen(isEntry: true)
                     })
                     .accessibilityHidden(true)
                 )

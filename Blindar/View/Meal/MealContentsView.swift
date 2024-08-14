@@ -35,14 +35,14 @@ struct MealContentsView: View {
                     HStack {
                         Text("중식")
                             .font(.title2)
-                            .fontWeight(.bold)
                             .padding(.horizontal, 8)
                             .padding(.bottom, 5)
-                            .overlay(alignment: .bottom, content: {
-                                Rectangle()
-                                    .frame(height: 3)
-                            })
                     }
+                    .overlay(alignment: .bottom, content: {
+                        Rectangle()
+                            .frame(height: 3)
+                            .foregroundColor(.gray)
+                    })
                     //                    HStack {
                     //                        ForEach(MealType.allCases, id: \.self) { type in
                     //                            Text(type.rawValue)
