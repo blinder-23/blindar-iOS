@@ -16,9 +16,11 @@ struct MemoEditModal: View {
     @EnvironmentObject var memoVM: MemoViewModel
     @Environment(\.dismiss) private var dismiss
     @Binding var currentDate: Date
+    @Binding var selectedDate: Date
     @State var contents = ""
     @State var yyyyMMdddate = ""
     @State var localMemo: MemoLocalData
+    @Binding var memosForCurrentDate: [MemoLocalData]
     
     var body: some View {
         VStack(spacing: 40) {
@@ -68,6 +70,13 @@ struct MemoEditModal: View {
         .padding()
         .onAppear {
             contents = localMemo.contents
+        }
+        .onDisappear {
+                //메모 업데이트
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyyMMdd"
+                let selectedDateString = formatter.string(from: selectedDate)
+                memosForCurrentDate = savedMemos.filter { $0.date == selectedDateString}
         }
     }
     

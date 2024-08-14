@@ -12,6 +12,7 @@ struct MemoNavigationPage: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var memoVM: MemoViewModel
     @Binding var currentDate: Date
+    @Binding var selectedDate: Date
     @State var isMemoPostModalPresented: Bool = false
     @State var isMemoEditModalPresented: Bool = false
     @State var selectedMemo: MemoLocalData? = nil
@@ -50,11 +51,11 @@ struct MemoNavigationPage: View {
             .padding()
         }
         .sheet(isPresented: $isMemoPostModalPresented, content: {
-            MemoPostModal(currentDate: $currentDate)
+            MemoPostModal(currentDate: $currentDate, selectedDate: $selectedDate, memosForCurrentDate: $memosForCurrentDate)
                 .presentationDetents([.large, .fraction(0.7)])
         })
         .sheet(item: $selectedMemo, content: { memo in
-            MemoEditModal(currentDate: $currentDate, localMemo: memo)
+            MemoEditModal(currentDate: $currentDate, selectedDate: $selectedDate, localMemo: memo, memosForCurrentDate: $memosForCurrentDate)
                 .presentationDetents([.large, .fraction(0.7)])
         })
     }

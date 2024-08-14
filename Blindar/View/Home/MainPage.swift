@@ -87,15 +87,11 @@ struct MainPage: View {
                 .onAppear {
                     selectedDate = currentDate
                     //디버깅
-                    //updateMealsForCurrentDate()
+                    updateMealsAndSchedulesForCurrentDate()
                 }
                 .onChange(of: selectedDate) { _ in
                     updateMealsAndSchedulesForCurrentDate()
                 }
-            }
-            .onAppear {
-                currentDate = Date()
-                selectedDate = Date()
             }
             .onChange(of: currentDate) { newDate in
                 fetchMealsIfNeeded(for: newDate)

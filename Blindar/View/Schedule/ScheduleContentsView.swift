@@ -61,7 +61,7 @@ struct ScheduleContentsView: View {
                 }
                 //Memo Edit Button
                 NavigationLink {
-                    MemoNavigationPage(currentDate: $currentDate, memosForCurrentDate: $memosForCurrentDate)
+                    MemoNavigationPage(currentDate: $currentDate, selectedDate: $selectedDate, memosForCurrentDate: $memosForCurrentDate)
                 } label: {
                     Text("메모 편집하기")
                         .foregroundStyle(Color.white)
