@@ -34,25 +34,30 @@ struct ScheduleContentsView: View {
                         .foregroundColor(.gray)
                 })
                 //일정 리스트
-                if schedulesForCurrentDate.isEmpty {
-                    Text("학사 정보가 없습니다")
-                        .font(.title2)
-                } else {
-                    ForEach(schedulesForCurrentDate, id: \.id) { schedule in
-                        VStack {
-                            Text(schedule.schedule)
-                                .font(.title3)
+                VStack {
+                    if schedulesForCurrentDate.isEmpty {
+                        Text("학사 정보가 없습니다")
+                            .font(.title2)
+                    } else {
+                        ForEach(schedulesForCurrentDate, id: \.id) { schedule in
+                            VStack {
+                                Text(schedule.schedule)
+                                    .font(.title3)
+                            }
+                            .padding(.vertical, 3)
                         }
-                        .padding(.vertical, 3)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityLabel(schedulesForCurrentDate.map { $0.schedule }.joined(separator: ", "))
+                    }
+                }
+                VStack {
+                    //Memo List
+                    ForEach(savedMemos, id: \.memoId) { memo in
+                        Text(memo.contents)
                     }
                     .accessibilityElement(children: .combine)
+                    .accessibilityLabel(savedMemos.map { $0.contents }.joined(separator: ", "))
                 }
-                
-                //Memo List
-                ForEach(savedMemos, id: \.memoId) { memo in
-                    Text(memo.contents)
-                }
-                .accessibilityElement(children: .combine)
                 //Memo Edit Button
                 NavigationLink {
                     MemoNavigationPage(currentDate: $currentDate)
