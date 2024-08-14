@@ -17,6 +17,7 @@ struct ScheduleContentsView: View {
     @Binding var currentDate: Date
     @Binding var selectedDate: Date
     @Binding var schedulesForCurrentDate: [ScheduleLocalData]
+    @Binding var memosForCurrentDate: [MemoLocalData]
 
     var body: some View {
         NavigationStack {
@@ -52,11 +53,11 @@ struct ScheduleContentsView: View {
                 }
                 VStack {
                     //Memo List
-                    ForEach(savedMemos, id: \.memoId) { memo in
+                    ForEach(memosForCurrentDate, id: \.memoId) { memo in
                         Text(memo.contents)
                     }
                     .accessibilityElement(children: .combine)
-                    .accessibilityLabel(savedMemos.map { $0.contents }.joined(separator: ", "))
+                    .accessibilityLabel(memosForCurrentDate.map { $0.contents }.joined(separator: ", "))
                 }
                 //Memo Edit Button
                 NavigationLink {

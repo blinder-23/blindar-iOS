@@ -32,6 +32,7 @@ struct MainPage: View {
     @State private var translation: CGFloat = 0
     @State var mealsForCurrentDate: MealLocalData?
     @State var schedulesForCurrentDate: [ScheduleLocalData] = []
+    @State var memosForCurrentDate: [MemoLocalData] = []
     @State var mainPageMode: MainPageMode = .oneday
     
     var body: some View {
@@ -45,7 +46,6 @@ struct MainPage: View {
                         Text(userVM.user?.schoolName ?? "학교 정보 없음")
                                 .foregroundStyle(Color.white)
                                 .font(.title)
-
                     })
                 }
                 .padding(.bottom, uiManager.isPortrait ? 20 : 50)
@@ -63,7 +63,7 @@ struct MainPage: View {
                                     //식단 뷰
                                     MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
                                     //일정 뷰
-                                    ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                                    ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
                                 }
                             }
                         } else {
@@ -75,13 +75,13 @@ struct MainPage: View {
                                         //식단 뷰
                                         MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
                                         //일정 뷰
-                                        ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                                        ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
                                     }
                                 }
                             }
                         }
                     case .oneday:
-                        OnedayModeView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate, schedulesForCurrentDate: $schedulesForCurrentDate)
+                        OnedayModeView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
                     }
                 }
                 .onAppear {
@@ -201,6 +201,8 @@ struct MainPage: View {
         mealsForCurrentDate = savedMeals.first { $0.ymd == selectedDateString }
         //일정 업데이트
         schedulesForCurrentDate = savedSchedules.filter { $0.dateString == selectedDateString }
+        //메모 업데이트
+        memosForCurrentDate = savedMemos.filter { $0.date == selectedDateString}
     }
     
     func fetchMealsIfNeeded(for date: Date) {
