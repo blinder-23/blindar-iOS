@@ -16,6 +16,7 @@ struct MemoNavigationPage: View {
     @State var isMemoEditModalPresented: Bool = false
     @State var selectedMemo: MemoLocalData? = nil
     @Query(sort: \MemoLocalData.date, order: .forward) var savedMemos: [MemoLocalData]
+    @Binding var memosForCurrentDate: [MemoLocalData]
     
     var body: some View {
         NavigationStack {
@@ -38,7 +39,7 @@ struct MemoNavigationPage: View {
                         }
                 })
                 ScrollView {
-                    ForEach(savedMemos, id: \.memoId) { memo in
+                    ForEach(memosForCurrentDate, id: \.memoId) { memo in
                         MemoBlock(localMemo: memo) {
                             selectedMemo = memo
                             isMemoEditModalPresented = true
