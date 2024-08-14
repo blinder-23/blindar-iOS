@@ -32,7 +32,7 @@ struct MainPage: View {
     @State private var translation: CGFloat = 0
     @State var mealsForCurrentDate: MealLocalData?
     @State var schedulesForCurrentDate: [ScheduleLocalData] = []
-    @State var mainPageMode: MainPageMode = .calendar
+    @State var mainPageMode: MainPageMode = .oneday
     
     var body: some View {
         NavigationStack {

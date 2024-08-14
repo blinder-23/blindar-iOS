@@ -23,6 +23,7 @@ struct LoginPage: View {
                         .resizable()
                         .scaledToFit()
                         .frame(height: uiManager.screenHeight * 0.3)
+                        .accessibilityHidden(true)
                     Button(action: {
                         appleLogin()
                     }, label: {
@@ -44,6 +45,7 @@ struct LoginPage: View {
                     NavigationLink("", isActive: $isLoggedIn, destination: {
                         SelectSchoolScreen()
                     })
+                    .accessibilityHidden(true)
                 )
             } else {
                 HStack {
@@ -52,6 +54,7 @@ struct LoginPage: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: uiManager.screenHeight * 0.3)
+                            .accessibilityLabel(Text("블린더"))
                     }
                     .frame(width: uiManager.screenWidth * 0.45)
                     VStack {
@@ -76,6 +79,7 @@ struct LoginPage: View {
                     NavigationLink("", isActive: $isLoggedIn, destination: {
                         SelectSchoolScreen()
                     })
+                    .accessibilityHidden(true)
                 )
             }
         }
