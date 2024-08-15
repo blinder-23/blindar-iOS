@@ -15,7 +15,10 @@ struct FeedbackNavigationPage: View {
     @State var contents: String = ""
 
     var body: some View {
-        NavigationStack {
+        VStack {
+            Text("피드백 작성")
+                .font(.title)
+                .padding()
             VStack(spacing: 30) {
                 VStack(alignment: .leading) {
                     //헤더
@@ -65,8 +68,9 @@ struct FeedbackNavigationPage: View {
                 }
             }
             .padding()
+            Spacer()
         }
-        .navigationBarTitle(Text("피드백 작성"))
+        .padding()
     }
 }
 

@@ -17,19 +17,22 @@ struct OnedayModeView: View {
 
     var body: some View {
         if uiManager.isPortrait {
-//            VStack {
                 ScrollView {
-                    //날짜 선택 블록
+                    //날짜 블록
                     VStack {
                         VStack {
                             // 현재 날짜
-                            Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
-                                .accessibilityLabel(Text("입력한 날짜 \(DateUtils.shared.configureDateFormatter.string(from: currentDate))"))
-                                .font(.title)
-                                .padding()
+                            VStack(alignment: .leading) {
+                                Text("입력한 날짜")
+                                    .accessibilityAddTraits(.isHeader)
+                                Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
+                                    .font(.title)
+                            }
+                            .padding()
                             VStack(alignment: .leading, spacing: 0) {
                                 // 날짜입력
                                 Text("날짜 입력")
+                                    .accessibilityAddTraits(.isHeader)
                                 // 날짜입력창 yyyy.MM.dd
                                 DatePicker("날짜 입력", selection: $currentDate, displayedComponents: [.date])
                                     .datePickerStyle(WheelDatePickerStyle())
@@ -45,12 +48,16 @@ struct OnedayModeView: View {
                                         selectedDate = newDate
                                     }
                             }
+                            .accessibilityElement(children: .contain)
                         }
                         HStack {
                             // 하루전, 오늘, 다음날 버튼
                             DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
+                                .accessibilityElement(children: .contain)
                             DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
+                                .accessibilityElement(children: .contain)
                             DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
+                                .accessibilityElement(children: .contain)
                         }
                     }
                     .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)
@@ -60,23 +67,39 @@ struct OnedayModeView: View {
                     VStack {
                         // 식단 뷰
                         MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
+//                            .id("meal")
+                            .accessibilityElement(children: .contain)
                         // 일정 뷰
                         ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
+//                            .id("schedule")
+                            .accessibilityElement(children: .contain)
                     }
                 }
-//            }
+//                .accessibilityRotor("식단") {
+//                    AccessibilityRotorEntry("식단", id: "meal")
+//                }
+//                .accessibilityRotor("학사일정") {
+//                    AccessibilityRotorEntry("일정", id: "schedule")
+//                }
         } else {
             HStack(alignment: .top) {
                 VStack {
                     VStack(alignment: .leading) {
                         Text("입력한 날짜")
-                        // 현재 날짜
-                        Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
-                            .font(.title)
+                            .accessibilityHeading(.h1)
+                        VStack(alignment: .leading) {
+                            Text("입력한 날짜")
+                            // 현재 날짜
+                            Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
+                                .font(.title)
+                        }
                     }
+                    .accessibilityElement(children: .contain)
+                    .padding()
                     VStack(alignment: .leading) {
                         // 날짜입력
                         Text("날짜 입력")
+                            .accessibilityHeading(.h1)
                         // 날짜입력창 yyyy.MM.dd
                         DatePicker("날짜 입력", selection: $currentDate, displayedComponents: [.date])
                             .datePickerStyle(WheelDatePickerStyle())
@@ -92,12 +115,14 @@ struct OnedayModeView: View {
                                 selectedDate = newDate
                             }
                     }
+                    .accessibilityElement(children: .contain)
                     HStack {
                         // 하루전, 오늘, 다음날 버튼
                         DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
                         DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
                         DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
                     }
+                    .accessibilityElement(children: .contain)
                 }
                 .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)                .padding()
                 .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
@@ -106,8 +131,10 @@ struct OnedayModeView: View {
                     VStack {
                         // 식단 뷰
                         MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
+                            .accessibilityElement(children: .contain)
                         // 일정 뷰
                         ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
+                            .accessibilityElement(children: .contain)
                     }
                 }
             }

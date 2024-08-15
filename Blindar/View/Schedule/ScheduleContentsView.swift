@@ -25,6 +25,7 @@ struct ScheduleContentsView: View {
                 //Header
                 HStack {
                     Text("일정")
+                        .accessibilityAddTraits(.isHeader)
                         .font(.title2)
                         .padding(.horizontal, 8)
                         .padding(.bottom, 5)

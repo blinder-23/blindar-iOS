@@ -17,7 +17,10 @@ struct SettingPage: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 30) {
+            VStack {
+                Text("설정")
+                    .font(.title)
+                    .padding()
                 HStack {
                     //프로필
                     Image("AppIconImage")
@@ -26,6 +29,7 @@ struct SettingPage: View {
                         .frame(width: uiManager.screenWidth * 0.17)
                         .clipShape(Circle())
                         .padding()
+                        .accessibilityHidden(true)
                     Text(userVM.user?.name ?? "이름 정보 없음")
                         .font(.title2)
                     Spacer()
@@ -65,12 +69,10 @@ struct SettingPage: View {
                         .foregroundColor(.white)
                     })
                 }
+                Spacer()
             }
-            .padding(.vertical, 0)
             .padding(.horizontal, 12)
-            .offset(y: -uiManager.screenHeight * 0.15)
         }
-        .navigationBarTitle(Text("설정"))
         .onAppear {
             isOnedayModeOn = mainPageMode == .oneday
         }

@@ -62,8 +62,10 @@ struct MainPage: View {
                                 VStack {
                                     //식단 뷰
                                     MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
+                                        .accessibilityElement(children: .contain)
                                     //일정 뷰
                                     ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
+                                        .accessibilityElement(children: .contain)
                                 }
                             }
                         } else {
@@ -74,8 +76,10 @@ struct MainPage: View {
                                     VStack {
                                         //식단 뷰
                                         MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
+                                            .accessibilityElement(children: .contain)
                                         //일정 뷰
                                         ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
+                                            .accessibilityElement(children: .contain)
                                     }
                                 }
                             }
@@ -105,7 +109,9 @@ struct MainPage: View {
                     }, label: {
                         Image(systemName: "arrow.circlepath")
                             .foregroundColor(.white)
+                            .accessibilityHidden(true)
                     })
+                    .accessibilityElement(children: .contain)
                     .accessibilityLabel(Text("새로고침"))
                 })
                 ToolbarItem(placement: .topBarTrailing, content: {
@@ -114,7 +120,9 @@ struct MainPage: View {
                     }, label: {
                         Image(systemName: "gearshape")
                             .foregroundColor(.white)
+                            .accessibilityHidden(true)
                     })
+                    .accessibilityElement(children: .contain)
                     .accessibilityLabel(Text("설정 페이지 이동"))
                 })
             })
