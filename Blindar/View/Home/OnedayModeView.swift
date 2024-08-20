@@ -51,9 +51,9 @@ struct OnedayModeView: View {
                         }
                         HStack {
                             // 하루전, 오늘, 다음날 버튼
-                            DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
-                            DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
-                            DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
+                            PreviousDateButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
+                            CurrentDateButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
+                            NextDateButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
                         }
                     }
                     .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)
@@ -109,11 +109,12 @@ struct OnedayModeView: View {
                             }
                     }
                     HStack {
-                        // 하루전, 오늘, 다음날 버튼
-                        DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
-                        DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
-                        DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
+                        // 하루 전, 오늘, 다음 날 버튼
+                        PreviousDateButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
+                        CurrentDateButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
+                        NextDateButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
                     }
+
                 }
                 .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)                .padding()
                 .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
@@ -131,23 +132,15 @@ struct OnedayModeView: View {
     }
 }
 
-struct DateChangeButton: View {
+struct PreviousDateButton: View {
     @Binding var currentDate: Date
     @Binding var selectedDate: Date
     var labelString: String
     
     var body: some View {
         Button(action: {
-            if labelString == "하루 전" {
                 currentDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate) ?? currentDate
                 selectedDate = currentDate
-            } else if labelString == "오늘" {
-                currentDate = Date()
-                selectedDate = Date()
-            } else if labelString == "다음 날" {
-                currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
-                selectedDate = currentDate
-            }
         }, label: {
             RoundedRectangle(cornerRadius: 5)
                 .stroke(Color.white, lineWidth: 1)
@@ -157,8 +150,54 @@ struct DateChangeButton: View {
                         .foregroundColor(.white)
                 }
         })
+        .accessibilityHint(Text("현재 날짜의 하루 전인 \(DateUtils.shared.configureDateFormatter.string(from: Calendar.current.date(byAdding: .day, value: -1, to: currentDate) ?? currentDate))로 이동하려면 이중 탭 하세요"))
     }
 }
+
+struct CurrentDateButton: View {
+    @Binding var currentDate: Date
+    @Binding var selectedDate: Date
+    var labelString: String
+    
+    var body: some View {
+        Button(action: {
+                currentDate = Date()
+                selectedDate = Date()
+        }, label: {
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(Color.white, lineWidth: 1)
+                .frame(height: 40)
+                .overlay {
+                    Text(labelString)
+                        .foregroundColor(.white)
+                }
+        })
+        .accessibilityHint(Text("오늘 날짜 \(DateUtils.shared.configureDateFormatter.string(from: Date()))로 이동하려면 이중 탭 하세요"))
+    }
+}
+
+struct NextDateButton: View {
+    @Binding var currentDate: Date
+    @Binding var selectedDate: Date
+    var labelString: String
+    
+    var body: some View {
+        Button(action: {
+                currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
+                selectedDate = currentDate
+        }, label: {
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(Color.white, lineWidth: 1)
+                .frame(height: 40)
+                .overlay {
+                    Text(labelString)
+                        .foregroundColor(.white)
+                }
+        })
+        .accessibilityHint(Text("현재 날짜의 다음 날인 \(DateUtils.shared.configureDateFormatter.string(from: Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate))로 이동하려면 이중 탭 하세요"))
+    }
+}
+
 
 #Preview {
     OnedayModeView(currentDate: .constant(Date()), selectedDate: .constant(Date()), mealsForCurrentDate: .constant(nil), schedulesForCurrentDate: .constant([]), memosForCurrentDate: .constant([]))

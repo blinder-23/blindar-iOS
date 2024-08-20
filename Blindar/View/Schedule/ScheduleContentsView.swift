@@ -48,8 +48,8 @@ struct ScheduleContentsView: View {
                             }
                             .padding(.vertical, 3)
                         }
-                        .accessibilityElement(children: .combine)
-                        .accessibilityLabel(schedulesForCurrentDate.map { $0.schedule }.joined(separator: ", "))
+//                        .accessibilityElement(children: .combine)
+//                        .accessibilityLabel(schedulesForCurrentDate.map { $0.schedule }.joined(separator: ", "))
                     }
                 }
                 VStack {

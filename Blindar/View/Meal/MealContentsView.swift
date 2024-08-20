@@ -78,8 +78,8 @@ struct MealContentsView: View {
                                     .font(.title3)
                                     .padding(.vertical, 3)
                             }
-                            .accessibilityElement(children: .combine)
-                            .accessibilityLabel(meals.dishes.map { $0.menu }.joined(separator: ", "))
+//                            .accessibilityElement(children: .combine)
+//                            .accessibilityLabel(meals.dishes.map { $0.menu }.joined(separator: ", "))
                         }
                     } else {
                         Text("식단 정보가 없습니다")

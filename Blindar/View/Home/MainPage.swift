@@ -45,6 +45,7 @@ struct MainPage: View {
                         SelectSchoolScreen(isEntry: false)
                     }, label: {
                         Text(userVM.user?.schoolName ?? "학교 정보 없음")
+                            .accessibilityHint(Text("학교 설정을 변경하려면 이중 탭 하세요"))
                                 .foregroundStyle(Color.white)
                                 .font(.title)
                     })
