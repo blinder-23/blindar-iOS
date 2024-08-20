@@ -92,7 +92,7 @@ struct OnedayModeView: View {
                     VStack(alignment: .leading) {
                         // 날짜입력
                         Text("날짜 입력")
-                            .accessibilityHeading(.h1)
+                            .accessibilityAddTraits(.isHeader)
                         // 날짜입력창 yyyy.MM.dd
                         DatePicker("날짜 입력", selection: $currentDate, displayedComponents: [.date])
                             .datePickerStyle(WheelDatePickerStyle())
