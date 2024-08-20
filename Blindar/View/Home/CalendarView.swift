@@ -83,20 +83,20 @@ struct CalendarView: View {
                                 }
                         }
                     }
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                self.translation = value.translation.width
-                            }
-                            .onEnded { value in
-                                if self.translation < -50 {
-                                    self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
-                                } else if self.translation > 50 {
-                                    self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
-                                }
-                                self.translation = 0
-                            }
-                    )
+//                    .gesture(
+//                        DragGesture()
+//                            .onChanged { value in
+//                                self.translation = value.translation.width
+//                            }
+//                            .onEnded { value in
+//                                if self.translation < -50 {
+//                                    self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
+//                                } else if self.translation > 50 {
+//                                    self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
+//                                }
+//                                self.translation = 0
+//                            }
+//                    )
                 }
         }
     }

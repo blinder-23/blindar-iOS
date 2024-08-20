@@ -39,7 +39,6 @@ struct MealContentsView: View {
                             .padding(.horizontal, 8)
                             .padding(.bottom, 5)
                     }
-                    .accessibilityElement(children: .contain)
                     .overlay(alignment: .bottom, content: {
                         Rectangle()
                             .frame(height: 3)
@@ -114,7 +113,6 @@ struct MealContentsView: View {
                         .background(Color.hex00497B)
                         .background(in: RoundedRectangle(cornerRadius: 16))
                 }
-                .accessibilityElement(children: .contain)
             }
             .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)
             .padding()

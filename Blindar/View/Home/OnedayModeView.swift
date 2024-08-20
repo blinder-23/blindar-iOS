@@ -48,16 +48,12 @@ struct OnedayModeView: View {
                                         selectedDate = newDate
                                     }
                             }
-                            .accessibilityElement(children: .contain)
                         }
                         HStack {
                             // 하루전, 오늘, 다음날 버튼
                             DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
-                                .accessibilityElement(children: .contain)
                             DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
-                                .accessibilityElement(children: .contain)
                             DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
-                                .accessibilityElement(children: .contain)
                         }
                     }
                     .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)
@@ -68,11 +64,9 @@ struct OnedayModeView: View {
                         // 식단 뷰
                         MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
 //                            .id("meal")
-                            .accessibilityElement(children: .contain)
                         // 일정 뷰
                         ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
 //                            .id("schedule")
-                            .accessibilityElement(children: .contain)
                     }
                 }
 //                .accessibilityRotor("식단") {
@@ -94,7 +88,6 @@ struct OnedayModeView: View {
                                 .font(.title)
                         }
                     }
-                    .accessibilityElement(children: .contain)
                     .padding()
                     VStack(alignment: .leading) {
                         // 날짜입력
@@ -115,14 +108,12 @@ struct OnedayModeView: View {
                                 selectedDate = newDate
                             }
                     }
-                    .accessibilityElement(children: .contain)
                     HStack {
                         // 하루전, 오늘, 다음날 버튼
                         DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "하루 전")
                         DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "오늘")
                         DateChangeButton(currentDate: $currentDate, selectedDate: $selectedDate, labelString: "다음 날")
                     }
-                    .accessibilityElement(children: .contain)
                 }
                 .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)                .padding()
                 .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
@@ -131,10 +122,8 @@ struct OnedayModeView: View {
                     VStack {
                         // 식단 뷰
                         MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
-                            .accessibilityElement(children: .contain)
                         // 일정 뷰
                         ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
-                            .accessibilityElement(children: .contain)
                     }
                 }
             }

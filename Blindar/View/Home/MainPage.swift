@@ -15,6 +15,7 @@ enum MainPageMode {
 }
 
 struct MainPage: View {
+    @AccessibilityFocusState private var isDateFocused: Bool
     @EnvironmentObject var uiManager: UIManager
     @Environment(\.modelContext) private var modelContext
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -62,10 +63,8 @@ struct MainPage: View {
                                 VStack {
                                     //식단 뷰
                                     MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
-                                        .accessibilityElement(children: .contain)
                                     //일정 뷰
                                     ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
-                                        .accessibilityElement(children: .contain)
                                 }
                             }
                         } else {
@@ -76,10 +75,8 @@ struct MainPage: View {
                                     VStack {
                                         //식단 뷰
                                         MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
-                                            .accessibilityElement(children: .contain)
                                         //일정 뷰
                                         ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
-                                            .accessibilityElement(children: .contain)
                                     }
                                 }
                             }
@@ -100,6 +97,7 @@ struct MainPage: View {
             .onChange(of: currentDate) { newDate in
                 fetchMealsIfNeeded(for: newDate)
                 fetchSchedulesIfNeeded(for: newDate)
+                UIAccessibility.post(notification: .announcement, argument: newDate)
             }
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing, content: {
