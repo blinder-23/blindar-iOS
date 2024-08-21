@@ -86,13 +86,14 @@ struct CalendarView: View {
                             }
                             .accessibilityLabel(
                                 Calendar.current.isDate(Date(), inSameDayAs: date) && currentDate == date ?
-                                Text("오늘 선택됨 \(Calendar.current.component(.day, from: date))일") :
+                                Text("오늘 선택됨 \(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일") :
                                 (Calendar.current.isDate(Date(), inSameDayAs: date) ?
-                                 Text("오늘 \(Calendar.current.component(.day, from: date))일") :
+                                 Text("오늘 \(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일") :
                                  (currentDate == date ?
-                                  Text("선택됨 \(Calendar.current.component(.day, from: date))일") :
-                                  Text("\(Calendar.current.component(.day, from: date))일")))
+                                  Text("선택됨 \(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일") :
+                                  Text("\(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일")))
                             )
+
                             .accessibilityHint(Text("현재 날짜로 선택하려면 이중 탭하세요"))
                         }
                     }//                    .gesture(

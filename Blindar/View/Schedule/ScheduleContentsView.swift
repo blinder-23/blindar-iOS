@@ -25,6 +25,7 @@ struct ScheduleContentsView: View {
                 //Header
                 HStack {
                     Text("일정")
+                        .accessibilityLabel(Text("일정. 학사 일정 \(schedulesForCurrentDate.count.description)개, 메모  \(memosForCurrentDate.count.description)개"))
                         .accessibilityAddTraits(.isHeader)
                         .font(.title2)
                         .padding(.horizontal, 8)
@@ -37,6 +38,9 @@ struct ScheduleContentsView: View {
                 })
                 //일정 리스트
                 VStack {
+                    Text("학사 일정 목록")
+                        .accessibilityAddTraits(.isHeader)
+                        .font(.caption)
                     if schedulesForCurrentDate.isEmpty {
                         Text("학사 정보가 없습니다")
                             .font(.title2)
@@ -48,23 +52,23 @@ struct ScheduleContentsView: View {
                             }
                             .padding(.vertical, 3)
                         }
-//                        .accessibilityElement(children: .combine)
-//                        .accessibilityLabel(schedulesForCurrentDate.map { $0.schedule }.joined(separator: ", "))
                     }
                 }
                 VStack {
+                    Text("메모 목록")
+                        .accessibilityAddTraits(.isHeader)
+                        .font(.caption)
                     //Memo List
                     ForEach(memosForCurrentDate, id: \.memoId) { memo in
                         Text(memo.contents)
                     }
-                    .accessibilityElement(children: .combine)
-                    .accessibilityLabel(memosForCurrentDate.map { $0.contents }.joined(separator: ", "))
                 }
                 //Memo Edit Button
                 NavigationLink {
                     MemoNavigationPage(currentDate: $currentDate, selectedDate: $selectedDate, memosForCurrentDate: $memosForCurrentDate)
                 } label: {
                     Text("메모 편집하기")
+                        .accessibilityAddTraits(.isHeader)
                         .foregroundStyle(Color.white)
                         .padding(12)
                         .padding(.horizontal, 10)
