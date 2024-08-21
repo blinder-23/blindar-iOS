@@ -55,12 +55,14 @@ struct ScheduleContentsView: View {
                     }
                 }
                 VStack {
-                    Text("메모 목록")
-                        .accessibilityAddTraits(.isHeader)
-                        .font(.caption)
-                    //Memo List
-                    ForEach(memosForCurrentDate, id: \.memoId) { memo in
-                        Text(memo.contents)
+                    if !memosForCurrentDate.isEmpty {
+                        Text("메모 목록")
+                            .accessibilityAddTraits(.isHeader)
+                            .font(.caption)
+                        //Memo List
+                        ForEach(memosForCurrentDate, id: \.memoId) { memo in
+                            Text(memo.contents)
+                        }
                     }
                 }
                 //Memo Edit Button
