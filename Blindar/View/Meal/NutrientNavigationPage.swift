@@ -46,6 +46,7 @@ struct NutrientNavigationPage: View {
                 //날짜
                 VStack {
                     Text(DateUtils.shared.configureDateFormatter.string(from: currentDate))
+                        .accessibilityAddTraits(.isHeader)
                         .font(.title)
                 }
                 .padding(.top, 40)
@@ -53,29 +54,39 @@ struct NutrientNavigationPage: View {
                     if let meals = savedMeals.first(where: { $0.ymd == DateUtils.shared.getDateString(from: currentDate) && $0.mealTime == mealtype.rawValue }) {
                         VStack(spacing: 20) {
                             // 열량
-                            VStack {
+                            VStack(alignment: .leading) {
+                                Text("열량 정보")
+                                    .accessibilityAddTraits(.isHeader)
+                                    .font(.subheadline)
                                 NutrientBlock(category: .calorie, label: "열량", value: "\(meals.calorie)kcal")
                                 Rectangle()
                                     .foregroundColor(.white)
                                     .frame(height: 1)
                             }
                             // 탄단지
-                            VStack {
+                            VStack(alignment: .leading) {
+                                Text("탄단지 정보")
+                                    .accessibilityAddTraits(.isHeader)
+                                    .font(.subheadline)
                                 ForEach(meals.nutrients.filter { ["탄수화물", "단백질", "지방"].contains($0.nutrient) }, id: \.self) { nutrient in
                                     NutrientBlock(category: .PCF, label: nutrient.nutrient, value: "\(nutrient.amount)\(nutrient.unit)")
                                 }
                             }
                             // 기타 영양소
-                            VStack {
+                            VStack(alignment: .leading) {
+                                Text("기타 영양소 정보")
+                                    .accessibilityAddTraits(.isHeader)
+                                    .font(.subheadline)
                                 ForEach(meals.nutrients.filter { !["탄수화물", "단백질", "지방"].contains($0.nutrient) }, id: \.self) { nutrient in
                                     NutrientBlock(category: .others, label: nutrient.nutrient, value: "\(nutrient.amount)\(nutrient.unit)")
                                 }
                             }
                             .padding(.bottom, 20)
                             // 원산지 정보
-                            VStack {
+                            VStack(alignment: .leading) {
                                 VStack(alignment: .leading) {
                                     Text("원산지 정보")
+                                        .accessibilityAddTraits(.isHeader)
                                         .font(.title2)
                                     Rectangle()
                                         .foregroundColor(.white)
