@@ -37,6 +37,12 @@ struct ContentView: View {
 //            }
         }
         .onAppear {
+            if checkDeviceType() == "iPhone" {
+                uiManager.isPortrait = true
+            } else if checkDeviceType() == "iPad" {
+                uiManager.isPortrait = false
+            }
+            print(checkDeviceType())
             // 자동 로그인
             if let user = userVM.getUserInfoFromUserDefaults() {
                 userVM.user = user
@@ -45,7 +51,6 @@ struct ContentView: View {
                 userVM.userState = .isNotRegistered
             }
             // 초기 화면 크기 설정
-            uiManager.isPortrait = UIDevice.current.orientation.isPortrait
             uiManager.screenWidth = UIScreen.main.bounds.width
             uiManager.screenHeight = UIScreen.main.bounds.height
             // VoiceOver 상태 감지 및 업데이트
@@ -54,15 +59,15 @@ struct ContentView: View {
             //                uiManager.isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
             //            }
         }
-        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in
-            // 화면 회전 시 화면 크기와 방향 업데이트
-            uiManager.isPortrait = UIDevice.current.orientation.isPortrait
-            uiManager.screenWidth = UIScreen.main.bounds.width
-            uiManager.screenHeight = UIScreen.main.bounds.height
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIAccessibility.voiceOverStatusDidChangeNotification)) { _ in
-            // VoiceOver 상태 변경 감지 및 업데이트
-            uiManager.isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
+    }
+    
+    func checkDeviceType() -> String {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return "iPhone"
+        } else if UIDevice.current.userInterfaceIdiom == .pad {
+            return "iPad"
+        } else {
+            return "Unknown"
         }
     }
 }
