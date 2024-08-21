@@ -25,8 +25,6 @@ class ScheduleViewModel: ObservableObject {
                         break
                     }
                 }, receiveValue: { scheduleResponse in
-                    //디버깅
-//                    print("학사 일정 반환값 : ", scheduleResponse)
                     self.schedules = scheduleResponse.response
                     promise(.success(self.schedules))
                 })

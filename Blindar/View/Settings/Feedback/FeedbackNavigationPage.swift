@@ -13,7 +13,7 @@ struct FeedbackNavigationPage: View {
     @Environment(\.dismiss) private var dismiss
     @State var newFeedback: Feedback = Feedback(userId: "", deviceName: "", osVersion: "", appVersion: "", contents: "")
     @State var contents: String = ""
-
+    
     var body: some View {
         VStack {
             Text("피드백 작성")
@@ -61,7 +61,8 @@ struct FeedbackNavigationPage: View {
                             .foregroundColor(.hex00497B)
                             .frame(height: 50)
                             .overlay {
-                                Text("전송")                                    .foregroundStyle(Color.white)
+                                Text("전송")                                    
+                                    .foregroundStyle(Color.white)
                                     .font(.title3)
                             }
                     })

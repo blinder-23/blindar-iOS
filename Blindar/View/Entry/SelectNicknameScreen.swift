@@ -146,7 +146,7 @@ struct SelectNicknameScreen: View {
             })
             .store(in: &userVM.cancellables)
     }
-
+    
     func refreshMeals(for date: Date) {
         let extractedDate = DateUtils.shared.extractYearAndMonth(from: date)
         let year = extractedDate.year

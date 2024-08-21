@@ -14,7 +14,7 @@ struct CalendarView: View {
     
     var body: some View {
         let monthDates = generateMonthDates()
-   
+        
         VStack(spacing: 10) {
             //달력 헤더
             HStack(spacing: 70) {
@@ -54,63 +54,50 @@ struct CalendarView: View {
             }
             .offset(x: 70)
             .padding(.bottom)
-                //달력
-                VStack {
-                    // 요일 헤더
-                    HStack {
-                        ForEach(["일", "월", "화", "수", "목", "금", "토"], id: \.self) { day in
-                            Text(day)
-                                .frame(maxWidth: .infinity)
-                                .foregroundColor(day == "일" ? .red : (day == "토" ? .blue : .primary))
-                        }
+            //달력
+            VStack {
+                // 요일 헤더
+                HStack {
+                    ForEach(["일", "월", "화", "수", "목", "금", "토"], id: \.self) { day in
+                        Text(day)
+                            .frame(maxWidth: .infinity)
+                            .foregroundColor(day == "일" ? .red : (day == "토" ? .blue : .primary))
                     }
-                    .accessibilityHidden(true)
-                    .padding(.bottom, 8)
-                    // 달력 날짜들
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-                        ForEach(monthDates, id: \.self) { date in
-                            Button(action: {
-                                self.selectedDate = date
-                                self.currentDate = date
-                            }) {
-                                Text("\(Calendar.current.component(.day, from: date))")
-                                    .font(.title3)
-                                    .padding(5)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                    .background(selectedDate == date ? Color.white.opacity(0.4) : Color.clear)
-                                    .clipShape(Circle())
-                                    .foregroundColor(isSameMonth(date: date) ? (isSaturday(date: date) ? .blue : (isSunday(date: date) ? .red : .primary)) : .gray)
-                                    .overlay(
-                                        Circle().stroke(isToday(date: date) ? Color.hex9DCAFF : Color.clear)
-                                    )
-                            }
-                            .accessibilityLabel(
-                                Calendar.current.isDate(Date(), inSameDayAs: date) && currentDate == date ?
-                                Text("오늘 선택됨 \(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일") :
+                }
+                .accessibilityHidden(true)
+                .padding(.bottom, 8)
+                // 달력 날짜들
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
+                    ForEach(monthDates, id: \.self) { date in
+                        Button(action: {
+                            self.selectedDate = date
+                            self.currentDate = date
+                        }) {
+                            Text("\(Calendar.current.component(.day, from: date))")
+                                .font(.title3)
+                                .padding(5)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .background(selectedDate == date ? Color.white.opacity(0.4) : Color.clear)
+                                .clipShape(Circle())
+                                .foregroundColor(isSameMonth(date: date) ? (isSaturday(date: date) ? .blue : (isSunday(date: date) ? .red : .primary)) : .gray)
+                                .overlay(
+                                    Circle().stroke(isToday(date: date) ? Color.hex9DCAFF : Color.clear)
+                                )
+                        }
+                        .accessibilityLabel(
+                            Calendar.current.isDate(Date(), inSameDayAs: date) && currentDate == date ?
+                            Text("오늘 선택됨 \(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일") :
                                 (Calendar.current.isDate(Date(), inSameDayAs: date) ?
                                  Text("오늘 \(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일") :
-                                 (currentDate == date ?
-                                  Text("선택됨 \(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일") :
-                                  Text("\(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일")))
-                            )
-
-                            .accessibilityHint(Text("현재 날짜로 선택하려면 이중 탭하세요"))
-                        }
-                    }//                    .gesture(
-//                        DragGesture()
-//                            .onChanged { value in
-//                                self.translation = value.translation.width
-//                            }
-//                            .onEnded { value in
-//                                if self.translation < -50 {
-//                                    self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
-//                                } else if self.translation > 50 {
-//                                    self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
-//                                }
-//                                self.translation = 0
-//                            }
-//                    )
+                                    (currentDate == date ?
+                                     Text("선택됨 \(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일") :
+                                        Text("\(Calendar.current.component(.month, from: date))월 \(Calendar.current.component(.day, from: date))일")))
+                        )
+                        
+                        .accessibilityHint(Text("현재 날짜로 선택하려면 이중 탭하세요"))
+                    }
                 }
+            }
         }
     }
     
@@ -166,81 +153,3 @@ struct CalendarView: View {
         return dates
     }
 }
-
-//struct CalendarView: View {
-//    @Binding var currentDate: Date
-//    @Binding var selectedDate: Date
-//
-//    var body: some View {
-//        let monthDates = generateMonthDates()
-//
-//        VStack(spacing: 10) {
-//            HStack(spacing: 70) {
-//                VStack {
-//                    Text(DateUtils.shared.yearFormatter.string(from: currentDate))
-//                    Text(DateUtils.shared.monthWithoutZeroFormatter.string(from: currentDate))
-//                        .font(.title)
-//                        .fontWeight(.semibold)
-//                        .foregroundStyle(Color.hex9DCAFF)
-//                }
-//                .onTapGesture {
-//                    self.currentDate = Date()
-//                }
-//
-//                HStack(spacing: 40) {
-//                    Button(action: {
-//                        self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? currentDate
-//                    }) {
-//                        Image(systemName: "chevron.left")
-//                            .accessibilityLabel("Previous Month")
-//                    }
-//                    Button(action: {
-//                        self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: currentDate) ?? currentDate
-//                    }) {
-//                        Image(systemName: "chevron.right")
-//                            .accessibilityLabel("Next Month")
-//                    }
-//                }
-//                .font(.headline)
-//                .foregroundStyle(Color.hex9DCAFF)
-//            }
-//            .offset(x: 70)
-//            .padding(.bottom)
-//
-//            VStack {
-//                HStack {
-//                    ForEach(["일", "월", "화", "수", "목", "금", "토"], id: \.self) { day in
-//                        Text(day)
-//                            .frame(maxWidth: .infinity)
-//                            .foregroundColor(day == "일" ? .red : (day == "토" ? .blue : .primary))
-//                            .accessibilityHidden(true) // Hide weekdays from VoiceOver
-//                    }
-//                }
-//                .padding(.bottom, 8)
-//
-//                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7)) {
-//                    ForEach(monthDates, id: \.self) { date in
-//                        Text("\(Calendar.current.component(.day, from: date))")
-//                            .font(.title3)
-//                            .padding(5)
-//                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                            .background(selectedDate == date ? Color.white.opacity(0.4) : Color.clear)
-//                            .clipShape(Circle())
-//                            .foregroundColor(isSameMonth(date: date) ? (isSaturday(date: date) ? .blue : (isSunday(date: date) ? .red : .primary)) : .gray)
-//                            .overlay(
-//                                Circle().stroke(isToday(date: date) ? Color.hex9DCAFF : Color.clear)
-//                            )
-//                            .onTapGesture {
-//                                self.selectedDate = date
-//                                self.currentDate = date
-//                            }
-//                            .accessibilityLabel("\(dateFormatter.string(from: date))")
-//                            .accessibilityAddTraits(selectedDate == date ? .isSelected : .none)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    // Other methods remain unchanged...
-//}

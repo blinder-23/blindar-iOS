@@ -46,8 +46,8 @@ struct MainPage: View {
                     }, label: {
                         Text(userVM.user?.schoolName ?? "학교 정보 없음")
                             .accessibilityHint(Text("학교 설정을 변경하려면 이중 탭 하세요"))
-                                .foregroundStyle(Color.white)
-                                .font(.title)
+                            .foregroundStyle(Color.white)
+                            .font(.title)
                     })
                 }
                 .padding(.bottom, uiManager.isPortrait ? 20 : 50)

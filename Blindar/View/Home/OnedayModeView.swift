@@ -59,18 +59,10 @@ struct OnedayModeView: View {
                 VStack {
                     // 식단 뷰
                     MealContentsView(currentDate: $currentDate, selectedDate: $selectedDate, mealsForCurrentDate: $mealsForCurrentDate)
-                    //                            .id("meal")
                     // 일정 뷰
                     ScheduleContentsView(currentDate: $currentDate, selectedDate: $selectedDate, schedulesForCurrentDate: $schedulesForCurrentDate, memosForCurrentDate: $memosForCurrentDate)
-                    //                            .id("schedule")
                 }
             }
-            //                .accessibilityRotor("식단") {
-            //                    AccessibilityRotorEntry("식단", id: "meal")
-            //                }
-            //                .accessibilityRotor("학사일정") {
-            //                    AccessibilityRotorEntry("일정", id: "schedule")
-            //                }
         } else {
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
@@ -196,4 +188,3 @@ struct NextDateButton: View {
 #Preview {
     OnedayModeView(currentDate: .constant(Date()), selectedDate: .constant(Date()), mealsForCurrentDate: .constant(nil), schedulesForCurrentDate: .constant([]), memosForCurrentDate: .constant([]))
 }
-

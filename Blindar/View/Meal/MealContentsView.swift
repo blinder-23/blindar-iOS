@@ -60,8 +60,6 @@ struct MealContentsView: View {
                     //                                })
                     //                                .onTapGesture {
                     //                                    mealtype = type
-                    //                                    //디버깅
-                    ////                                    updateMealsForCurrentDate()
                     //                                }
                     //                        }
                     //                    }
@@ -78,8 +76,7 @@ struct MealContentsView: View {
                                     .font(.title3)
                                     .padding(.vertical, 3)
                             }
-//                            .accessibilityElement(children: .combine)
-//                            .accessibilityLabel(meals.dishes.map { $0.menu }.joined(separator: ", "))
+
                         }
                     } else {
                         Text("식단 정보가 없습니다")
@@ -99,8 +96,6 @@ struct MealContentsView: View {
                             mealtype = allCases[currentIndex + 1]
                         }
                     }
-                    //디버깅
-                    //                    updateMealsForCurrentDate()
                 })
                 //영양 정보 확인하기 버튼
                 NavigationLink {

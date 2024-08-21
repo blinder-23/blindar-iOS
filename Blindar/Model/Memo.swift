@@ -36,7 +36,7 @@ struct Memo: Codable {
     }
 }
 
-@Model 
+@Model
 final public class MemoLocalData: Identifiable {
     var userId: String
     var date: String

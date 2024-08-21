@@ -32,66 +32,66 @@ struct SelectSchoolScreen: View {
     var isEntry: Bool
     
     var body: some View {
-            VStack {
-                // Header
-                HStack {
-                    Text("학교 선택")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                    Spacer()
-                }
-                .padding(.vertical, 20)
-                
-                // Search Bar
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color.white)
-                    .frame(height: 60)
-                    .overlay {
-                        HStack {
-                            Image(systemName: "magnifyingglass")
-                                .accessibilityHidden(true)
-                            TextField(text: $query, prompt: Text("학교 이름 검색").foregroundStyle(.hexC6C6CA), label: {
-                                EmptyView()
-                            })
-                        }
-                        .padding()
+        VStack {
+            // Header
+            HStack {
+                Text("학교 선택")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                Spacer()
+            }
+            .padding(.vertical, 20)
+            
+            // Search Bar
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(Color.white)
+                .frame(height: 60)
+                .overlay {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .accessibilityHidden(true)
+                        TextField(text: $query, prompt: Text("학교 이름 검색").foregroundStyle(.hexC6C6CA), label: {
+                            EmptyView()
+                        })
                     }
-                
-                // School List
-                ScrollView {
-                    ForEach(filteredSchools, id: \.schoolCode) { school in
-                        if isEntry {
-                            NavigationLink(destination: {
-                                SelectNicknameScreen(schoolCode: school.schoolCode, schoolName: school.schoolName)
-                            }, label: {
-                                VStack(alignment: .leading) {
-                                    Text(school.schoolName)
-                                        .padding(.vertical)
-                                    Rectangle()
-                                        .frame(height: 0.3)
-                                }
-                                .foregroundColor(.white)
-                            })
-                            .accessibilityLabel(Text(school.schoolName))
-                        } else {
-                            Button(action: {
-                                let user: User = User(userId: globalUid, schoolCode: school.schoolCode, name: userVM.user?.name ?? "이름 정보 없음", schoolName: school.schoolName)
-                                repostUserToServer(user: user)
-                            }, label: {
-                                VStack(alignment: .leading) {
-                                    Text(school.schoolName)
-                                        .padding(.vertical)
-                                    Rectangle()
-                                        .frame(height: 0.3)
-                                }
-                                .foregroundColor(.white)
-                            })
-                            .accessibilityLabel(Text(school.schoolName))
-                        }
+                    .padding()
+                }
+            
+            // School List
+            ScrollView {
+                ForEach(filteredSchools, id: \.schoolCode) { school in
+                    if isEntry {
+                        NavigationLink(destination: {
+                            SelectNicknameScreen(schoolCode: school.schoolCode, schoolName: school.schoolName)
+                        }, label: {
+                            VStack(alignment: .leading) {
+                                Text(school.schoolName)
+                                    .padding(.vertical)
+                                Rectangle()
+                                    .frame(height: 0.3)
+                            }
+                            .foregroundColor(.white)
+                        })
+                        .accessibilityLabel(Text(school.schoolName))
+                    } else {
+                        Button(action: {
+                            let user: User = User(userId: globalUid, schoolCode: school.schoolCode, name: userVM.user?.name ?? "이름 정보 없음", schoolName: school.schoolName)
+                            repostUserToServer(user: user)
+                        }, label: {
+                            VStack(alignment: .leading) {
+                                Text(school.schoolName)
+                                    .padding(.vertical)
+                                Rectangle()
+                                    .frame(height: 0.3)
+                            }
+                            .foregroundColor(.white)
+                        })
+                        .accessibilityLabel(Text(school.schoolName))
                     }
                 }
             }
-            .padding()
+        }
+        .padding()
         .onAppear {
             schoolVM.fetchSchools()
         }
@@ -107,23 +107,23 @@ struct SelectSchoolScreen: View {
                     userVM.saveUserInfoToUserDefaults(user: user)
                 }
             }, receiveValue: {
-                    userVM.postUser(newUser: UserRequest(userId: user.userId, schoolCode: user.schoolCode, name: user.name))
-                        .sink(receiveValue: { _ in
-                            // 저장된 유저 정보가 올바른지 확인
-                            if let savedUser = userVM.getUserInfoFromUserDefaults(),
-                               savedUser.schoolCode != 0,
-                               savedUser.schoolName != "" {
-                                
-                                // Refresh functions 실행
-                                refreshMeals(for: Date())
-                                refreshSchedules(for: Date())
-                                userVM.user = user
-                                // 모든 작업이 완료된 후 상태 변경
-                                userVM.userState = .isRegistered
-                            }
-                            dismiss()
-                        })
-                        .store(in: &userVM.cancellables)
+                userVM.postUser(newUser: UserRequest(userId: user.userId, schoolCode: user.schoolCode, name: user.name))
+                    .sink(receiveValue: { _ in
+                        // 저장된 유저 정보가 올바른지 확인
+                        if let savedUser = userVM.getUserInfoFromUserDefaults(),
+                           savedUser.schoolCode != 0,
+                           savedUser.schoolName != "" {
+                            
+                            // Refresh functions 실행
+                            refreshMeals(for: Date())
+                            refreshSchedules(for: Date())
+                            userVM.user = user
+                            // 모든 작업이 완료된 후 상태 변경
+                            userVM.userState = .isRegistered
+                        }
+                        dismiss()
+                    })
+                    .store(in: &userVM.cancellables)
                 
             })
             .store(in: &userVM.cancellables)

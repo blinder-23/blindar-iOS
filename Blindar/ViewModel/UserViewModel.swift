@@ -87,7 +87,7 @@ class UserViewModel: ObservableObject {
             }
         }
     }
-
+    
     // 2. 사용자 학교 정보를 저장하는 함수
     func tryStoreUserSchoolToFirebase(user: User) -> Future<Void, Error> {
         return Future { promise in
@@ -110,39 +110,39 @@ class UserViewModel: ObservableObject {
         }
     }
     
-//    func tryStoreUserToFirebase(user: User) -> Future<Void, Error> {
-//        return Future { promise in
-//            let userRef = self.firebaseDB.child("users").child(user.name)
-//            
-//            // Step 1: Check if the username already exists
-//            userRef.observeSingleEvent(of: .value) { snapshot in
-//                if snapshot.exists() {
-//                    // Username already exists, do not proceed to save
-//                    self.isNicknameDuplicated = true
-//                    let error = NSError(domain: "Username already exists", code: 0, userInfo: nil)
-//                    promise(.failure(error))
-//                } else {
-//                    // Step 2: Username does not exist, proceed to store the data
-//                    let userData: [String: Any] = [
-//                        "owner": user.userId,
-//                        "school_code": user.schoolCode,
-//                        "school_name": user.schoolName
-//                    ]
-//                    
-//                    userRef.setValue(userData) { error, _ in
-//                        if let error = error {
-//                            // Handle error when setting value
-//                            promise(.failure(error))
-//                        } else {
-//                            // Successfully stored user
-//                            self.isNicknameDuplicated = false
-//                            promise(.success(()))
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+    //    func tryStoreUserToFirebase(user: User) -> Future<Void, Error> {
+    //        return Future { promise in
+    //            let userRef = self.firebaseDB.child("users").child(user.name)
+    //            
+    //            // Step 1: Check if the username already exists
+    //            userRef.observeSingleEvent(of: .value) { snapshot in
+    //                if snapshot.exists() {
+    //                    // Username already exists, do not proceed to save
+    //                    self.isNicknameDuplicated = true
+    //                    let error = NSError(domain: "Username already exists", code: 0, userInfo: nil)
+    //                    promise(.failure(error))
+    //                } else {
+    //                    // Step 2: Username does not exist, proceed to store the data
+    //                    let userData: [String: Any] = [
+    //                        "owner": user.userId,
+    //                        "school_code": user.schoolCode,
+    //                        "school_name": user.schoolName
+    //                    ]
+    //                    
+    //                    userRef.setValue(userData) { error, _ in
+    //                        if let error = error {
+    //                            // Handle error when setting value
+    //                            promise(.failure(error))
+    //                        } else {
+    //                            // Successfully stored user
+    //                            self.isNicknameDuplicated = false
+    //                            promise(.success(()))
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
 }
 
 extension UserDefaults {

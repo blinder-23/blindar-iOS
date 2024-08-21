@@ -18,7 +18,7 @@ struct ScheduleContentsView: View {
     @Binding var selectedDate: Date
     @Binding var schedulesForCurrentDate: [ScheduleLocalData]
     @Binding var memosForCurrentDate: [MemoLocalData]
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {

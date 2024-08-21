@@ -24,7 +24,7 @@ class ScheduleAPI {
         guard let url = components?.url else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-                        
+        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         

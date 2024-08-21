@@ -72,11 +72,11 @@ struct MemoEditModal: View {
             contents = localMemo.contents
         }
         .onDisappear {
-                //메모 업데이트
-                let formatter = DateFormatter()
-                formatter.dateFormat = "yyyyMMdd"
-                let selectedDateString = formatter.string(from: selectedDate)
-                memosForCurrentDate = savedMemos.filter { $0.date == selectedDateString}
+            //메모 업데이트
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyyMMdd"
+            let selectedDateString = formatter.string(from: selectedDate)
+            memosForCurrentDate = savedMemos.filter { $0.date == selectedDateString}
         }
     }
     

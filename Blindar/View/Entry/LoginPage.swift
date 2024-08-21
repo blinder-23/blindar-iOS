@@ -89,7 +89,7 @@ struct LoginPage: View {
     func appleLogin() {
         appleLoginCoordinator = AppleAuthCoordinator(window: window) {
             // Completion handler called after login UI is dismissed
-                self.isLoggedIn = true
+            self.isLoggedIn = true
         }
         appleLoginCoordinator?.startAppleLogin()
     }

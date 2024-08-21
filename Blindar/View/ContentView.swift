@@ -26,15 +26,14 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            MainPage()
-//            switch userVM.userState {
-//            case .isCheckingRegistration:
-//                SplashScreen()
-//            case .isNotRegistered:
-//                LoginPage()
-//            case .isRegistered:
-//                MainPage()
-//            }
+            switch userVM.userState {
+            case .isCheckingRegistration:
+                SplashScreen()
+            case .isNotRegistered:
+                LoginPage()
+            case .isRegistered:
+                MainPage()
+            }
         }
         .onAppear {
             if checkDeviceType() == "iPhone" {
@@ -55,9 +54,6 @@ struct ContentView: View {
             uiManager.screenHeight = UIScreen.main.bounds.height
             // VoiceOver 상태 감지 및 업데이트
             uiManager.isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
-            //            NotificationCenter.default.addObserver(forName: UIAccessibility.voiceOverStatusDidChangeNotification, object: nil, queue: .main) { _ in
-            //                uiManager.isVoiceOverRunning = UIAccessibility.isVoiceOverRunning
-            //            }
         }
     }
     
