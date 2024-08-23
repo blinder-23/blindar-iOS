@@ -1,13 +1,32 @@
-# blindar-iOS
 
-# 기술 스택 및 설계 요약
 
-## 프로젝트 개요
+# 프로젝트 개요
 
 **대상 사용자 및 기능:**  
 - 전국 맹학교의 학사 일정과 식단 정보를 제공
 - 메모 기능
 - 달력 모드, 하루씩 보기 모드 지원
+
+<br>
+
+
+# 화면 미리보기
+## 아이폰
+<img src="https://github.com/user-attachments/assets/c2b093d7-cbca-4392-b508-d9b8430dbd55" width="30%" style="margin: 0; padding: 0;"/> <img src="https://github.com/user-attachments/assets/ec31634c-919a-41e4-882b-03043b63ba3d" width="30%" style="margin: 0; padding: 0;"/> <img src="https://github.com/user-attachments/assets/0bb3ba5c-c5d1-4ea5-a9d3-7222276d8946" width="30%" style="margin: 0; padding: 0;"/> <img src="https://github.com/user-attachments/assets/98746651-bb94-4722-b9b1-613ae71012dd" width="30%" style="margin: 0; padding: 0;"/> <img src="https://github.com/user-attachments/assets/f34ebe7b-52d8-4169-818d-d7db152311a5" width="30%" style="margin: 0; padding: 0;"/>
+
+## 아이패드
+
+<img src="https://github.com/user-attachments/assets/975d8713-719f-4339-b33c-a2f1ff954ffb" width="45%" style="margin: 0; padding: 0;"/> <img src="https://github.com/user-attachments/assets/bea36fd0-8e59-4d9f-ad89-aefd1dbce75b" width="45%" style="margin: 0; padding: 0;"/>
+
+<img src="https://github.com/user-attachments/assets/46dc86b3-3aa8-4077-9256-06f6cc9629b5" width="45%" style="margin: 0; padding: 0;"/> <img src="https://github.com/user-attachments/assets/bbe68ff1-2a9b-4153-9ef7-e5a80a58c330" width="45%" style="margin: 0; padding: 0;"/>
+
+
+<br>
+<br>
+
+
+
+# 기술 스택 및 설계 요약
 
 ## 기술 스택
 
@@ -39,6 +58,10 @@
 
 - **개인화:** 사용자 학교 정보 로컬 저장, 설정 개인화.
 - **오류 처리:** 명확한 작업 실패 피드백 제공.
+
+
+<br>
+
 
 ## 아키텍처 및 의존성 개요
 
