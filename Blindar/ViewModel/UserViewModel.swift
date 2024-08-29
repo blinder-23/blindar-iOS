@@ -109,6 +109,32 @@ class UserViewModel: ObservableObject {
             }
         }
     }
+
+    func tryDeleteUserFromFirebase(user: User) -> Future<Void, Error> {
+            return Future { promise in
+                let userRef = self.firebaseDB.child("users").child(user.name)
+                
+                userRef.observeSingleEvent(of: .value) { snapshot in
+                    if snapshot.exists() {
+                        if let owner = snapshot.childSnapshot(forPath: "owner").value as? String, owner == user.userId {
+                            userRef.removeValue { error, _ in
+                                if let error = error {
+                                    promise(.failure(error))
+                                } else {
+                                    promise(.success(()))
+                                }
+                            }
+                        } else {
+                            let error = NSError(domain: "Owner does not match", code: 0, userInfo: nil)
+                            promise(.failure(error))
+                        }
+                    } else {
+                        let error = NSError(domain: "Username does not exist", code: 0, userInfo: nil)
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }
     
     //    func tryStoreUserToFirebase(user: User) -> Future<Void, Error> {
     //        return Future { promise in
@@ -165,5 +191,9 @@ extension UserDefaults {
             }
         }
         return nil
+    }
+    
+    func removeUser(forKey key: String) {
+        self.removeObject(forKey: key)
     }
 }
