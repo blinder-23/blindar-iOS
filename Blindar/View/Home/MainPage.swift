@@ -35,6 +35,7 @@ struct MainPage: View {
     @State var schedulesForCurrentDate: [ScheduleLocalData] = []
     @State var memosForCurrentDate: [MemoLocalData] = []
     @State var mainPageMode: MainPageMode = .oneday
+    @Binding var displayView: DisplayView
     
     var body: some View {
         NavigationStack {
@@ -42,9 +43,9 @@ struct MainPage: View {
                 VStack {
                     //학교 표시 - 학교 선택 페이지 네비게이션 링크
                     NavigationLink(destination: {
-                        SelectSchoolScreen()
+                        SelectSchoolScreen(displayView: $displayView)
                     }, label: {
-                        Text(userVM.user?.schoolName ?? "학교 정보 없음")
+                        Text(userVM.user.schoolName)
                             .accessibilityHint(Text("학교 설정을 변경하려면 이중 탭 하세요"))
                             .foregroundStyle(Color.white)
                             .font(.title)
@@ -285,6 +286,3 @@ struct MainPage: View {
     }
 }
 
-#Preview {
-    MainPage()
-}

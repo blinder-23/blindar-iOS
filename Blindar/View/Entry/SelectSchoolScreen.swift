@@ -29,6 +29,7 @@ struct SelectSchoolScreen: View {
             return schoolVM.schools.filter { $0.schoolName.contains(query) }
         }
     }
+    @Binding var displayView: DisplayView
     
     var body: some View {
         VStack {
@@ -59,24 +60,30 @@ struct SelectSchoolScreen: View {
             // School List
             ScrollView {
                 ForEach(filteredSchools, id: \.schoolCode) { school in
-                        Button(action: {
-                            //유저 저오 로컬에 저장
-                        }, label: {
-                            VStack(alignment: .leading) {
-                                Text(school.schoolName)
-                                    .padding(.vertical)
-                                Rectangle()
-                                    .frame(height: 0.3)
-                            }
-                            .foregroundColor(.white)
-                        })
-                        .accessibilityLabel(Text(school.schoolName))
+                    Button(action: {
+                        userVM.user.schoolCode = school.schoolCode
+                        userVM.user.schoolName = school.schoolName
+                        userVM.saveUserInfoToUserDefaults(user: userVM.user)
+                        refreshMeals(for: Date())
+                        refreshSchedules(for: Date())
+                        displayView = .mainPage
+                    }, label: {
+                        VStack(alignment: .leading) {
+                            Text(school.schoolName)
+                                .padding(.vertical)
+                            Rectangle()
+                                .frame(height: 0.3)
+                        }
+                        .foregroundColor(.white)
+                    })
+                    .accessibilityLabel(Text(school.schoolName))
                 }
             }
         }
         .padding()
         .onAppear {
             schoolVM.fetchSchools()
+            displayView = .selecSchoolScreenPage
         }
     }
     

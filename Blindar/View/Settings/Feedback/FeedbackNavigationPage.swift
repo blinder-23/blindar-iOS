@@ -51,11 +51,13 @@ struct FeedbackNavigationPage: View {
                     Button(action: {
                         let deviceInfo = getDeviceInfo()
                         if let user = userVM.getUserInfoFromUserDefaults() {
-                            newFeedback = Feedback(userId: user.userId, deviceName: deviceInfo.deviceName, osVersion: deviceInfo.osVersion, appVersion: deviceInfo.osVersion, contents: contents)
+                            newFeedback = Feedback(userId: user.id, deviceName: deviceInfo.deviceName, osVersion: deviceInfo.osVersion, appVersion: deviceInfo.osVersion, contents: contents)
                             //피드백 전송 함수 호출
                             feedbackVM.postFeedback(newFeedback: newFeedback)
-                            dismiss()
+                        } else {
+                            print("no user")
                         }
+                        dismiss()
                     }, label: {
                         RoundedRectangle(cornerRadius: 16)
                             .foregroundColor(.hex00497B)

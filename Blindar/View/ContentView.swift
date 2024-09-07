@@ -8,6 +8,12 @@
 import SwiftUI
 import SwiftData
 
+enum DisplayView {
+    case loginPage
+    case selecSchoolScreenPage
+    case mainPage
+}
+
 class UIManager: ObservableObject {
     @Published var isPortrait = UIDevice.current.orientation.isPortrait
     @Published var screenWidth = UIScreen.main.bounds.width
@@ -22,14 +28,17 @@ struct ContentView: View {
     @EnvironmentObject var schoolVM: SchoolViewModel
     @EnvironmentObject var mealVM: MealViewModel
     @Query var savedMeals: [MealLocalData]
+    @State var displayView: DisplayView = .loginPage
     
     var body: some View {
         Group {
-            switch userVM.userState {
-            case .isNotRegistered:
-                LoginPage()
-            case .isRegistered:
-                MainPage()
+            switch displayView {
+            case .loginPage:
+                LoginPage(displayView: $displayView)
+            case .selecSchoolScreenPage:
+                SelectSchoolScreen(displayView: $displayView)
+            case .mainPage:
+                MainPage(displayView: $displayView)
             }
         }
         .onAppear {
@@ -41,9 +50,9 @@ struct ContentView: View {
             // 자동 로그인
             if let user = userVM.getUserInfoFromUserDefaults() {
                 userVM.user = user
-                userVM.userState = .isRegistered
+                displayView = .mainPage
             } else {
-                userVM.userState = .isNotRegistered
+                displayView = .loginPage
             }
             // 초기 화면 크기 설정
             uiManager.screenWidth = UIScreen.main.bounds.width

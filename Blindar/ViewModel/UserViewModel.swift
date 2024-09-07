@@ -8,20 +8,14 @@
 import Foundation
 import Combine
 
-enum UserState {
-    case isNotRegistered
-    case isRegistered
-}
-
 class UserViewModel: ObservableObject {
-    @Published var user: User?
+    @Published var user: User = User(schoolCode: 0, schoolName: "")
     var cancellables = Set<AnyCancellable>()
     @Published var errorMessage: String?
     var postUserCancellable: AnyCancellable?
     //닉네임 중복 검사 결과
     @Published var isNicknameDuplicated: Bool = false
     @Published var isLoggedIn: Bool = false
-    @Published var userState: UserState = .isNotRegistered
     
     func saveUserInfoToUserDefaults(user: User) {
         UserDefaults.standard.setUser(user, forKey: "user")

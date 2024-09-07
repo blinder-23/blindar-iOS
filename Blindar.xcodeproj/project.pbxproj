@@ -31,7 +31,6 @@
 		090541B12C4F807A0039D633 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541932C4F807A0039D633 /* ContentView.swift */; };
 		090541B22C4F807A0039D633 /* FeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541962C4F807A0039D633 /* FeedbackViewModel.swift */; };
 		090541B32C4F807A0039D633 /* MealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541972C4F807A0039D633 /* MealViewModel.swift */; };
-		090541B42C4F807A0039D633 /* MemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541982C4F807A0039D633 /* MemoViewModel.swift */; };
 		090541B52C4F807A0039D633 /* SchoolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541992C4F807A0039D633 /* SchoolViewModel.swift */; };
 		090541B82C4F82470039D633 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 090541B72C4F82470039D633 /* GoogleService-Info.plist */; };
 		090541BB2C4F829F0039D633 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 090541BA2C4F829F0039D633 /* FirebaseAnalytics */; };
@@ -100,7 +99,6 @@
 		090541932C4F807A0039D633 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		090541962C4F807A0039D633 /* FeedbackViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewModel.swift; sourceTree = "<group>"; };
 		090541972C4F807A0039D633 /* MealViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealViewModel.swift; sourceTree = "<group>"; };
-		090541982C4F807A0039D633 /* MemoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoViewModel.swift; sourceTree = "<group>"; };
 		090541992C4F807A0039D633 /* SchoolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolViewModel.swift; sourceTree = "<group>"; };
 		090541B72C4F82470039D633 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		090541F22C4F8A150039D633 /* Blindar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Blindar.entitlements; sourceTree = "<group>"; };
@@ -318,7 +316,6 @@
 				090541992C4F807A0039D633 /* SchoolViewModel.swift */,
 				090541972C4F807A0039D633 /* MealViewModel.swift */,
 				0996CED02C61ABCE0015D602 /* ScheduleViewModel.swift */,
-				090541982C4F807A0039D633 /* MemoViewModel.swift */,
 				090541962C4F807A0039D633 /* FeedbackViewModel.swift */,
 			);
 			path = ViewModel;
@@ -440,7 +437,6 @@
 				09A94D942C5A1E4F003E7EF6 /* SettingPage.swift in Sources */,
 				0905419F2C4F807A0039D633 /* Schedule.swift in Sources */,
 				090541B12C4F807A0039D633 /* ContentView.swift in Sources */,
-				090541B42C4F807A0039D633 /* MemoViewModel.swift in Sources */,
 				090541AC2C4F807A0039D633 /* MealContentsView.swift in Sources */,
 				0905419D2C4F807A0039D633 /* Meal.swift in Sources */,
 				0996CED52C61DD6E0015D602 /* OnedayModeView.swift in Sources */,

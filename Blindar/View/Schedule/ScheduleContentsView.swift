@@ -12,7 +12,6 @@ struct ScheduleContentsView: View {
     @EnvironmentObject var uiManager: UIManager
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var userVM: UserViewModel
-    @EnvironmentObject var memoVM: MemoViewModel
     @Query var savedMemos: [MemoLocalData]
     @Binding var currentDate: Date
     @Binding var selectedDate: Date
@@ -60,7 +59,7 @@ struct ScheduleContentsView: View {
                             .accessibilityAddTraits(.isHeader)
                             .font(.caption)
                         //Memo List
-                        ForEach(memosForCurrentDate, id: \.memoId) { memo in
+                        ForEach(memosForCurrentDate, id: \.id) { memo in
                             Text(memo.contents)
                         }
                     }
@@ -81,11 +80,6 @@ struct ScheduleContentsView: View {
             .frame(width: uiManager.isPortrait ? uiManager.screenWidth * 0.85 : uiManager.screenWidth * 0.45)
             .padding()
             .background(Color.hex2E2E2E, in: RoundedRectangle(cornerRadius: 16))
-        }
-        .onAppear {
-            if let user = userVM.getUserInfoFromUserDefaults() {
-                memoVM.fetchMemos(userId: user.userId)
-            }
         }
     }
 }

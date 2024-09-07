@@ -13,11 +13,10 @@ struct MemoPostModal: View {
     @Environment(\.modelContext) private var modelContext
     @Query var savedMemos: [MemoLocalData]
     @EnvironmentObject var userVM: UserViewModel
-    @EnvironmentObject var memoVM: MemoViewModel
     @Environment(\.dismiss) private var dismiss
     @Binding var currentDate: Date
     @Binding var selectedDate: Date
-    @State var newMemo: Memo = Memo(userId: "", date: "", memoId: "", contents: "")
+    @State var newMemo: Memo = Memo(userId: "", date: "", contents: "")
     @State private var contents = ""
     @State private var yyyyMMdddate = ""
     @Binding var memosForCurrentDate: [MemoLocalData]
@@ -53,18 +52,13 @@ struct MemoPostModal: View {
                     newMemo.date = DateUtils.shared.compactDateFormatter.string(from: currentDate)
                     newMemo.contents = contents
                     if let user = userVM.getUserInfoFromUserDefaults() {
-                        newMemo.userId = user.userId
-                        postMemoToServer(newMemo: newMemo)
-                            .sink(receiveValue: { newMemoId in
-                                if let newMemoId = newMemoId, let user = userVM.getUserInfoFromUserDefaults() {
-                                    print("디버깅 : ", user.userId)
-                                    let newMemoToLocal = MemoLocalData(userId: user.userId, date: newMemo.date, memoId: newMemoId, contents: newMemo.contents)
-                                    postMemoToLocal(newMemoToLocal: newMemoToLocal)
-                                }
-                                dismiss()
-                            })
-                            .store(in: &memoVM.cancellables)
+                        //로컬에 메모 저장
+                        let newMemoToLocal: MemoLocalData = MemoLocalData(id: newMemo.id, date: newMemo.date, userId: newMemo.userId, contents: newMemo.contents)
+                        postMemoToLocal(newMemoToLocal: newMemoToLocal)
+                    } else {
+                        print("no user")
                     }
+                    dismiss()
                 }, label: {
                     RoundedRectangle(cornerRadius: 16)
                         .foregroundColor(.hex00497B)
@@ -79,7 +73,7 @@ struct MemoPostModal: View {
         }
         .padding()
         .onAppear {
-            newMemo.userId = userVM.user?.userId ?? ""
+            newMemo.userId = userVM.user.id
         }
         .onDisappear {
             //메모 업데이트
@@ -90,12 +84,8 @@ struct MemoPostModal: View {
         }
     }
     
-    func postMemoToServer(newMemo: Memo) -> AnyPublisher<String?, Never> {
-        memoVM.postMemo(newMemo: newMemo)
-    }
-    
     func postMemoToLocal(newMemoToLocal: MemoLocalData) {
-        if !savedMemos.contains(where: { $0.memoId == newMemoToLocal.memoId }) {
+        if !savedMemos.contains(where: { $0.id == newMemoToLocal.id }) {
             modelContext.insert(newMemoToLocal)
             do {
                 try modelContext.save()

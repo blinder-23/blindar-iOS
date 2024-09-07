@@ -10,10 +10,8 @@ import SwiftData
 
 @main
 struct BlindarApp: App {
-    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            UserLocalData.self,
             MealLocalData.self,
             MemoLocalData.self,
             ScheduleLocalData.self,
@@ -33,7 +31,6 @@ struct BlindarApp: App {
             ContentView()
                 .environmentObject(UIManager())
                 .environmentObject(UserViewModel())
-                .environmentObject(MemoViewModel())
                 .environmentObject(MealViewModel())
                 .environmentObject(SchoolViewModel())
                 .environmentObject(ScheduleViewModel())

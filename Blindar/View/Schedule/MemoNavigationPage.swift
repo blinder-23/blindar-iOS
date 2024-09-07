@@ -10,7 +10,6 @@ import SwiftData
 
 struct MemoNavigationPage: View {
     @Environment(\.modelContext) private var modelContext
-    @EnvironmentObject var memoVM: MemoViewModel
     @Binding var currentDate: Date
     @Binding var selectedDate: Date
     @State var isMemoPostModalPresented: Bool = false
@@ -40,7 +39,7 @@ struct MemoNavigationPage: View {
                         }
                 })
                 ScrollView {
-                    ForEach(memosForCurrentDate, id: \.memoId) { memo in
+                    ForEach(memosForCurrentDate, id: \.id) { memo in
                         MemoBlock(localMemo: memo) {
                             selectedMemo = memo
                             isMemoEditModalPresented = true
@@ -63,7 +62,6 @@ struct MemoNavigationPage: View {
 
 struct MemoBlock: View {
     @Environment(\.modelContext) private var modelContext
-    @EnvironmentObject var memoVM: MemoViewModel
     @State var isAlertPresented: Bool = false
     var localMemo: MemoLocalData
     var onEdit: () -> Void
@@ -92,8 +90,6 @@ struct MemoBlock: View {
     }
     
     func deleteMemo() {
-        // 서버 메모 삭제
-        memoVM.deleteMemo(memoId: localMemo.memoId)
         // 로컬 메모 삭제
         modelContext.delete(localMemo)
     }

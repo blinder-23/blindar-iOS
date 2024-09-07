@@ -13,7 +13,6 @@ struct MemoEditModal: View {
     @Environment(\.modelContext) private var modelContext
     @Query var savedMemos: [MemoLocalData]
     @EnvironmentObject var userVM: UserViewModel
-    @EnvironmentObject var memoVM: MemoViewModel
     @Environment(\.dismiss) private var dismiss
     @Binding var currentDate: Date
     @Binding var selectedDate: Date
@@ -49,12 +48,8 @@ struct MemoEditModal: View {
                 })
                 Button(action: {
                     yyyyMMdddate = DateUtils.shared.compactDateFormatter.string(from: currentDate)
-                    editMemoOfServer()
-                        .sink(receiveValue: {
                             editMemoOfLocal()
                             dismiss()
-                        })
-                        .store(in: &memoVM.cancellables)
                 }, label: {
                     RoundedRectangle(cornerRadius: 16)
                         .foregroundColor(.hex00497B)
@@ -78,10 +73,6 @@ struct MemoEditModal: View {
             let selectedDateString = formatter.string(from: selectedDate)
             memosForCurrentDate = savedMemos.filter { $0.date == selectedDateString}
         }
-    }
-    
-    func editMemoOfServer() -> AnyPublisher<Void, Never> {
-        memoVM.editMemo(newMemo: Memo(userId: localMemo.userId, date: yyyyMMdddate, memoId: localMemo.memoId, contents: contents))
     }
     
     func editMemoOfLocal() {

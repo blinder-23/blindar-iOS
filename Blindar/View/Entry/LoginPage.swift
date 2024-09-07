@@ -12,6 +12,7 @@ import SwiftData
 struct LoginPage: View {
     @EnvironmentObject var uiManager: UIManager
     @State var isLoggedIn = false
+    @Binding var displayView: DisplayView
     
     var body: some View {
         NavigationView {
@@ -40,7 +41,7 @@ struct LoginPage: View {
                 .padding(20)
                 .background(
                     NavigationLink("", isActive: $isLoggedIn, destination: {
-                        SelectSchoolScreen()
+                        SelectSchoolScreen(displayView: $displayView)
                     })
                     .accessibilityHidden(true)
                 )
@@ -74,7 +75,7 @@ struct LoginPage: View {
                 }
                 .background(
                     NavigationLink("", isActive: $isLoggedIn, destination: {
-                        SelectSchoolScreen()
+                        SelectSchoolScreen(displayView: $displayView)
                     })
                     .accessibilityHidden(true)
                 )
@@ -84,6 +85,6 @@ struct LoginPage: View {
     }
     
     func login() {
-            self.isLoggedIn = true
+        self.isLoggedIn = true
     }
 }
