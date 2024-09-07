@@ -41,7 +41,6 @@ struct ContentView: View {
             } else if checkDeviceType() == "iPad" {
                 uiManager.isPortrait = false
             }
-            print(checkDeviceType())
             // 자동 로그인
             if let user = userVM.getUserInfoFromUserDefaults() {
                 userVM.user = user
