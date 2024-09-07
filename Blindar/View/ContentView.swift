@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import FirebaseAuth
 
 class UIManager: ObservableObject {
     @Published var isPortrait = UIDevice.current.orientation.isPortrait
@@ -27,8 +26,6 @@ struct ContentView: View {
     var body: some View {
         Group {
             switch userVM.userState {
-            case .isCheckingRegistration:
-                SplashScreen()
             case .isNotRegistered:
                 LoginPage()
             case .isRegistered:

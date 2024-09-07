@@ -8,41 +8,21 @@
 import Foundation
 import SwiftData
 
-struct UserResponse: Codable {
-    var message: String
-    var responseCode: Int
-    var response: UserRequest
-}
-
-struct UserRequest: Codable {
-    var userId: String //Google Firebase UID
+struct User: Identifiable, Codable {
+    var id: String = UUID().uuidString
     var schoolCode: Int //NEIS API에서 제공하는 표준 학교 코드
-    var name: String //유저 닉네임
-    
-    enum CodingKeys: String, CodingKey {
-        case userId = "user_id"
-        case schoolCode = "school_code"
-        case name
-    }
-}
-
-//앱 내에서 사용할 User Info
-struct User: Codable {
-    var userId: String
-    var schoolCode: Int
-    var name: String
     var schoolName: String
 }
 
 @Model
 class UserLocalData {
-    @Attribute(.unique) var userId: String //Google Firebase UID
+    @Attribute(.unique) var userId: String
     var schoolCode: Int //NEIS API에서 제공하는 표준 학교 코드
-    var name: String //유저 닉네임
+    var schoolName: String
     
-    init(userId: String, schoolCode: Int, name: String, email: String, platform: String) {
+    init(userId: String, schoolCode: Int, schoolName: String)  {
         self.userId = userId
         self.schoolCode = schoolCode
-        self.name = name
+        self.schoolName = schoolName
     }
 }

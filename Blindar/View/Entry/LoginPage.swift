@@ -11,8 +11,6 @@ import SwiftData
 
 struct LoginPage: View {
     @EnvironmentObject var uiManager: UIManager
-    @Environment(\.window) var window: UIWindow?
-    @State private var appleLoginCoordinator: AppleAuthCoordinator?
     @State var isLoggedIn = false
     
     var body: some View {
@@ -25,15 +23,14 @@ struct LoginPage: View {
                         .frame(height: uiManager.screenHeight * 0.3)
                         .accessibilityHidden(true)
                     Button(action: {
-                        appleLogin()
+                        login()
                     }, label: {
                         RoundedRectangle(cornerRadius: 14)
                             .stroke(Color.white, lineWidth: 1.5)
                             .frame(width: uiManager.screenWidth * 0.85, height: 55)
                             .overlay {
                                 HStack {
-                                    Image(systemName: "apple.logo")
-                                    Text("Apple로 시작하기")
+                                    Text("시작하기")
                                 }
                                 .font(.headline)
                                 .foregroundColor(.white)
@@ -43,7 +40,7 @@ struct LoginPage: View {
                 .padding(20)
                 .background(
                     NavigationLink("", isActive: $isLoggedIn, destination: {
-                        SelectSchoolScreen(isEntry: true)
+                        SelectSchoolScreen()
                     })
                     .accessibilityHidden(true)
                 )
@@ -59,7 +56,7 @@ struct LoginPage: View {
                     .frame(width: uiManager.screenWidth * 0.45)
                     VStack {
                         Button(action: {
-                            appleLogin()
+                            login()
                         }, label: {
                             RoundedRectangle(cornerRadius: 14)
                                 .stroke(Color.white, lineWidth: 1.5)
@@ -77,7 +74,7 @@ struct LoginPage: View {
                 }
                 .background(
                     NavigationLink("", isActive: $isLoggedIn, destination: {
-                        SelectSchoolScreen(isEntry: true)
+                        SelectSchoolScreen()
                     })
                     .accessibilityHidden(true)
                 )
@@ -86,11 +83,7 @@ struct LoginPage: View {
         .navigationViewStyle(StackNavigationViewStyle())
     }
     
-    func appleLogin() {
-        appleLoginCoordinator = AppleAuthCoordinator(window: window) {
-            // Completion handler called after login UI is dismissed
+    func login() {
             self.isLoggedIn = true
-        }
-        appleLoginCoordinator?.startAppleLogin()
     }
 }

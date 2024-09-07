@@ -29,7 +29,6 @@ struct SelectSchoolScreen: View {
             return schoolVM.schools.filter { $0.schoolName.contains(query) }
         }
     }
-    var isEntry: Bool
     
     var body: some View {
         VStack {
@@ -60,23 +59,8 @@ struct SelectSchoolScreen: View {
             // School List
             ScrollView {
                 ForEach(filteredSchools, id: \.schoolCode) { school in
-                    if isEntry {
-                        NavigationLink(destination: {
-                            SelectNicknameScreen(schoolCode: school.schoolCode, schoolName: school.schoolName)
-                        }, label: {
-                            VStack(alignment: .leading) {
-                                Text(school.schoolName)
-                                    .padding(.vertical)
-                                Rectangle()
-                                    .frame(height: 0.3)
-                            }
-                            .foregroundColor(.white)
-                        })
-                        .accessibilityLabel(Text(school.schoolName))
-                    } else {
                         Button(action: {
-                            let user: User = User(userId: globalUid, schoolCode: school.schoolCode, name: userVM.user?.name ?? "이름 정보 없음", schoolName: school.schoolName)
-                            repostUserToServer(user: user)
+                            //유저 저오 로컬에 저장
                         }, label: {
                             VStack(alignment: .leading) {
                                 Text(school.schoolName)
@@ -87,7 +71,6 @@ struct SelectSchoolScreen: View {
                             .foregroundColor(.white)
                         })
                         .accessibilityLabel(Text(school.schoolName))
-                    }
                 }
             }
         }
@@ -95,38 +78,6 @@ struct SelectSchoolScreen: View {
         .onAppear {
             schoolVM.fetchSchools()
         }
-    }
-    
-    private func repostUserToServer(user: User) {
-        userVM.tryStoreUserSchoolToFirebase(user: user)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    break
-                case .finished:
-                    userVM.saveUserInfoToUserDefaults(user: user)
-                }
-            }, receiveValue: {
-                userVM.postUser(newUser: UserRequest(userId: user.userId, schoolCode: user.schoolCode, name: user.name))
-                    .sink(receiveValue: { _ in
-                        // 저장된 유저 정보가 올바른지 확인
-                        if let savedUser = userVM.getUserInfoFromUserDefaults(),
-                           savedUser.schoolCode != 0,
-                           savedUser.schoolName != "" {
-                            
-                            // Refresh functions 실행
-                            refreshMeals(for: Date())
-                            refreshSchedules(for: Date())
-                            userVM.user = user
-                            // 모든 작업이 완료된 후 상태 변경
-                            userVM.userState = .isRegistered
-                        }
-                        dismiss()
-                    })
-                    .store(in: &userVM.cancellables)
-                
-            })
-            .store(in: &userVM.cancellables)
     }
     
     func refreshMeals(for date: Date) {

@@ -18,9 +18,7 @@
 		090541A12C4F807A0039D633 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0905417A2C4F807A0039D633 /* User.swift */; };
 		090541A22C4F807A0039D633 /* FeedbackAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0905417C2C4F807A0039D633 /* FeedbackAPI.swift */; };
 		090541A32C4F807A0039D633 /* MealAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0905417D2C4F807A0039D633 /* MealAPI.swift */; };
-		090541A42C4F807A0039D633 /* MemoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0905417E2C4F807A0039D633 /* MemoAPI.swift */; };
 		090541A52C4F807A0039D633 /* SchoolAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0905417F2C4F807A0039D633 /* SchoolAPI.swift */; };
-		090541A62C4F807A0039D633 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541802C4F807A0039D633 /* UserAPI.swift */; };
 		090541A72C4F807A0039D633 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541822C4F807A0039D633 /* DateUtils.swift */; };
 		090541A92C4F807A0039D633 /* MainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541852C4F807A0039D633 /* MainPage.swift */; };
 		090541AA2C4F807A0039D633 /* SelectSchoolScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541872C4F807A0039D633 /* SelectSchoolScreen.swift */; };
@@ -35,7 +33,6 @@
 		090541B32C4F807A0039D633 /* MealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541972C4F807A0039D633 /* MealViewModel.swift */; };
 		090541B42C4F807A0039D633 /* MemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541982C4F807A0039D633 /* MemoViewModel.swift */; };
 		090541B52C4F807A0039D633 /* SchoolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541992C4F807A0039D633 /* SchoolViewModel.swift */; };
-		090541B62C4F807A0039D633 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0905419A2C4F807A0039D633 /* UserViewModel.swift */; };
 		090541B82C4F82470039D633 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 090541B72C4F82470039D633 /* GoogleService-Info.plist */; };
 		090541BB2C4F829F0039D633 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 090541BA2C4F829F0039D633 /* FirebaseAnalytics */; };
 		090541BD2C4F829F0039D633 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 090541BC2C4F829F0039D633 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -66,17 +63,15 @@
 		090541EF2C4F829F0039D633 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 090541EE2C4F829F0039D633 /* FirebaseStorageCombine-Community */; };
 		090541F12C4F829F0039D633 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 090541F02C4F829F0039D633 /* FirebaseVertexAI-Preview */; };
 		090541F62C4F8BFB0039D633 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541F52C4F8BFB0039D633 /* LoginPage.swift */; };
-		090541F82C4F8CC60039D633 /* AppleAuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */; };
-		0996CECF2C60C0180015D602 /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CECE2C60C0180015D602 /* SplashScreen.swift */; };
 		0996CED12C61ABCE0015D602 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED02C61ABCE0015D602 /* ScheduleViewModel.swift */; };
 		0996CED32C61AC1C0015D602 /* ScheduleAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED22C61AC1C0015D602 /* ScheduleAPI.swift */; };
 		0996CED52C61DD6E0015D602 /* OnedayModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED42C61DD6E0015D602 /* OnedayModeView.swift */; };
 		0996CED72C61E6370015D602 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0996CED62C61E6370015D602 /* CalendarView.swift */; };
+		0997172E2C8C3FBC00F5CB9A /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0997172D2C8C3FBC00F5CB9A /* UserViewModel.swift */; };
 		09A94D8E2C54EFFD003E7EF6 /* PostUserProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */; };
 		09A94D902C58A747003E7EF6 /* MemoEditModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */; };
 		09A94D922C5A1CA6003E7EF6 /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */; };
 		09A94D942C5A1E4F003E7EF6 /* SettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A94D932C5A1E4F003E7EF6 /* SettingPage.swift */; };
-		09F5770D2C4FA0F300B89ECF /* SelectNicknameScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F5770C2C4FA0F300B89ECF /* SelectNicknameScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,9 +87,7 @@
 		0905417A2C4F807A0039D633 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0905417C2C4F807A0039D633 /* FeedbackAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackAPI.swift; sourceTree = "<group>"; };
 		0905417D2C4F807A0039D633 /* MealAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealAPI.swift; sourceTree = "<group>"; };
-		0905417E2C4F807A0039D633 /* MemoAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoAPI.swift; sourceTree = "<group>"; };
 		0905417F2C4F807A0039D633 /* SchoolAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolAPI.swift; sourceTree = "<group>"; };
-		090541802C4F807A0039D633 /* UserAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
 		090541822C4F807A0039D633 /* DateUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
 		090541852C4F807A0039D633 /* MainPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPage.swift; sourceTree = "<group>"; };
 		090541872C4F807A0039D633 /* SelectSchoolScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectSchoolScreen.swift; sourceTree = "<group>"; };
@@ -109,23 +102,20 @@
 		090541972C4F807A0039D633 /* MealViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealViewModel.swift; sourceTree = "<group>"; };
 		090541982C4F807A0039D633 /* MemoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoViewModel.swift; sourceTree = "<group>"; };
 		090541992C4F807A0039D633 /* SchoolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolViewModel.swift; sourceTree = "<group>"; };
-		0905419A2C4F807A0039D633 /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		090541B72C4F82470039D633 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		090541F22C4F8A150039D633 /* Blindar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Blindar.entitlements; sourceTree = "<group>"; };
 		090541F52C4F8BFB0039D633 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
-		090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthCoordinator.swift; sourceTree = "<group>"; };
-		0996CECE2C60C0180015D602 /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		0996CED02C61ABCE0015D602 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		0996CED22C61AC1C0015D602 /* ScheduleAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAPI.swift; sourceTree = "<group>"; };
 		0996CED42C61DD6E0015D602 /* OnedayModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnedayModeView.swift; sourceTree = "<group>"; };
 		0996CED62C61E6370015D602 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		0997172D2C8C3FBC00F5CB9A /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		09A94D8D2C54EFFD003E7EF6 /* PostUserProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostUserProgressView.swift; sourceTree = "<group>"; };
 		09A94D8F2C58A747003E7EF6 /* MemoEditModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoEditModal.swift; sourceTree = "<group>"; };
 		09A94D912C5A1CA6003E7EF6 /* DeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
 		09A94D932C5A1E4F003E7EF6 /* SettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPage.swift; sourceTree = "<group>"; };
 		09BE105C2C4F99A0002A6E66 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		09BE105D2C4F99C5002A6E66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		09F5770C2C4FA0F300B89ECF /* SelectNicknameScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNicknameScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,11 +217,9 @@
 		090541812C4F807A0039D633 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				090541802C4F807A0039D633 /* UserAPI.swift */,
 				0905417C2C4F807A0039D633 /* FeedbackAPI.swift */,
 				0905417D2C4F807A0039D633 /* MealAPI.swift */,
 				0996CED22C61AC1C0015D602 /* ScheduleAPI.swift */,
-				0905417E2C4F807A0039D633 /* MemoAPI.swift */,
 				0905417F2C4F807A0039D633 /* SchoolAPI.swift */,
 			);
 			path = API;
@@ -259,10 +247,8 @@
 		090541882C4F807A0039D633 /* Entry */ = {
 			isa = PBXGroup;
 			children = (
-				0996CECE2C60C0180015D602 /* SplashScreen.swift */,
 				090541F52C4F8BFB0039D633 /* LoginPage.swift */,
 				090541872C4F807A0039D633 /* SelectSchoolScreen.swift */,
-				09F5770C2C4FA0F300B89ECF /* SelectNicknameScreen.swift */,
 			);
 			path = Entry;
 			sourceTree = "<group>";
@@ -328,8 +314,7 @@
 		0905419B2C4F807A0039D633 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				090541F72C4F8CC60039D633 /* AppleAuthCoordinator.swift */,
-				0905419A2C4F807A0039D633 /* UserViewModel.swift */,
+				0997172D2C8C3FBC00F5CB9A /* UserViewModel.swift */,
 				090541992C4F807A0039D633 /* SchoolViewModel.swift */,
 				090541972C4F807A0039D633 /* MealViewModel.swift */,
 				0996CED02C61ABCE0015D602 /* ScheduleViewModel.swift */,
@@ -451,21 +436,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0996CECF2C60C0180015D602 /* SplashScreen.swift in Sources */,
 				090541A02C4F807A0039D633 /* School.swift in Sources */,
 				09A94D942C5A1E4F003E7EF6 /* SettingPage.swift in Sources */,
-				09F5770D2C4FA0F300B89ECF /* SelectNicknameScreen.swift in Sources */,
-				090541B62C4F807A0039D633 /* UserViewModel.swift in Sources */,
 				0905419F2C4F807A0039D633 /* Schedule.swift in Sources */,
 				090541B12C4F807A0039D633 /* ContentView.swift in Sources */,
 				090541B42C4F807A0039D633 /* MemoViewModel.swift in Sources */,
 				090541AC2C4F807A0039D633 /* MealContentsView.swift in Sources */,
 				0905419D2C4F807A0039D633 /* Meal.swift in Sources */,
-				090541A62C4F807A0039D633 /* UserAPI.swift in Sources */,
 				0996CED52C61DD6E0015D602 /* OnedayModeView.swift in Sources */,
 				09A94D8E2C54EFFD003E7EF6 /* PostUserProgressView.swift in Sources */,
 				09A94D922C5A1CA6003E7EF6 /* DeviceInfo.swift in Sources */,
-				090541F82C4F8CC60039D633 /* AppleAuthCoordinator.swift in Sources */,
 				090541A22C4F807A0039D633 /* FeedbackAPI.swift in Sources */,
 				090541AF2C4F807A0039D633 /* MemoNavigationPage.swift in Sources */,
 				090541A12C4F807A0039D633 /* User.swift in Sources */,
@@ -485,9 +465,9 @@
 				090541AD2C4F807A0039D633 /* NutrientNavigationPage.swift in Sources */,
 				0996CED72C61E6370015D602 /* CalendarView.swift in Sources */,
 				0996CED12C61ABCE0015D602 /* ScheduleViewModel.swift in Sources */,
-				090541A42C4F807A0039D633 /* MemoAPI.swift in Sources */,
 				0905419E2C4F807A0039D633 /* Memo.swift in Sources */,
 				090541F62C4F8BFB0039D633 /* LoginPage.swift in Sources */,
+				0997172E2C8C3FBC00F5CB9A /* UserViewModel.swift in Sources */,
 				0996CED32C61AC1C0015D602 /* ScheduleAPI.swift in Sources */,
 				090541AE2C4F807A0039D633 /* MemoPostModal.swift in Sources */,
 			);
